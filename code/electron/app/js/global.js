@@ -1,6 +1,9 @@
 $(document).ready(function(){
 	console.log("hello")
+
+	var wrapper = $("#wrapper")
 	
+	var temp = Handlebars.templates.eyes;
 
 	if(annyang){
 		console.log("Annyang detected");
@@ -17,5 +20,9 @@ $(document).ready(function(){
 	function activateListening(){
 		console.log("You said hello");
 	}
+
+	$("#test").on('click', function(){
+		wrapper.html(temp({"name":"abhishek"}))
+	})
 
 })
