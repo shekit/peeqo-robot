@@ -1,7 +1,16 @@
 $(document).ready(function(){
-	console.log("hello")
 
-	var wrapper = $("#wrapper")
+	var wrapper = $("#wrapper");
+
+	var config = require('./config/config.js');
+
+	var apiConfig = {
+		server: config.server,
+		token: config.token,
+		sessionId: config.sessionId
+	}
+
+	var apiAi = new ApiAi(config);
 	
 	var temp = Handlebars.templates.eyes;
 
