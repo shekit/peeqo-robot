@@ -1,0 +1,30 @@
+{
+	"manifest_version":2,
+	"name" : "Peeqo Tracker",
+	"version":"0.1",
+	"description":"Tells peeqo robot when you access sites that aren't allowed",
+	"browser_action":{
+		// "default_icon":{
+		// 	"19":"icon19.png",
+		// 	"38":"icon38.png"
+		// },
+
+		"default_title":"Peeqo"
+	},
+
+	"background":{
+		"scripts":["socket.io.js", "background.js"]
+	},
+
+	"permissions":[
+		"activeTab",
+		"tabs"
+	],
+
+	"content_scripts":[
+		{
+			"matches":["<all_urls>"],
+			"js":["content.js"]
+		}
+	]
+}

@@ -7,3 +7,5 @@ bleno_test/
 arduino/
 peeqo_electron/
 assets/
+test/
+speech_to_text_trials/
