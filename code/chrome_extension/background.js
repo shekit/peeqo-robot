@@ -34,6 +34,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, res){
 
 	console.log("GOT FROM CONTENT: " + req.url);
 
+	//if its in the blocked site list emit socket to peeqo
 	if(blocked_sites.indexOf(req.url) > -1){
 		console.log("emit socket")
 	}

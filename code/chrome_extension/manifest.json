@@ -2,7 +2,7 @@
 	"manifest_version":2,
 	"name" : "Peeqo Tracker",
 	"version":"0.1",
-	"description":"Tells peeqo robot when you access sites that aren't allowed",
+	"description":"Tells peeqo when you access sites that aren't allowed",
 	"browser_action":{
 		// "default_icon":{
 		// 	"19":"icon19.png",
