@@ -26,6 +26,27 @@ app.use('/', routes)
 
 var io = require('socket.io')(http);
 
+// socket connections from chrome extension
+
+var extension_io = io.of('/extension')
+
+extension_io.on('connection', function(socket){
+	console.log("extension connected")
+
+	socket.on('blocked', function(msg){
+		console.log("URL :" + msg.url)
+		peeqo_io.emit("blocked", "yes")
+	})
+})
+
+// socket connections from peeqo
+
+var peeqo_io = io.of('/peeqo')
+
+peeqo_io.on('connection', function(socket){
+	console.log("peeqo connected");
+})
+
 http.listen(3000, function(){
 	console.log("listening")
 })

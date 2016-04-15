@@ -1,6 +1,10 @@
 var blocked_sites = ["www.facebook.com","facebook.com","twitter.com","www.twitter.com","youtube.com","www.youtube.com"]
 
-//var socket = io("http://localhost:3000");
+var socket_url = "http://localhost:3000";
+
+//var socket_url = "";
+
+var socket = io(socket_url + '/extension');
 
 
 
@@ -38,7 +42,7 @@ chrome.runtime.onMessage.addListener(function(req, sender, res){
 
 	if(blocked_sites.indexOf(url) > -1){
 		console.log("emit socket along with url")
-		//socket.emit("blocked", {"url":url})
+		socket.emit("blocked", {"url":url})
 	}
 	
 

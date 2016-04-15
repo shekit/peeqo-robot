@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	var connected = true;
+
 	var wrapper = $("#wrapper");
 
 	var config = require('./config/config.js');
@@ -8,14 +10,23 @@ $(document).ready(function(){
 
 	var fs = require('fs');
 
-	var socket = io("http://localhost:3000")
 	
 	var reminder = null;
 
+	// track blocked sites
 	var blocked_sites = {
-		"facebook":false,
-		"twitter":false,
-		"youtube":false
+		"facebook":{
+			"blocked": false,
+			"offenceCount": 0
+		},
+		"twitter":{
+			"blocked": false,
+			"offenceCount": 0
+		},
+		"youtube":{
+			"blocked": false,
+			"offenceCount": 0
+		}
 	}
 	
 	// ANNYANG CONFIGURATION
@@ -264,6 +275,18 @@ $(document).ready(function(){
 		})
 	}
 
+	//////////// SOCKET EVENTS  ///////////////
+
+	var socket_url = "http://localhost:3000";
+
+	//var socket_url = "";
+
+	var socket = io(socket_url + '/peeqo');
+
+	socket.on('blocked', function(msg){
+		console.log("BLOCKED: " + msg)
+	})
+
 	// TEMPLATES
 
 	var eyes = Handlebars.templates.eyes;
@@ -280,5 +303,7 @@ $(document).ready(function(){
 		//mimicAnnyang();
 		activateListening();
 	})
+
+
 
 })
