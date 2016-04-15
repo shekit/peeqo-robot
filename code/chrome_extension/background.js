@@ -31,12 +31,14 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
 // get url from content script
 chrome.runtime.onMessage.addListener(function(req, sender, res){
 
-
-	console.log("GOT FROM CONTENT: " + req.url);
+	var url = req.url;
+	console.log("GOT FROM CONTENT: " + url);
 
 	//if its in the blocked site list emit socket to peeqo
-	if(blocked_sites.indexOf(req.url) > -1){
-		console.log("emit socket")
+
+	if(blocked_sites.indexOf(url) > -1){
+		console.log("emit socket along with url")
+		//socket.emit("blocked", {"url":url})
 	}
 	
 
