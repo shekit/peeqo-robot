@@ -7,8 +7,17 @@ $(document).ready(function(){
 	var giphy = require('giphy-api')(config.giphyKey);
 
 	var fs = require('fs');
-	
 
+	var socket = io("http://localhost:3000")
+	
+	var reminder = null;
+
+	var blocked_sites = {
+		"facebook":false,
+		"twitter":false,
+		"youtube":false
+	}
+	
 	// ANNYANG CONFIGURATION
 
 	if(annyang){
@@ -112,38 +121,49 @@ $(document).ready(function(){
 
 	// ACTION FUNCTIONS - BASED ON API AI RESPONSES
 
-	// stop everything that is happening and revert to default screen
-	// maybe say fine before doing that
+	
 	function stopEverything(){
-
+		// stop everything that is happening and revert to default screen
+		// maybe say fine before doing that
 	}
 
 	function getWeather(){
-
+		//call weather api and set gif based on temperature returned
 	}
 
 	function getTime(){
-
+		// get time and figure out way to display as gif, maybe just show night or day or sleeping
 	}
 
 	function giveSupport(){
-
+		// gif when I say I accomplished something
 	}
 
-	function setReminder(){
+	function setReminder(reminder, time){
+		// set reminder
+		var duration = parseInt(time);
 
+		reminder = setTimeout(function(){
+			//display alert gif when time elapses with reminder value
+		}, duration)
 	}
 
-	function greetPublic(){
+	function greetPublic(greeting){
+		// find gif from local filesystem or giphy depending on greeting and display
 
+		// send i2c message for lights and movement
 	}
 
 	function greetPrivate(){
+		// find gif
 
+		// send i2c message
 	}
 
 	function addNote(){
+		// show got it gif
 
+		// emit to server and view in chrome extension
 	}
 
 	function playMusic(){
@@ -201,10 +221,13 @@ $(document).ready(function(){
 				var latestImage = obj.savedRenderingContexts[0];
 			}
 		})
+
+		// send picture to chrome extension
 	}
 	
 	function blockSite(){
-
+		// check if blocking has been activated
+		// get angry if blocked site accessed
 	}
 
 	function addSkill(){

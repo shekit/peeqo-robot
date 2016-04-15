@@ -12,6 +12,7 @@
     "electron-prebuilt": "^0.37.5"
   },
   "dependencies": {
+    "giphy-api": "^1.1.15",
     "handlebars": "^4.0.5"
   }
 }
