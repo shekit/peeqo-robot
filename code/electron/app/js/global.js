@@ -252,6 +252,8 @@ $(document).ready(function(){
 	var Spotify = require('spotify-web-api-js')
 	var spotifyApi = new Spotify();
 
+	var song = $("#song")
+
 	function searchSpotify(query, searchLimit){
 
 		spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
@@ -266,27 +268,37 @@ $(document).ready(function(){
 
 				console.log(artistName)
 
-				$("#song").attr('autoplay','true');
-				$("#song").attr('src',url);
+				playMusic(url);
 
 				getArtistImage(artistName)
 			} else {
 				console.log("ERROR: " + err)
 			}
 		})
+	}
 
+	function playMusic(url){
+		song.attr('autoplay','true');
+		song.attr('src',url);
 	}
 
 	function getArtistImage(artist){
 		
 		spotifyApi.searchArtists(artist, {limit: 10}, function(err, data){
 			if(!err){
-				console.log(data)
-				console.log(data.artists.items[0].images[0].url)
+				console.log(data.artists.items[0].images[0].url);
+				var img_url = data.artists.items[0].images[0].url;
+				showArtistImage(img_url)
 			} else {
 				console.log("ERROR: " + err);
 			}
 		})
+	}
+
+	function showArtistImage(artist){
+		console.log("show artist image")
+		// show a gif 
+		// switch to static image
 	}
 
 
