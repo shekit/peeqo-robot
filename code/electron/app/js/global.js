@@ -139,6 +139,17 @@ $(document).ready(function(){
 
 	function getWeather(){
 		//call weather api and set gif based on temperature returned
+		$.simpleWeather({
+			location: "New York",
+			unit: 'c',
+			success: function(weather){
+				console.log(weather);
+			},
+
+			error: function(error){
+				console.log("weather error: "+error)
+			}
+		})
 	}
 
 	function getTime(){
@@ -372,7 +383,6 @@ $(document).ready(function(){
 			alert("Error accessing camera");
 			console.log("error: " + err)
 		})
-
 		
 	}
 
@@ -425,6 +435,9 @@ $(document).ready(function(){
 		takePicture();
 	})
 
+	$("#getWeather").on("click", function(){
+		getWeather();
+	})
 
 
 })
