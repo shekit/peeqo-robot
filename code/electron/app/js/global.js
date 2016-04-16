@@ -215,6 +215,7 @@ $(document).ready(function(){
 			'gifHeight':480,
 			'text':'hello',
 			'numFrames': 10,
+			'keepCameraOn': false,
 			'completeCallback':function(){
 				console.log('done');
 			},
@@ -222,9 +223,16 @@ $(document).ready(function(){
 
 		}, function(obj){
 			if(!obj.error){
+				//gifshot.stopVideoStreaming();
 				var image = obj.image;
-				var animateImage = document.createElement('img');
-				animateImage.src = image;
+				var animatedImage = document.createElement('img');
+				animatedImage.src = image;
+
+				//stop webcam
+				if(track){
+					track.stop();
+				}
+				
 				document.body.appendChild(animatedImage)
 
 				// use this to save the image to be able to send/email
@@ -244,6 +252,8 @@ $(document).ready(function(){
 
 	}
 
+
+
 	/////******* ALL EXTERNAL API FUNCTIONS ********////
 
 
@@ -258,15 +268,22 @@ $(document).ready(function(){
 
 		spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
 			if(!err){
-			
+
+				if(searchLimit == null){
+					searchLimit = 10;
+				}
+
 				var randomSong = Math.floor(Math.random()*searchLimit);
 				console.log(data.tracks)
 				console.log(data.tracks.items[randomSong].preview_url);
 
-				var url = data.tracks.items[randomSong].preview_url
-				var artistName = data.tracks.items[randomSong].artists[0].name;
+				var song = data.tracks.items[randomSong]
+				var url = song.preview_url
+				var artistName = song.artists[0].name;
+				var albumCover = song.album.images[0].url;
+				var albumName = song.album.name
 
-				console.log(artistName)
+				console.log(artistName, albumName, albumCover)
 
 				playMusic(url);
 
@@ -334,7 +351,34 @@ $(document).ready(function(){
 		})
 	}
 
-	//////////// SOCKET EVENTS  ///////////////
+	var video = $("video")
+	var track = null;
+
+	function getCameraFeed(){
+		navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
+		var constraints = {audio:false, video:{width:800, height:480}}
+
+		navigator.getUserMedia(constraints, function(stream){
+			video.attr({'src':URL.createObjectURL(stream)})
+			window.pictureStream = stream;
+			track = stream.getTracks()[0]
+
+			video.on('loadedmetadata', function(e){
+				video.get(0).play();
+			})			
+
+		}, function(err){
+			alert("Error accessing camera");
+			console.log("error: " + err)
+		})
+
+		
+	}
+
+
+
+	/////********* SOCKET EVENTS  *******//////
 
 	var socket_url = "http://localhost:3000";
 
@@ -346,7 +390,9 @@ $(document).ready(function(){
 	// 	console.log("BLOCKED: " + msg)
 	// })
 
-	// TEMPLATES
+
+
+	//////********* TEMPLATES  *******//////
 
 	var eyes = Handlebars.templates.eyes;
 
@@ -354,7 +400,7 @@ $(document).ready(function(){
 		wrapper.html(eyes({"name":"abhishek"}))
 	}
 
-	// EVENT LISTENERS
+	// TEST EVENT LISTENERS
 
 	$("#test").on('click', function(){
 		//wrapper.html(temp({"name":"abhishek"}))
@@ -369,6 +415,14 @@ $(document).ready(function(){
 
 	$("#getArtist").on("click", function(){
 		getArtistImage("beatles")
+	})
+
+	$("#startWebcam").on("click", function(){
+		getCameraFeed();
+	})
+
+	$("#takePicture").on("click", function(){
+		takePicture();
 	})
 
 
