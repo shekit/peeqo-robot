@@ -9,7 +9,6 @@ $(document).ready(function(){
 	var giphy = require('giphy-api')(config.giphyKey);
 
 	var fs = require('fs');
-
 	
 	var reminder = null;
 
@@ -245,6 +244,54 @@ $(document).ready(function(){
 
 	}
 
+	/////******* ALL EXTERNAL API FUNCTIONS ********////
+
+
+	///// SPOTIFY API CALLS /////
+
+	var Spotify = require('spotify-web-api-js')
+	var spotifyApi = new Spotify();
+
+	function searchSpotify(query, searchLimit){
+
+		spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
+			if(!err){
+			
+				var randomSong = Math.floor(Math.random()*searchLimit);
+				console.log(data.tracks)
+				console.log(data.tracks.items[randomSong].preview_url);
+
+				var url = data.tracks.items[randomSong].preview_url
+				var artistName = data.tracks.items[randomSong].artists[0].name;
+
+				console.log(artistName)
+
+				$("#song").attr('autoplay','true');
+				$("#song").attr('src',url);
+
+				getArtistImage(artistName)
+			} else {
+				console.log("ERROR: " + err)
+			}
+		})
+
+	}
+
+	function getArtistImage(artist){
+		
+		spotifyApi.searchArtists(artist, {limit: 10}, function(err, data){
+			if(!err){
+				console.log(data)
+				console.log(data.artists.items[0].images[0].url)
+			} else {
+				console.log("ERROR: " + err);
+			}
+		})
+	}
+
+
+	////// GIPHY API //////
+
 	function searchGiphy(query, prefix){
 
 
@@ -281,11 +328,11 @@ $(document).ready(function(){
 
 	//var socket_url = "";
 
-	var socket = io(socket_url + '/peeqo');
+	//var socket = io(socket_url + '/peeqo');
 
-	socket.on('blocked', function(msg){
-		console.log("BLOCKED: " + msg)
-	})
+	// socket.on('blocked', function(msg){
+	// 	console.log("BLOCKED: " + msg)
+	// })
 
 	// TEMPLATES
 
@@ -302,6 +349,14 @@ $(document).ready(function(){
 		//annyang.start();
 		//mimicAnnyang();
 		activateListening();
+	})
+
+	$("#searchSpotify").on('click', function(){
+		searchSpotify('beatles',10);
+	})
+
+	$("#getArtist").on("click", function(){
+		getArtistImage("beatles")
 	})
 
 

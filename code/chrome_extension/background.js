@@ -7,7 +7,7 @@ var socket_url = "http://localhost:3000";
 var socket = io(socket_url + '/extension');
 
 
-
+console.log(socket.connected)
 // send message to content script when page is activated to check if its a blocked page
 chrome.tabs.onActivated.addListener(function(tab){
 
