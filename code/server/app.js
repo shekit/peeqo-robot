@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var wifi = require('wifi-control')
-
 var routes = require('./routes/index')
 
 var app = express();
@@ -49,11 +47,6 @@ peeqo_io.on('connection', function(socket){
 	console.log("peeqo connected");
 })
 
-wifi.init({
-	debug: true
-})
-
-console.log(wifi)
 
 http.listen(3000, function(){
 	console.log("listening")
