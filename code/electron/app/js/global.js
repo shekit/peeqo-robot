@@ -29,6 +29,39 @@ $(document).ready(function(){
 		console.log("CHECKING CONN")
 	})
 
+	////**** i2c ******//////
+	/*
+	var i2c = require('i2c-bus')
+	var i2c1 = null
+
+	var ledMiniAddress = 0x04
+	var ledMiniAccessCmd = 0xa1
+
+	var servoMiniAddress = 0x07
+	var servoMiniAccessCmd = 0x80
+
+	i2c1 = i2c.open(1, function(err){
+		if(err){
+			throw err;
+		}
+	})
+
+	function sendI2C(addr, code, byte){
+		i2c1.writeByte(addr, code, byte, function(){
+			console.log("sent i2c message")
+		})
+	}
+
+	function readI2C(addr, code){
+		i2c1.readByte(addr, code, function(err, id){
+			if(err){
+				console.log(err)
+			}
+			console.log(id);
+		})
+	}
+	*/
+
 	////**** WIFI SCANNING ****////
 
 	var wifiscanner = require('wifiscanner')();
@@ -77,8 +110,6 @@ $(document).ready(function(){
 	}
 
 	var wrapper = $("#wrapper");
-
-	
 
 	var giphy = require('giphy-api')(config.giphyKey);
 
@@ -228,8 +259,10 @@ $(document).ready(function(){
 		})
 	}
 
-	function getTime(){
+
+	function getTime(city){
 		// get time and figure out way to display as gif, maybe just show night or day or sleeping
+		
 	}
 
 	function giveSupport(){
@@ -518,6 +551,18 @@ $(document).ready(function(){
 
 	$("#joinITP").on('click', function(){
 		connectToWifi(sandbox);
+	})
+
+	$("#getTime").on('click', function(){
+		getTime('Mumbai');
+	})
+
+	$("#ledi2c").on("click", function(){
+		sendI2C(ledMiniAddress, ledMiniAccessCmd, 3);
+	})
+
+	$("#servoi2c").on("click", function(){
+		sendI2C(servoMiniAddress, servoMiniAccessCmd, 3);
 	})
 
 
