@@ -28,6 +28,53 @@ $(document).ready(function(){
 		console.log("CHECKING CONN")
 	})
 
+	////**** WIFI SCANNING ****////
+
+	var wifiscanner = require('wifiscanner')();
+
+	function scanWifiAgain(){
+		wifiscanner.scan(function(err, networks){
+			if(err){
+				console.log(err)
+			} else {
+				console.dir(networks)
+			}
+		}, function(standardError){
+			console.log("Standard Error: " + standardError);
+		})
+	}
+
+	var wifi = require('wifi-control');
+
+	wifi.init({
+		debug: true
+	});
+
+	function scanWifi(){
+		wifi.scanForWifi(function(err, resp){
+			if(err){
+				console.log("ERROR: "+ err)
+			} else {
+				console.log(resp)
+			}
+		})
+	}
+
+	var sandbox = {
+		ssid: "itpsandbox",
+		password: "NYU+s0a!+P?"
+	}
+
+	function connectToWifi(network){
+		var results = wifi.connectToAp(network, function(err, resp){
+			if(err){
+				console.log(err);
+			} else {
+				console.log(resp)
+			}
+		})
+	}
+
 	var wrapper = $("#wrapper");
 
 	var config = require('./config/config.js');
@@ -458,6 +505,18 @@ $(document).ready(function(){
 
 	$("#getWeather").on("click", function(){
 		getWeather('New York');
+	})
+
+	$("#scanWifi").on('click', function(){
+		scanWifiAgain();
+	})
+
+	$("#scanWifi2").on('click', function(){
+		scanWifi();
+	})
+
+	$("#joinITP").on('click', function(){
+		connectToWifi(sandbox);
 	})
 
 
