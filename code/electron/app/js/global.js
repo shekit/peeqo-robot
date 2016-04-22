@@ -2,6 +2,32 @@ $(document).ready(function(){
 
 	var connected = true;
 
+
+	////***** CHECK ONLINE OFFLINE STATUS ****////
+
+	// replace this with the url of the peeqo server or some server you know is always up
+	Offline.options = {
+		checks: {xhr: {url: 'http://svrround.com/live/user'}},
+		requests: false,
+		checkOnLoad: true
+	}
+
+	Offline.on('down', function(){
+		console.log('lost connection');
+		console.log("State: " + Offline.state);
+		connected = false;
+	})
+
+	Offline.on('up', function(){
+		console.log('connection returned')
+		console.log("State: " + Offline.state)
+		connected = true;
+	})
+
+	Offline.on('checking', function(){
+		console.log("CHECKING CONN")
+	})
+
 	var wrapper = $("#wrapper");
 
 	var config = require('./config/config.js');
@@ -11,6 +37,8 @@ $(document).ready(function(){
 	var fs = require('fs');
 	
 	var reminder = null;
+
+	var userPreferences = {}; //make an object containing all user related prefs
 
 	// track blocked sites
 	var blocked_sites = {
@@ -137,10 +165,10 @@ $(document).ready(function(){
 		// maybe say fine before doing that
 	}
 
-	function getWeather(){
+	function getWeather(city='New York'){
 		//call weather api and set gif based on temperature returned
 		$.simpleWeather({
-			location: "New York",
+			location: city,
 			unit: 'c',
 			success: function(weather){
 				console.log(weather);
@@ -187,20 +215,17 @@ $(document).ready(function(){
 		// emit to server and view in chrome extension
 	}
 
-	function playMusic(){
-
-	}
 
 	function motivate(){
-
+		// show you can do it or motivation gif
 	}
 
 	function controlLights(){
-
+		// 
 	}
 
 	function setGifPreference(){
-
+		// prefix gif searches with preference set
 	}
 
 	function showExpression(expression){
@@ -260,7 +285,7 @@ $(document).ready(function(){
 	}
 
 	function addSkill(){
-
+		// activate a disabled skill set
 	}
 
 
@@ -275,14 +300,10 @@ $(document).ready(function(){
 
 	var song = $("#song")
 
-	function searchSpotify(query, searchLimit){
+	function searchSpotify(query, searchLimit=10){
 
 		spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
 			if(!err){
-
-				if(searchLimit == null){
-					searchLimit = 10;
-				}
 
 				var randomSong = Math.floor(Math.random()*searchLimit);
 				console.log(data.tracks)
@@ -310,9 +331,9 @@ $(document).ready(function(){
 		song.attr('src',url);
 	}
 
-	function getArtistImage(artist){
+	function getArtistImage(artist, searchLimit=10){
 		
-		spotifyApi.searchArtists(artist, {limit: 10}, function(err, data){
+		spotifyApi.searchArtists(artist, {limit: searchLimit}, function(err, data){
 			if(!err){
 				console.log(data.artists.items[0].images[0].url);
 				var img_url = data.artists.items[0].images[0].url;
@@ -436,7 +457,7 @@ $(document).ready(function(){
 	})
 
 	$("#getWeather").on("click", function(){
-		getWeather();
+		getWeather('New York');
 	})
 
 
