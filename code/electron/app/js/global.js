@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	var connected = true;
 
+	var config = require('./config/config.js');
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
 
@@ -61,8 +62,8 @@ $(document).ready(function(){
 	}
 
 	var sandbox = {
-		ssid: "itpsandbox",
-		password: "NYU+s0a!+P?"
+		ssid: config.ssid,
+		password: config.sandboxPass
 	}
 
 	function connectToWifi(network){
@@ -77,7 +78,7 @@ $(document).ready(function(){
 
 	var wrapper = $("#wrapper");
 
-	var config = require('./config/config.js');
+	
 
 	var giphy = require('giphy-api')(config.giphyKey);
 
