@@ -143,7 +143,9 @@ $(document).ready(function(){
 		annyang.debug();
 
 		var commands = {
-			"pico": activateListening
+			"pico": activateListening,
+			"peko": activateListening,
+			"piko": activateListening
 		}
 
 		annyang.addCommands(commands);
@@ -263,6 +265,21 @@ $(document).ready(function(){
 	function getTime(city){
 		// get time and figure out way to display as gif, maybe just show night or day or sleeping
 		
+		var url = "http://api.worldweatheronline.com/premium/v1/tz.ashx?key=" + config.timezone
+		var query = "&q="+city
+		var format = "&format=json"
+		$.ajax({
+			url: url+query+format,
+			method: "GET",
+			success: function(obj){
+				console.log(obj)
+				console.log(obj.data.time_zone[0].localtime)
+			},
+			error: function(err){
+				console.log(err)
+			}
+
+		})
 	}
 
 	function giveSupport(){
