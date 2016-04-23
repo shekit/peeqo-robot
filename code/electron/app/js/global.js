@@ -387,6 +387,10 @@ $(document).ready(function(){
 		console.log("petting");
 	}
 
+	function annoy(){
+		console.log("annoy")
+	}
+
 
 
 	/////******* ALL EXTERNAL API FUNCTIONS ********////
@@ -583,9 +587,12 @@ $(document).ready(function(){
 		sendI2C(servoMiniAddress, servoMiniAccessCmd, 3);
 	})
 
-	$("body").hammer().bind('swipe', function(e){
-		
+	$("body").hammer().bind('pan', function(e){
 		petting();
+	})
+
+	$("body").hammer().bind('tap', function(e){
+		annoy();
 	})
 
 
