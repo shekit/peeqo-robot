@@ -64,21 +64,6 @@ $(document).ready(function(){
 
 	////**** WIFI SCANNING ****////
 
-	var wifiscanner = require('wifiscanner')();
-
-	function scanWifiAgain(){
-		wifiscanner.scan(function(err, networks){
-			if(err){
-				console.log(err)
-			} else {
-				console.dir(networks)
-			}
-		}, function(standardError){
-			console.log("Standard Error: " + standardError);
-		})
-	}
-
-
 	WiFiControl = require("wifi-control");
 
 	WiFiControl.init({
@@ -104,6 +89,53 @@ $(document).ready(function(){
 		  console.log(response);
 		});
 	}
+
+	////**** BLUETOOTH ****////
+
+	var bleno = require('bleno');
+	var bleAdvertising = false;
+	var name = 'peeqo';
+
+	var serviceUuid = ['12ab'];
+
+	bleno.on('advertisingStart', function(error){
+		console.log("advertising")
+		bleAdvertising = true;
+		if(error){
+			console.log("Advertising start error")
+		} else {
+			bleno.setServices([
+				new bleno.PrimaryService({
+					uuid: serviceUuid[0],
+					characteristics: [
+						new bleno.Characteristic({
+							value: null,
+							uuid: '34cd',
+							properties: ['read', 'write'],
+
+							onReadRequest: function(offset, callback){
+								console.log("Read request received");
+								callback(this.RESULT_SUCCESS, new Buffer("Echo: "+(this.value ? this.value.toString("utf-8"):"")))
+							},
+
+							onWriteRequest: function(data, offset, withoutResponse, callback){
+								this.value = data;
+								console.log('Write request: value = '+this.value.toString("utf-8"));
+								callback(this.RESULT_SUCCESS);
+							}
+						})
+					]
+				})
+
+			])
+		}
+	})
+
+	bleno.on('advertisingStop', function(){
+		console.log("stop advertising")
+		bleAdvertising = false;
+	})
+
 
 	var wrapper = $("#wrapper");
 
@@ -563,10 +595,6 @@ $(document).ready(function(){
 		getWeather('New York');
 	})
 
-	$("#scanWifi").on('click', function(){
-		scanWifiAgain();
-	})
-
 	$("#scanWifi2").on('click', function(){
 		scanWifi();
 	})
@@ -591,9 +619,16 @@ $(document).ready(function(){
 		petting();
 	})
 
-	$("body").hammer().bind('tap', function(e){
-		annoy();
-	})
+	// $("body").hammer().bind('tap', function(e){
+	// 	annoy();
+	// })
 
+	$("#bleAdvertise").on('click', function(){
+		if(bleAdvertising){
+			bleno.stopAdvertising();
+		} else {
+			bleno.startAdvertising(bleno.name, serviceUuid);
+		}
+	})
 
 })
