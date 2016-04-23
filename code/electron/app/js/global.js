@@ -261,6 +261,7 @@ $(document).ready(function(){
 		})
 	}
 
+	var moment = require('moment');
 
 	function getTime(city){
 		// get time and figure out way to display as gif, maybe just show night or day or sleeping
@@ -272,8 +273,11 @@ $(document).ready(function(){
 			url: url+query+format,
 			method: "GET",
 			success: function(obj){
-				console.log(obj)
-				console.log(obj.data.time_zone[0].localtime)
+				//console.log(obj)
+				var date = moment(obj.data.time_zone[0].localtime)
+				console.log(date);
+				console.log(date._d.getHours())
+				//console.log(date.hours())
 			},
 			error: function(err){
 				console.log(err)
