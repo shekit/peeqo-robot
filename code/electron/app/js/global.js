@@ -382,6 +382,11 @@ $(document).ready(function(){
 		// activate a disabled skill set
 	}
 
+	function petting(){
+		// show getting pet gif
+		console.log("petting");
+	}
+
 
 
 	/////******* ALL EXTERNAL API FUNCTIONS ********////
@@ -576,6 +581,11 @@ $(document).ready(function(){
 
 	$("#servoi2c").on("click", function(){
 		sendI2C(servoMiniAddress, servoMiniAccessCmd, 3);
+	})
+
+	$("body").hammer().bind('swipe', function(e){
+		
+		petting();
 	})
 
 
