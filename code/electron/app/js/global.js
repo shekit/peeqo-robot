@@ -78,20 +78,19 @@ $(document).ready(function(){
 		})
 	}
 
-	var wifi = require('wifi-control');
 
-	wifi.init({
-		debug: true
+	WiFiControl = require("wifi-control");
+
+	WiFiControl.init({
+	  debug: true,
+	  connectionTimeout: 2000
 	});
 
 	function scanWifi(){
-		wifi.scanForWifi(function(err, resp){
-			if(err){
-				console.log("ERROR: "+ err)
-			} else {
-				console.log(resp)
-			}
-		})
+		WiFiControl.scanForWiFi( function(error, response) {
+		  if (error) console.log(error);
+		  console.log(response);
+		});
 	}
 
 	var sandbox = {
@@ -100,13 +99,10 @@ $(document).ready(function(){
 	}
 
 	function connectToWifi(network){
-		var results = wifi.connectToAp(network, function(err, resp){
-			if(err){
-				console.log(err);
-			} else {
-				console.log(resp)
-			}
-		})
+		WiFiControl.connectToAP(network, function(error, response) {
+		  if (error) console.log(error);
+		  console.log(response);
+		});
 	}
 
 	var wrapper = $("#wrapper");
@@ -273,16 +269,12 @@ $(document).ready(function(){
 			url: url+query+format,
 			method: "GET",
 			success: function(obj){
-				//console.log(obj)
-				var date = moment(obj.data.time_zone[0].localtime)
-				console.log(date);
-				console.log(date._d.getHours())
-				//console.log(date.hours())
+				var date = moment(obj.data.time_zone[0].localtime)  // converts string of time at location to date moment object
+				console.log(date._d.getHours()) // gets hours from moment date object
 			},
 			error: function(err){
 				console.log(err)
 			}
-
 		})
 	}
 
