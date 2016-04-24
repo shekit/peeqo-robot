@@ -1,0 +1,44 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.peeqo.cordova"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.peeqo.cordova"
+        },
+        "cordova-plugin-ble-central": {
+            "PACKAGE_NAME": "com.peeqo.cordova"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "file": "plugins/cordova-plugin-ble-central/www/ble.js",
+            "id": "cordova-plugin-ble-central.ble",
+            "pluginId": "cordova-plugin-ble-central",
+            "clobbers": [
+                "ble"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-ble-central/src/browser/BLECentralPlugin.js",
+            "id": "cordova-plugin-ble-central.BLECentralPlugin",
+            "pluginId": "cordova-plugin-ble-central",
+            "merges": [
+                "ble"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-whitelist": "1.2.2",
+        "cordova-plugin-compat": "1.0.0",
+        "cordova-plugin-ble-central": "1.0.6"
+    }
+}
