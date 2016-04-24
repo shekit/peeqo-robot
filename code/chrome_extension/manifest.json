@@ -9,7 +9,8 @@
 		// 	"38":"icon38.png"
 		// },
 
-		"default_title":"Peeqo"
+		"default_title":"Peeqo",
+		"default_popup":"popup.html"
 	},
 
 	"background":{

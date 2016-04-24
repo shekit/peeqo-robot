@@ -7,6 +7,7 @@ var socket_url = "http://localhost:3000";
 var socket = io(socket_url + '/extension');
 
 
+
 console.log(socket.connected)
 // send message to content script when page is activated to check if its a blocked page
 chrome.tabs.onActivated.addListener(function(tab){
@@ -26,7 +27,7 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
 	if(info.status == 'complete'){
 		chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
 			var activeTab = tabs[0];
-			chrome.tabs.sendMessage(activeTab.id, {"message":"get_url"})
+			chrome.tabs.sendMessage(activeTab.id, {"method":"get_url"})
 		})
 	}
 	
@@ -35,15 +36,29 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
 // get url from content script
 chrome.runtime.onMessage.addListener(function(req, sender, res){
 
-	var url = req.url;
-	console.log("GOT FROM CONTENT: " + url);
+	if(req.method == 'takeUrl'){
+		var url = req.url;
+		console.log("GOT FROM CONTENT: " + url);
 
-	//if its in the blocked site list emit socket to peeqo
+		//if its in the blocked site list emit socket to peeqo
 
-	if(blocked_sites.indexOf(url) > -1){
-		console.log("emit socket along with url")
-		socket.emit("blocked", {"url":url})
+		if(blocked_sites.indexOf(url) > -1){
+			console.log("emit socket along with url")
+			socket.emit("blocked", {"url":url})
+		}
 	}
-	
+})
 
+// ON CLICK OF POPUP BUTTON
+chrome.browserAction.onClicked.addListener(function(tab){
+	socket.emit({"notes":"get"});
+})
+
+socket.on('notes', function(msg){
+	chrome.runtime.sendMessage({method:'displayNotes', data: msg}, function(response){})
+})
+
+// send notes to popup.js
+socket.on('note', function(msg){
+	chrome.runtime.sendMessage({method:'updateNotes', data: msg}, function(response){})
 })
