@@ -144,6 +144,9 @@ function stringToBytes(string){
 
             //write password
             ble.write(peeqo_id, peeqo.service, peeqo.password, stringToBytes(pass))
+
+            $("#wifi_ssid").val("");
+            $("#wifi_pass").val("");
         } else {
             alert("Enter wifi details")
         }
