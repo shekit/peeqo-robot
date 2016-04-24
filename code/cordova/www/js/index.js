@@ -164,7 +164,7 @@ function stringToBytes(string){
 
 
     function onFoundPeeqo(device){
-        if(device.name.match(/peeqo/i) && typeof(device) == 'object'){
+        if(device.advertising.kCBAdvDataLocalName.match(/peeqo/i) && typeof(device) == 'object'){
             ble.stopScan(function(){
                 console.log("Stopped scan, peeqo found")
             }, function(){

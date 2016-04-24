@@ -16,11 +16,13 @@ function stringToBytes(string){
 
 (function(){
 
+    console.log("Hello")
+
     var peeqo_id = null;
     var stop_ble_search = null;
     var connected_via_ble = false;
 
-    var wrapper = $("wrapper")
+    var wrapper = $("#wrapper")
 
 
     var searchPeeqoTimer = function(){
@@ -44,15 +46,20 @@ function stringToBytes(string){
 
     Handlebars.registerPartial({
         'empty_header': '<header class="bar bar-nav">'+
-                            'h1 class="title">Peeqo</h1>'+
+                            '<h1 class="title">Peeqo</h1>'+
                         '</header>'
     })
 
+    var scan_template = Handlebars.compile($("#scan").html())
     var find_peeqo_template = Handlebars.compile($("#find_peeqo").html());
     var found_peeqo_template = Handlebars.compile($("#found_peeqo").html());
     var not_found_peeqo_template = Handlebars.compile($("#not_found_peeqo").html());
     var pairing_error_template = Handlebars.compile($("#pairing_error").html());
     var wifi_template = Handlebars.compile($("#wifi").html())
+
+    function render_scan(){
+        wrapper.html(scan_template());
+    }
 
     function render_find_peeqo(){
         wrapper.html(find_peeqo_template());
@@ -77,17 +84,14 @@ function stringToBytes(string){
         wrapper.html(wifi_template())
     }
 
-    // start finding peeqo immediately
-    render_find_peeqo();
-
     ///**** EVENTS ****////
 
     document.addEventListener('deviceready', function(){
 
         // ios7 status bar issue fix
-        StatusBar.overlaysWebView(false);
-        StatusBar.backgroundColorByHexString('#ffffff');
-        StatusBar.styleDefault();
+        // StatusBar.overlaysWebView(false);
+        // StatusBar.backgroundColorByHexString('#ffffff');
+        // StatusBar.styleDefault();
 
         FastClick.attach(document.body);
 
@@ -104,6 +108,11 @@ function stringToBytes(string){
         }
 
     }, false)
+
+    $(document).on('click', '#scan_ble', function(e){
+        e.preventDefault();
+        render_find_peeqo();
+    })
 
     $(document).on('click', '#connect', function(e){
         e.preventDefault();
@@ -153,8 +162,9 @@ function stringToBytes(string){
         
     })
 
+
     function onFoundPeeqo(device){
-        if(device.name.match(/peeqo/i) && typeof(device) == 'object'){
+        if(device.advertising.kCBAdvDataLocalName.match(/peeqo/i) && typeof(device) == 'object'){
             ble.stopScan(function(){
                 console.log("Stopped scan, peeqo found")
             }, function(){
@@ -180,5 +190,7 @@ function stringToBytes(string){
     function pairedPeeqoError(){
         render_pairing_error();
     }
+
+    render_scan();
 
 }());

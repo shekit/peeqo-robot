@@ -17,7 +17,17 @@
 
         <!-- HANDLEBAR TEMPLATES -->
 
-        <script id="find_peeqo" type="text/template">
+        <script id="scan" type="text/x-handlebars-template">
+            {{> empty_header}}
+            <div class="content-padded">
+                <h3>Scan for peeqo</h3>
+                <div class="btn_bottom">
+                    <a href="#" id="scan_ble" class="btn btn-block btn-positive btn_custom_connect">Scan</a>
+                </div>
+            </div>
+        </script>
+
+        <script id="find_peeqo" type="text/x-handlebars-template">
             {{> empty_header }}
             <div class="content-padded">
                 <h3 class="text-center">Searching for Peeqo</h3>
@@ -31,7 +41,7 @@
             </div>
         </script>
 
-        <script id="found_peeqo" type="text/template">
+        <script id="found_peeqo" type="text/x-handlebars-template">
             {{> empty_header }}
             <div class="loading">
             </div>
@@ -43,7 +53,7 @@
             </div>
         </script>
 
-        <script id="not_found_peeqo" type="text/template">
+        <script id="not_found_peeqo" type="text/x-handlebars-template">
             {{> empty_header }}
             <div class="content-padded">
                 <h3 class="text-center">Can't find peeqo</h3>
@@ -53,7 +63,7 @@
             </div>
         </script>
 
-        <script id="pairing_error" type="text/template">
+        <script id="pairing_error" type="text/x-handlebars-template">
             {{> empty_header}}
             <div class="content-padded">
                 <h3 class="text-center">Oops! Could not pair</h3>
@@ -63,7 +73,7 @@
             </div>
         </script>
 
-        <script id="wifi" type="text/template">
+        <script id="wifi" type="text/x-handlebars-template">
             {{> empty_header}}
             <div class="content-padded">
                 <h3>Enter wifi detail</h3>
