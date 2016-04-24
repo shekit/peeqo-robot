@@ -102,12 +102,13 @@ $(document).ready(function(){
 		console.log("advertising")
 		bleAdvertising = true;
 		if(error){
-			console.log("Advertising start error")
+			console.log("Advertising start error: " + error)
 		} else {
 			bleno.setServices([
 				new bleno.PrimaryService({
 					uuid: serviceUuid[0],
 					characteristics: [
+						// wifi ssid characteristic
 						new bleno.Characteristic({
 							value: null,
 							uuid: '34cd',
@@ -115,12 +116,27 @@ $(document).ready(function(){
 
 							onReadRequest: function(offset, callback){
 								console.log("Read request received");
-								callback(this.RESULT_SUCCESS, new Buffer("Echo: "+(this.value ? this.value.toString("utf-8"):"")))
+								this._value = new Buffer(JSON.stringify({
+									'hello':'2'
+								}));
+								callback(this.RESULT_SUCCESS, this._value)
 							},
 
 							onWriteRequest: function(data, offset, withoutResponse, callback){
 								this.value = data;
-								console.log('Write request: value = '+this.value.toString("utf-8"));
+								console.log(data[0])
+								console.log('Wifi SSID: '+this.value.toString("utf-8"));
+								callback(this.RESULT_SUCCESS);
+							}
+						}),
+						// password characteristic
+						new bleno.Characteristic({
+							value: null,
+							uuid: '45ef',
+							properties: ['write'],
+							onWriteRequest: function(data, offset, withoutResponse, callback){
+								this.value = data
+								console.log("Wifi Password: "+this.value.toString("utf-8"))
 								callback(this.RESULT_SUCCESS);
 							}
 						})
@@ -627,7 +643,7 @@ $(document).ready(function(){
 		if(bleAdvertising){
 			bleno.stopAdvertising();
 		} else {
-			bleno.startAdvertising(bleno.name, serviceUuid);
+			bleno.startAdvertising(name, serviceUuid);
 		}
 	})
 
