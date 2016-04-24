@@ -47,18 +47,20 @@ chrome.runtime.onMessage.addListener(function(req, sender, res){
 			socket.emit("blocked", {"url":url})
 		}
 	}
+
+	// when popup opens it sends message to background to make request for note data via socket
+	if(req.method == 'getNotes'){
+		socket.emit({"notes":"get"})
+	}
 })
 
-// ON CLICK OF POPUP BUTTON
-chrome.browserAction.onClicked.addListener(function(tab){
-	socket.emit({"notes":"get"});
-})
 
+// when all notes received from server send to popup js
 socket.on('notes', function(msg){
 	chrome.runtime.sendMessage({method:'displayNotes', data: msg}, function(response){})
 })
 
-// send notes to popup.js
+// send single note received from server send to popup.js
 socket.on('note', function(msg){
 	chrome.runtime.sendMessage({method:'updateNotes', data: msg}, function(response){})
 })

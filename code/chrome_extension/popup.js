@@ -11,7 +11,6 @@ chrome.runtime.onMessage.addListener(function(req, sender ,resp){
 	}
 })
 
-
 function updateNotes(note){
 	console.log("Received note: " + note);
 }
@@ -20,3 +19,7 @@ function displayNotes(notes){
 	console.log("All notes: ")
 	console.log(notes)
 }
+
+document.addEventListener('DOMContentLoaded', function(){
+	chrome.runtime.sendMessage({"method":"getNotes"})
+})
