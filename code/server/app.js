@@ -26,6 +26,8 @@ app.use('/', routes)
 
 var io = require('socket.io')(http);
 
+var notes = ["helo","what to do", "save this page"]
+
 // socket connections from chrome extension
 
 var extension_io = io.of('/extension')
@@ -37,6 +39,12 @@ extension_io.on('connection', function(socket){
 		console.log("URL :" + msg.url)
 		peeqo_io.emit("blocked", "yes")
 	})
+
+	socket.on('notes', function(msg){
+		console.log("send all notes");
+		socket.emit('notes', notes)
+	})
+
 })
 
 // socket connections from peeqo
@@ -45,6 +53,8 @@ var peeqo_io = io.of('/peeqo')
 
 peeqo_io.on('connection', function(socket){
 	console.log("peeqo connected");
+
+	//extension_io.emit('note', newnote)
 })
 
 
