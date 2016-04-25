@@ -53,6 +53,14 @@ chrome.runtime.onMessage.addListener(function(req, sender, res){
 		console.log("get notes")
 		socket.emit("notes", "get")
 	}
+
+	if(req.method == 'getPic'){
+		socket.emit("img","yes")
+	}
+})
+
+socket.on("img", function(msg){
+	chrome.runtime.sendMessage({method:'showPic', data: msg}, function(response){})
 })
 
 

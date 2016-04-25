@@ -196,10 +196,9 @@ $(document).ready(function(){
 
 		python.stdout.on('close', function(){
 			console.log(gifLength)
+			// set timer to play gif based on this duration
 		})
 	}
-
-	console.log(__dirname)
 	
 	// ANNYANG CONFIGURATION
 
@@ -406,6 +405,8 @@ $(document).ready(function(){
 
 	}
 
+	var latestImage = null;
+
 	function takePicture(){
 
 		// take a gif picture
@@ -418,8 +419,8 @@ $(document).ready(function(){
 			'keepCameraOn': false,
 			'completeCallback':function(){
 				console.log('done');
-			},
-			'saveRenderingContexts': true,
+			}
+			//'saveRenderingContexts': true,
 
 		}, function(obj){
 			if(!obj.error){
@@ -428,19 +429,35 @@ $(document).ready(function(){
 				var animatedImage = document.createElement('img');
 				animatedImage.src = image;
 
-				//stop webcam
+
+				// use this to save the image to be able to send/email
+				latestImage = image
+
+				console.log(image);
+				console.log(obj.cameraStream);
+
+				//stop this stream
+				obj.cameraStream.getTracks()[0].stop();
+				
+				//stop sep webcam stream
 				if(track){
 					track.stop();
 				}
 				
 				document.body.appendChild(animatedImage)
 
-				// use this to save the image to be able to send/email
-				var latestImage = obj.savedRenderingContexts[0];
+				
 			}
 		})
 
 		// send picture to chrome extension
+	}
+
+	function sendPicture(img){
+		if(img){
+			console.log("sending image")
+			socket.emit("img", img)
+		}
 	}
 	
 	function blockSite(){
@@ -588,7 +605,7 @@ $(document).ready(function(){
 
 	//var socket_url = "";
 
-	//var socket = io(socket_url + '/peeqo');
+	var socket = io(socket_url + '/peeqo');
 
 	// socket.on('blocked', function(msg){
 	// 	console.log("BLOCKED: " + msg)
@@ -671,6 +688,10 @@ $(document).ready(function(){
 
 	$("#gifDuration").on('click', function(){
 		findGifDuration("lo");
+	})
+
+	$("#sendPicture").on('click', function(){
+		sendPicture(latestImage);
 	})
 
 })

@@ -45,15 +45,26 @@ extension_io.on('connection', function(socket){
 		socket.emit('notes', notes)
 	})
 
+	socket.on('img', function(msg){
+		if(latestImage != null){
+			socket.emit("img",latestImage);
+		}
+	})
+
 })
 
 // socket connections from peeqo
-
+var latestImage = null;
 var peeqo_io = io.of('/peeqo')
 
 peeqo_io.on('connection', function(socket){
 	console.log("peeqo connected");
 
+	socket.on('img', function(data){
+		console.log("got image");
+		//extension_io.emit("img", data);
+		latestImage = data;
+	})
 	//extension_io.emit('note', newnote)
 })
 
