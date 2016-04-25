@@ -178,6 +178,28 @@ $(document).ready(function(){
 			"offenceCount": 0
 		}
 	}
+
+	// FIND GIF DURATION //
+
+	var spawn = require('child_process').spawn;
+
+	function findGifDuration(gif){
+		console.log("gif")
+		
+		var python = spawn('python', [__dirname + '/gifduration/gifduration.py', __dirname + '/images/downloaded_gifs/beyonce.gif'])
+
+		var gifLength = ''
+
+		python.stdout.on('data', function(data){
+			gifLength+=data;
+		})
+
+		python.stdout.on('close', function(){
+			console.log(gifLength)
+		})
+	}
+
+	console.log(__dirname)
 	
 	// ANNYANG CONFIGURATION
 
@@ -645,6 +667,10 @@ $(document).ready(function(){
 		} else {
 			bleno.startAdvertising(name, serviceUuid);
 		}
+	})
+
+	$("#gifDuration").on('click', function(){
+		findGifDuration("lo");
 	})
 
 })
