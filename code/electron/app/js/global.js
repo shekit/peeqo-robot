@@ -543,33 +543,43 @@ $(document).ready(function(){
 
 	////// GIPHY API //////
 
+	var smallUrl = null;
+
 	function searchGiphy(query, prefix){
 
 
 		giphy.search(query, function(err, res){
 
-			if(err || !resp){
+			if(err || !res){
 				//show sad local gif
 				//try again
 			}
 
-			var randomGif = res.data[Math.floor(Math.random()*(resp.data.length))];
-
-			var url = randomGif.images['original'].url;
-
-			return url
+			var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
+			console.log(randomGif);
+			var url = randomGif.images.original.url;
+			smallUrl = randomGif.images.fixed_width_small.url
+			console.log(smallUrl);
 		})
 
-		giphy.random(query, function(err, res){
+		// giphy.random(query, function(err, res){
 
-			var url = res.data.images['original'].url;
-			return url;
+		// 	var url = res.data.images['original'].url;
+		// 	return url;
 
-		})
+		// })
 
-		giphy.translate(query, function(err, res){
-			var url = res.data.images['original'].url;
-			return url;
+		// giphy.translate(query, function(err, res){
+		// 	var url = res.data.images['original'].url;
+		// 	return url;
+		// })
+	}
+
+	var request = require('request');
+
+	function downloadGif(url, name){
+		request(url).pipe(fs.createWriteStream(__dirname + "/images/downloaded_gifs/"+name+".gif")).on('close', function(){
+			console.log('downloaded gifs')
 		})
 	}
 
@@ -605,7 +615,7 @@ $(document).ready(function(){
 
 	//var socket_url = "";
 
-	var socket = io(socket_url + '/peeqo');
+	//var socket = io(socket_url + '/peeqo');
 
 	// socket.on('blocked', function(msg){
 	// 	console.log("BLOCKED: " + msg)
@@ -692,6 +702,14 @@ $(document).ready(function(){
 
 	$("#sendPicture").on('click', function(){
 		sendPicture(latestImage);
+	})
+
+	$("#findGif").on("click", function(){
+		searchGiphy("beyonce");
+	})
+
+	$("#downloadGif").on("click", function(){
+		downloadGif("http://media1.giphy.com/media/l3V0HfHMGsVUt2tDq/100w.gif","beyonce");
 	})
 
 })
