@@ -50,7 +50,8 @@ chrome.runtime.onMessage.addListener(function(req, sender, res){
 
 	// when popup opens it sends message to background to make request for note data via socket
 	if(req.method == 'getNotes'){
-		socket.emit({"notes":"get"})
+		console.log("get notes")
+		socket.emit("notes", "get")
 	}
 })
 
