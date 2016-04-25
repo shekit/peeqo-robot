@@ -26,7 +26,6 @@ app.use('/', routes)
 
 var io = require('socket.io')(http);
 
-var notes = ["helo","what to do", "save this page"]
 
 // socket connections from chrome extension
 
@@ -42,7 +41,14 @@ extension_io.on('connection', function(socket){
 
 	socket.on('notes', function(msg){
 		console.log("send all notes");
-		socket.emit('notes', notes)
+
+		//send 10 latest notes
+		if(notes.length < 10){
+			socket.emit('notes', notes)
+		} else {
+			socket.emit('notes', notes[10])
+		}
+		
 	})
 
 	socket.on('img', function(msg){
@@ -55,10 +61,18 @@ extension_io.on('connection', function(socket){
 
 // socket connections from peeqo
 var latestImage = null;
+
 var peeqo_io = io.of('/peeqo')
+
+var notes = []
 
 peeqo_io.on('connection', function(socket){
 	console.log("peeqo connected");
+
+	socket.on("addNote", function(note){
+		//save note in variable
+		notes.unshift(note);
+	})
 
 	socket.on('img', function(data){
 		console.log("got image");

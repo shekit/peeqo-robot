@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 	var connected = true;
 
+	var allTimers = new Array();
+
 	var config = require('./config/config.js');
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
@@ -159,7 +161,7 @@ $(document).ready(function(){
 
 	var fs = require('fs');
 	
-	var reminder = null;
+	
 
 	var userPreferences = {}; //make an object containing all user related prefs
 
@@ -351,6 +353,8 @@ $(document).ready(function(){
 		// gif when I say I accomplished something
 	}
 
+	var reminder = null;
+
 	function setReminder(reminder, time){
 		// set reminder
 		var duration = parseInt(time);
@@ -358,6 +362,7 @@ $(document).ready(function(){
 		reminder = setTimeout(function(){
 			//display alert gif when time elapses with reminder value
 		}, duration)
+
 	}
 
 	function greetPublic(greeting){
@@ -376,6 +381,11 @@ $(document).ready(function(){
 		// show got it gif
 
 		// emit to server and view in chrome extension
+	}
+
+	function saveNote(note){
+		//save note on server
+		socket.emit("addNote",note)
 	}
 
 
@@ -579,8 +589,24 @@ $(document).ready(function(){
 
 	function downloadGif(url, name){
 		request(url).pipe(fs.createWriteStream(__dirname + "/images/downloaded_gifs/"+name+".gif")).on('close', function(){
-			console.log('downloaded gifs')
+			console.log('downloaded gif')
 		})
+	}
+
+	var gifLoopTimer = null;
+
+	function setGifTimer(duration,loop=2){
+		// display gif for exactly 2 loops by passing in its duration
+
+		gifLoopTimer = setTimeout(function(){
+			showEyeGif();
+		}, duration*loop)
+
+		//allTimers.push(gifLoopTimer);
+	}
+
+	function showEyeGif(){
+		console.log("EYES EYES EYES")
 	}
 
 	var video = $("video")
