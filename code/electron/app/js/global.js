@@ -394,7 +394,7 @@ $(document).ready(function(){
 	}
 
 	function controlLights(){
-		// 
+		// control wemo lights
 	}
 
 	function setGifPreference(){
