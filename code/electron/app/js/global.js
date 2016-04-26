@@ -500,6 +500,9 @@ $(document).ready(function(){
 
 	var song = $("#song")
 
+	// use this to activate the skill
+	var canPlayMusic = false;
+
 	function searchSpotify(query, searchLimit=10){
 
 		spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
