@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var routes = require('./routes/index')
+// var routes = require('./routes/index')
 
 var app = express();
 var http = require('http').Server(app);
@@ -22,10 +22,27 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(cors());
 
-app.use('/', routes)
+// app.use('/', routes)
+
+app.get("/", function(req, res, next){
+	res.render("index.jade")
+})
 
 var io = require('socket.io')(http);
 
+// socket connections from control panel
+
+var controlpanel_io = io.of('/controlpanel')
+
+controlpanel_io.on('connection', function(socket){
+	console.log("control panel connected")
+
+	/*
+	socket.on('', function(msg){
+		peeqo_io.emit("blocked")
+	})
+	*/
+})
 
 // socket connections from chrome extension
 

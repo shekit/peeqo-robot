@@ -1,0 +1,11 @@
+.row {
+	margin-top: 10px;
+}
+
+.btn {
+	border-radius: 0;
+}
+
+.btn:focus{
+	outline: none;
+}
