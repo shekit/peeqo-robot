@@ -20,7 +20,7 @@
         <script id="scan" type="text/x-handlebars-template">
             {{> empty_header}}
             <div class="content-padded">
-                <h3>Scan for peeqo</h3>
+                <h3 class='text-center setup'>Scan for peeqo</h3>
                 <div class="btn_bottom">
                     <a href="#" id="scan_ble" class="btn btn-block btn-positive btn_custom_connect">Scan</a>
                 </div>
@@ -30,7 +30,7 @@
         <script id="find_peeqo" type="text/x-handlebars-template">
             {{> empty_header }}
             <div class="content-padded">
-                <h3 class="text-center">Searching for Peeqo</h3>
+                <h3 class="text-center setup">Searching for Peeqo</h3>
                 <div class="spinner">
                     <div class="rect1"></div>
                     <div class="rect2"></div>
@@ -46,7 +46,7 @@
             <div class="loading">
             </div>
             <div class="content-padded">
-                <h3 class="text-center">Found Peeqo</h3>
+                <h3 class="text-center setup">Found Peeqo</h3>
                 <div class="btn_bottom">
                     <a href="#" data-device-id={{ id }} id="connect" class="btn btn-block btn-positive btn_custom_connect">Connect</a>
                 </div>
@@ -56,7 +56,7 @@
         <script id="not_found_peeqo" type="text/x-handlebars-template">
             {{> empty_header }}
             <div class="content-padded">
-                <h3 class="text-center">Can't find peeqo</h3>
+                <h3 class="text-center setup">Can't find peeqo</h3>
                 <div class="btn_bottom">
                     <a href="#" id="find" class="btn btn-block btn-primary btn_custom_try">Try Again</a>
                 </div>
@@ -65,7 +65,7 @@
 
         <script id="pairing_error" type="text/x-handlebars-template">
             {{> empty_header}}
-            <div class="content-padded">
+            <div class="content-padded setup">
                 <h3 class="text-center">Oops! Could not pair</h3>
                 <div class="btn-bottom">
                     <a href="#" data-device-id="" id="reconnect" class="btn btn-block btn-primary btn_custom_try">Try Again</a>
@@ -76,7 +76,7 @@
         <script id="wifi" type="text/x-handlebars-template">
             {{> empty_header}}
             <div class="content-padded">
-                <h3>Enter wifi detail</h3>
+                <h3 class="text-center setup">Enter wifi detail</h3>
                 
                 <input type="text" id="wifi_ssid" placeholder="Wifi SSID">
                 <input type="text" id="wifi_pass" placeholder="Wifi Password">
