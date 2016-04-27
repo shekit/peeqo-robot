@@ -1,5 +1,17 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
 video {
 	-webkit-transform: rotateY(-180deg);
 	tranform: rotateY(-180deg);
 }
+
+#eyes {
+	width: 800px;
+	height: 480px;
+	background: yellow;
+}
+
 

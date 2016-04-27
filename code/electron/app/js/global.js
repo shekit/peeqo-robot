@@ -3,12 +3,43 @@ $(document).ready(function(){
 	var gifs = {
 		"happy":[
 			{
-				"path":,
-				"duration":
+				"path":"",
+				"duration":""
 			}
 		],
 
 	}
+
+	var Snap = require('snapsvg')
+
+	var snap = Snap("#eyes")
+
+	var eyeSize = 87.5;
+	var closedEye = 1;
+	var closeEyeDuration = 220;
+	var openEyeDuration = 300;
+	var blinkInterval = 4000;
+
+	var left_eye = snap.ellipse(202.5,330,eyeSize, eyeSize);
+	var right_eye = snap.ellipse(604.5,330,eyeSize, eyeSize);
+
+	var eyes = snap.group(left_eye, right_eye)
+
+	eyes.attr({
+		fill:"#000000"
+	})
+
+	function blink(){
+		left_eye.animate({ry:closedEye}, closeEyeDuration,mina.elastic(), function(){
+			left_eye.animate({ry:eyeSize}, openEyeDuration, mina.easein());
+		})
+
+		right_eye.animate({ry:closedEye}, closeEyeDuration,mina.elastic(), function(){
+			right_eye.animate({ry:eyeSize}, openEyeDuration, mina.easein());
+		})
+	}
+
+	var blinking = setInterval(blink, blinkInterval);
 
 	var connected = true;
 
@@ -23,7 +54,7 @@ $(document).ready(function(){
 		var randomGifNumber = Math.floor(Math.random()*gifsCategory.length)
 
 		var randomGif = gifsCategory[randomGifNumber]
-		
+
 		return {"path":randomGif.path, "duration":randomGif.duration}
 	}
 
