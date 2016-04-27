@@ -1,10 +1,31 @@
 $(document).ready(function(){
 
+	var gifs = {
+		"happy":[
+			{
+				"path":,
+				"duration":
+			}
+		],
+
+	}
+
 	var connected = true;
 
 	var allTimers = new Array();
 
 	var config = require('./config/config.js');
+
+	////
+
+	function findRandomLocalGif(category){
+		var gifCategory = gifs[category]
+		var randomGifNumber = Math.floor(Math.random()*gifsCategory.length)
+
+		var randomGif = gifsCategory[randomGifNumber]
+		
+		return {"path":randomGif.path, "duration":randomGif.duration}
+	}
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
 
