@@ -26,13 +26,14 @@ $(document).ready(function(){
 	}
 
 	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "testWrapper"]
+	
 	// show div and hide all others
 	function showDiv(div){
 		for(var i in majorDivs){
 			if(majorDivs[i] != div){
-				$(majorDivs[i]).hide()
+				$("#"+majorDivs[i]).hide()
 			} else {
-				$(majorDivs[i]).show()
+				$("#"+majorDivs[i]).show()
 			}
 		}
 	}
@@ -70,8 +71,8 @@ $(document).ready(function(){
 
 	var eyeSize = 87.5;
 	var closedEye = 1;
-	var closeEyeDuration = 220;
-	var openEyeDuration = 300;
+	var closeEyeDuration = 120;
+	var openEyeDuration = 200;
 	var blinkInterval = 4000;
 
 	var left_eye = snap.ellipse(202.5,330,eyeSize, eyeSize);
@@ -131,8 +132,16 @@ $(document).ready(function(){
 		console.log("CHECKING CONN")
 	})
 
+	function stringToBytes(string){
+	    var array = new Uint8Array(string.length);
+	    for(var i=0, l=string.length; i<l;i++){
+	        array[i] = string.charCodeAt(i);
+	    }
+	    return array.buffer;
+	}
+
 	////**** i2c ******//////
-	/*
+	
 	var i2c = require('i2c-bus')
 	var i2c1 = null
 
@@ -140,29 +149,30 @@ $(document).ready(function(){
 	var ledMiniAccessCmd = 0xa1
 
 	var servoMiniAddress = 0x07
-	var servoMiniAccessCmd = 0x80
+	var servoMiniAccessCmd = 0xa2
 
 	i2c1 = i2c.open(1, function(err){
 		if(err){
-			throw err;
+			console.log("i2c error: "+err )
+		} else {
+			console.log("I2C OPEN")
 		}
+	})
+
+	i2c1.receiveByte(ledMiniAddress, function(err, byte){
+		console.log("led mini finished task")
+	})
+
+	i2c1.receiveByte(servoMiniAddress, function(err, byte){
+		console.log("servo mini finished task")
 	})
 
 	function sendI2C(addr, code, byte){
 		i2c1.writeByte(addr, code, byte, function(){
-			console.log("sent i2c message")
+			console.log("sent i2c message to: "+addr)
 		})
 	}
 
-	function readI2C(addr, code){
-		i2c1.readByte(addr, code, function(err, id){
-			if(err){
-				console.log(err)
-			}
-			console.log(id);
-		})
-	}
-	*/
 
 	////**** WIFI SCANNING ****////
 
@@ -254,7 +264,6 @@ $(document).ready(function(){
 		bleAdvertising = false;
 	})
 
-
 	
 
 	var giphy = require('giphy-api')(config.giphyKey);
@@ -301,8 +310,18 @@ $(document).ready(function(){
 			// set timer to play gif based on this duration
 		})
 	}
+
+	////**** SHUTDOWN PI ****/////
+
+	var execSync = require('child_process').execSync;
+
+	function shutdown(){
+		execSync('sudo shutdown -h now')
+	}
 	
 	// ANNYANG CONFIGURATION
+
+	var startAnnyang = false;
 
 	if(annyang){
 		console.log("Annyang detected");
@@ -318,6 +337,22 @@ $(document).ready(function(){
 		annyang.addCommands(commands);
 
 		annyang.start();	
+	}
+
+	function startAnnyang(){
+		if(annyang || startAnnyang){
+			annyang.debug();
+
+			var commands = {
+				"pico": activateListening,
+				"peko": activateListening,
+				"piko": activateListening
+			}
+
+			annyang.addCommands(commands);
+
+			annyang.start();
+		}
 	}
 
 	function mimicAnnyang(){
@@ -793,12 +828,12 @@ $(document).ready(function(){
 	})
 
 	$("#ledi2c").on("click", function(){
-		sendI2C(ledMiniAddress, ledMiniAccessCmd, 3);
+		sendI2C(ledMiniAddress, ledMiniAccessCmd, 0x03);
 	})
 
 	$("#servoi2c").on("click", function(){
-		sendI2C(servoMiniAddress, servoMiniAccessCmd, 3);
-	})
+		sendI2C(servoMiniAddress, servoMiniAccessCmd, 0x04);
+	})	
 
 	$("body").hammer().bind('pan', function(e){
 		petting();
@@ -832,6 +867,12 @@ $(document).ready(function(){
 		downloadGif("http://media1.giphy.com/media/l3V0HfHMGsVUt2tDq/100w.gif","beyonce");
 	})
 
+	$("#shutdown").on("click", function(){
+		shutdown();
+	})
 
+	showDiv("testWrapper");
+
+	startBlinking();
 
 })

@@ -19,3 +19,26 @@ video {
 	height: 480px;
 }
 
+#testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper {
+	display: none;
+}
+
+#wrapper {
+	position: relative;
+}
+
+#glasses{
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 10;
+}
+
+.wrapper {
+	position: absolute;
+	top:0;
+	left: 0;
+	height: 480px;
+	width: 800px;
+}
+
