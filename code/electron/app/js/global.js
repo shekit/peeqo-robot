@@ -25,7 +25,7 @@ $(document).ready(function(){
 		return {"path":randomGif.path, "duration":randomGif.duration}
 	}
 
-	var majorDivs = ["eyes", "camera", "gif"]
+	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "testWrapper"]
 	// show div and hide all others
 	function showDiv(div){
 		for(var i in majorDivs){
