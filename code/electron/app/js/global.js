@@ -25,6 +25,18 @@ $(document).ready(function(){
 		return {"path":randomGif.path, "duration":randomGif.duration}
 	}
 
+	var majorDivs = ["eyes", "camera", "gif"]
+	// show div and hide all others
+	function showDiv(div){
+		for(var i in majorDivs){
+			if(majorDivs[i] != div){
+				$(majorDivs[i]).hide()
+			} else {
+				$(majorDivs[i]).show()
+			}
+		}
+	}
+
 	////**** TEMPLATES ****////
 
 	var wrapper = $("#wrapper");
@@ -81,7 +93,18 @@ $(document).ready(function(){
 		})
 	}
 
-	var blinking = setInterval(blink, blinkInterval);
+	var blinking = null;
+	var isBlinking = false;
+
+	function startBlinking(){
+		isBlinking = true;
+		blinking = setInterval(blink, blinkInterval);
+	}
+
+	function stopBlinking(){
+		isBlinking = false;
+		clearInterval(blinking);
+	}
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
 
