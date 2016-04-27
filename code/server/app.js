@@ -28,6 +28,10 @@ app.get("/", function(req, res, next){
 	res.render("index.jade")
 })
 
+app.get("/listen", function(req,res,next){
+	res.render("listen.jade")
+})
+
 var io = require('socket.io')(http);
 
 // socket connections from control panel
