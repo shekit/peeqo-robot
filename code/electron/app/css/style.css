@@ -1,4 +1,4 @@
-body {
+body, div {
 	padding: 0;
 	margin: 0;
 }
@@ -14,4 +14,8 @@ video {
 	background: yellow;
 }
 
+#gif {
+	width: 800px;
+	height: 480px;
+}
 

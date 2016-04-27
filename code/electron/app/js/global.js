@@ -10,6 +10,48 @@ $(document).ready(function(){
 
 	}
 
+	var connected = true;
+
+	var allTimers = new Array();
+
+	var config = require('./config/config.js');
+
+	function findRandomLocalGif(category){
+		var gifCategory = gifs[category]
+		var randomGifNumber = Math.floor(Math.random()*gifsCategory.length)
+
+		var randomGif = gifsCategory[randomGifNumber]
+
+		return {"path":randomGif.path, "duration":randomGif.duration}
+	}
+
+	////**** TEMPLATES ****////
+
+	var wrapper = $("#wrapper");
+
+	var eye_template = Handlebars.templates.eyes;
+	var gif_template = Handlebars.templates.gif;
+	var camera_template = Handlebars.templates.camera;
+	var picture_template = Handlebars.templates.picture;
+
+	function render_eye_template(){
+		wrapper.html(eye_template())
+	}
+
+	function render_gif_template(path){
+		wrapper.html(gif_template({"path":path}))
+	}
+
+	function render_camera_template(){
+		wrapper.html(camera_template())
+	}
+
+	function picture_template(){
+		wrapper.html(picture_template());
+	}
+
+	////**** EYES *****////
+
 	var Snap = require('snapsvg')
 
 	var snap = Snap("#eyes")
@@ -40,23 +82,6 @@ $(document).ready(function(){
 	}
 
 	var blinking = setInterval(blink, blinkInterval);
-
-	var connected = true;
-
-	var allTimers = new Array();
-
-	var config = require('./config/config.js');
-
-	////
-
-	function findRandomLocalGif(category){
-		var gifCategory = gifs[category]
-		var randomGifNumber = Math.floor(Math.random()*gifsCategory.length)
-
-		var randomGif = gifsCategory[randomGifNumber]
-
-		return {"path":randomGif.path, "duration":randomGif.duration}
-	}
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
 
@@ -121,7 +146,7 @@ $(document).ready(function(){
 	WiFiControl = require("wifi-control");
 
 	WiFiControl.init({
-	  debug: true,
+	  debug: false,
 	  connectionTimeout: 2000
 	});
 
@@ -207,7 +232,7 @@ $(document).ready(function(){
 	})
 
 
-	var wrapper = $("#wrapper");
+	
 
 	var giphy = require('giphy-api')(config.giphyKey);
 
@@ -701,16 +726,7 @@ $(document).ready(function(){
 	// socket.on('blocked', function(msg){
 	// 	console.log("BLOCKED: " + msg)
 	// })
-
-
-
-	//////********* TEMPLATES  *******//////
-
-	var eyes = Handlebars.templates.eyes;
-
-	function render_eye_template(){
-		wrapper.html(eyes({"name":"abhishek"}))
-	}
+	
 
 	// TEST EVENT LISTENERS
 
@@ -792,5 +808,7 @@ $(document).ready(function(){
 	$("#downloadGif").on("click", function(){
 		downloadGif("http://media1.giphy.com/media/l3V0HfHMGsVUt2tDq/100w.gif","beyonce");
 	})
+
+
 
 })
