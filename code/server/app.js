@@ -32,6 +32,10 @@ app.get("/listen", function(req,res,next){
 	res.render("listen.jade")
 })
 
+app.get("/shutdown", function(req,res,next){
+	res.render("shutdown.jade")
+})
+
 var io = require('socket.io')(http);
 
 // socket connections from control panel
