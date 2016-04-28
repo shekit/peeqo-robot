@@ -199,7 +199,7 @@ $(document).ready(function(){
 
 	
 	function showGif(path){
-		gif.attr({'src',path});
+		gif.attr({'src':path});
 	}
 
 
@@ -284,7 +284,7 @@ $(document).ready(function(){
 			left_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein(), function(){
 				left_eye.animate({ry:closedEye}, fastCloseEyeDuration,mina.elastic(), function(){
 					left_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein())
-				}
+				})
 			});
 		})
 
@@ -292,7 +292,7 @@ $(document).ready(function(){
 			right_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein(), function(){
 				right_eye.animate({ry:closedEye}, fastCloseEyeDuration,mina.elastic(), function(){
 					right_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein())
-				}
+				})
 			});
 		})
 	}
@@ -324,7 +324,7 @@ $(document).ready(function(){
 
 	// replace this with the url of the peeqo server or some server you know is always up
 	Offline.options = {
-		checks: {xhr: {url: 'http://svrround.com/live/user'}},
+		checks: {xhr: {url: 'http://google.com'}},
 		requests: false,
 		checkOnLoad: true
 	}
@@ -786,7 +786,7 @@ $(document).ready(function(){
 				//gifshot.stopVideoStreaming();
 				var image = obj.image;
 
-				selfie.attr({'src',image})
+				selfie.attr({'src':image})
 
 				// use this to save the image to be able to send/email
 				latestImage = image
@@ -879,7 +879,7 @@ $(document).ready(function(){
 
 	function playMusic(url){
 		song.attr('autoplay','true');
-		song.attr('src',url);
+		song.attr({'src':url});
 	}
 
 	function getArtistImage(artist, searchLimit=10){
