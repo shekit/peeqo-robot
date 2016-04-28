@@ -50,6 +50,14 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("blocked")
 	})
 	*/
+
+	socket.on('shutdown', function(msg){
+		peeqo_io.emit("shutdown","yes")
+	})
+
+	socket.on("listen", function(msg){
+		peeqo_io.emit("listen","yes")
+	})
 })
 
 // socket connections from chrome extension
