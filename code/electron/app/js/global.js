@@ -228,8 +228,9 @@ $(document).ready(function(){
 		var dur = parseInt(duration)
 
 		// check here to decide how many times to loop based on length of gif
-
-		if(dur<=500){
+		if(dur<=300){
+			loop = 6
+		} else if(dur<=500){
 			loop = 4
 		} else if(dur<=1500){
 			loop = 3
