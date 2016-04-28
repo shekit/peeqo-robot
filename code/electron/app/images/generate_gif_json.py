@@ -10,10 +10,13 @@ localGifs = {}
 for dirname, dirs, filenames in os.walk(os.path.join(path, gifParentFolder)):
 	for d in dirs:
 		list_of_gifs = []
-		for dirname2, dirs2, filenames2 in os.walk(os.path.join(path, gifParentFolder, d)):
+		for dirname2, dirs2, files in os.walk(os.path.join(path, gifParentFolder, d)):
 			# list_of_gifs.append(filenames2)
 			# pprint.pprint(filenames2)
-			localGifs[d] = filenames2
+			for f in files:
+				if f.endswith(".gif"):
+					list_of_gifs.append(f)
+		localGifs[d] = list_of_gifs
 
 pprint.pprint(localGifs)
 
