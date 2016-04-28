@@ -57,7 +57,7 @@ $(document).ready(function(){
 		var path = __dirname + "/images/local/"+randomGif+".gif"
 
 		if(setDuration){
-			findGifDuration(path, false)
+			findGifDuration(path, false) // false since they are local files
 		} else {
 			playLocalGif(path)
 		}	
@@ -245,6 +245,8 @@ $(document).ready(function(){
 
 	////**** EYES *****////
 
+	
+
 	var Snap = require('snapsvg')
 
 	var snap = Snap("#eyes")
@@ -285,6 +287,16 @@ $(document).ready(function(){
 	function stopBlinking(){
 		isBlinking = false;
 		clearInterval(blinking);
+	}
+
+	var glassPics = ["glass1.png", "glass2.png", "glass3.png", "glass4.png"];
+
+	var glasses = $("#glasses");
+
+	function changeGlasses(){
+		var randomGlass = glassPics[Math.floor(Math.random()*(glassPics.length))]
+		var path = __dirname + '/images/glasses/'+randomGlass
+		glasses.attr({'src':path});
 	}
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
