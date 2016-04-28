@@ -399,7 +399,7 @@ $(document).ready(function(){
 
 	var bleno = require('bleno');
 	var bleAdvertising = false;
-	var name = 'peeqo';
+	var ble_name = 'peeqo';
 
 	var serviceUuid = ['12ab'];
 
@@ -417,7 +417,7 @@ $(document).ready(function(){
 						new bleno.Characteristic({
 							value: null,
 							uuid: '34cd',
-							properties: ['read', 'write'],
+							properties: ['write'],
 
 							onWriteRequest: function(data, offset, withoutResponse, callback){
 								this.value = data;
@@ -441,6 +441,21 @@ $(document).ready(function(){
 
 								callback(this.RESULT_SUCCESS);
 							}
+						}),
+
+						new bleno.Characteristic({
+							value: null,
+							uuid: '67gh',
+							properties: ['write'],
+							onWriteRequest: function(data, offset, withoutResponse, callback){
+								console.log("Stop advertising");
+								
+								if(data.toString("utf-8")=="a"){
+									stopBleAdvertising();
+								}
+								
+								callback(this.RESULT_SUCCESS)
+							}
 						})
 					]
 				})
@@ -454,8 +469,14 @@ $(document).ready(function(){
 		bleAdvertising = false;
 	})
 
-	
-	
+	function startBleAdvertising(){
+		bleno.startAdvertising(ble_name, serviceUuid)
+	}
+
+	function stopBleAdvertising(){
+		bleno.stopAdvertising();
+	}
+
 	
 	var userPreferences = {}; //make an object containing all user related prefs
 
@@ -963,7 +984,7 @@ $(document).ready(function(){
 		if(bleAdvertising){
 			bleno.stopAdvertising();
 		} else {
-			bleno.startAdvertising(name, serviceUuid);
+			bleno.startAdvertising(ble_name, serviceUuid);
 		}
 	})
 
