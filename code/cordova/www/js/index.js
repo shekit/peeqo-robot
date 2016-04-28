@@ -1,7 +1,8 @@
 var peeqo = {
     service: '12ab',
     ssid: '34cd',
-    password: '45ef'
+    password: '45ef',
+    stop: '67gh'
 }
 
 
@@ -46,9 +47,11 @@ function stringToBytes(string){
 
     Handlebars.registerPartial({
         'empty_header': '<header class="bar bar-nav">'+
+                            '<a href="#" class="icon icon-right-nav pull-right stop_ble"></a>'+
                             '<h1 class="title">Peeqo</h1>'+
                         '</header>',
         'back_header' : '<header class="bar bar-nav">'+
+                            '<a href="#" class="icon icon-right-nav pull-right stop_ble"></a>'+
                             '<a href="javascript:void(0);" class="icon icon-left-nav pull-left back_to_wifi_name"></a>'+
                             '<h1 class="title">Wifi Password</h1>'+
                         '</header>'
@@ -127,7 +130,7 @@ function stringToBytes(string){
         e.preventDefault();
 
         if($(e.target).attr('data-device-id')){
-            console.log("setting lumen to device id");
+            console.log("setting peeqo to device id");
             var device_id = e.target.dataset.deviceId;
             peeqo_id = device_id;
         } else {
@@ -184,6 +187,12 @@ function stringToBytes(string){
         e.preventDefault();
 
         render_wifi_name();
+    })
+
+    $(document).on('click', '.stop_ble', function(e){
+        e.preventDefault();
+
+        ble.write(peeqo_id, peeqo.service, peeqo.stop, stringToBytes("a"))
     })
 
 
