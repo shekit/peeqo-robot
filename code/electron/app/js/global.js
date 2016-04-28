@@ -42,7 +42,8 @@ $(document).ready(function(){
 		"compliments":[],
 		"abuses":[],
 		"thanks":[],
-		"sleepy":[]
+		"sleepy":[],
+		"error":[]
 	}
 
 	function findRandomLocalGif(category, setDuration){
@@ -184,6 +185,7 @@ $(document).ready(function(){
 		// puts giphy gif in wrapper
 		showGif(path);
 
+		// when gif has loaded display it
 		gif.on('load', function(){
 			showDiv("gifWrapper");
 		})
@@ -205,7 +207,7 @@ $(document).ready(function(){
 
 	var wrapper = $("#wrapper");
 
-	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "testWrapper"]
+	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "pictureWrapper", "testWrapper"]
 	
 	// show div and hide all others
 
@@ -254,6 +256,8 @@ $(document).ready(function(){
 	var closedEye = 1;
 	var closeEyeDuration = 120;
 	var openEyeDuration = 200;
+	var fastCloseEyeDuration = 50;
+	var fastOpenEyeDuration = 100;
 	var blinkInterval = 4000;
 
 	var left_eye = snap.ellipse(202.5,330,eyeSize, eyeSize);
@@ -272,6 +276,24 @@ $(document).ready(function(){
 
 		right_eye.animate({ry:closedEye}, closeEyeDuration,mina.elastic(), function(){
 			right_eye.animate({ry:eyeSize}, openEyeDuration, mina.easein());
+		})
+	}
+
+	function fastBlink(){
+		left_eye.animate({ry:closedEye}, fastCloseEyeDuration,mina.elastic(), function(){
+			left_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein(), function(){
+				left_eye.animate({ry:closedEye}, fastCloseEyeDuration,mina.elastic(), function(){
+					left_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein())
+				}
+			});
+		})
+
+		right_eye.animate({ry:closedEye}, fastCloseEyeDuration,mina.elastic(), function(){
+			right_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein(), function(){
+				right_eye.animate({ry:closedEye}, fastCloseEyeDuration,mina.elastic(), function(){
+					right_eye.animate({ry:eyeSize}, fastOpenEyeDuration, mina.easein())
+				}
+			});
 		})
 	}
 
@@ -449,7 +471,7 @@ $(document).ready(function(){
 							properties: ['write'],
 							onWriteRequest: function(data, offset, withoutResponse, callback){
 								console.log("Stop advertising");
-								
+
 								if(data.toString("utf-8")=="a"){
 									stopBleAdvertising();
 								}
@@ -721,9 +743,6 @@ $(document).ready(function(){
 		// show you can do it or motivation gif
 	}
 
-	function controlLights(){
-		// control wemo lights
-	}
 
 	function setGifPreference(){
 		// prefix gif searches with preference set
@@ -745,6 +764,8 @@ $(document).ready(function(){
 
 	var latestImage = null;
 
+	var selfie = $("#selfie");
+
 	function takePicture(){
 
 		// take a gif picture
@@ -764,9 +785,8 @@ $(document).ready(function(){
 			if(!obj.error){
 				//gifshot.stopVideoStreaming();
 				var image = obj.image;
-				var animatedImage = document.createElement('img');
-				animatedImage.src = image;
 
+				selfie.attr({'src',image})
 
 				// use this to save the image to be able to send/email
 				latestImage = image
@@ -782,7 +802,7 @@ $(document).ready(function(){
 					track.stop();
 				}
 				
-				document.body.appendChild(animatedImage)
+				showDiv("pictureWrapper")
 
 				
 			}
