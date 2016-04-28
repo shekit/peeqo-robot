@@ -29,22 +29,30 @@ $(document).ready(function(){
 
 	/////**** GIFS *****/////
 
-	var localGifs = {
-		"happy":[],
-		"sad":[],
-		"angry":[],
-		"annoyed":[],
-		"high_five":[],
-		"excited":[],
-		"no_internet":[],
-		"learning":[],
-		"picture":[],
-		"compliments":[],
-		"abuses":[],
-		"thanks":[],
-		"sleepy":[],
-		"error":[]
-	}
+	// var localGifs = {
+	// 	"happy":[],
+	// 	"sad":[],
+	// 	"angry":[],
+	// 	"annoyed":[],
+	// 	"high_five":[],
+	// 	"excited":[],
+	// 	"no_internet":[],
+	// 	"learning":[],
+	// 	"picture":[],
+	// 	"compliments":[],
+	// 	"abuses":[],
+	// 	"thanks":[],
+	// 	"sleepy":[],
+	// 	"error":[],
+	// 	"confused":[],
+	// 	"motivation":[],
+	// 	"affirmations":[],
+	// 	"petting":[]
+	// }
+
+	var localGifs = require('./images/local_gifs.json')
+
+	console.log(localGifs);
 
 	function findRandomLocalGif(category, setDuration){
 		// further randomize gif selection by shuffling array
@@ -246,8 +254,6 @@ $(document).ready(function(){
 
 	////**** EYES *****////
 
-	
-
 	var Snap = require('snapsvg')
 
 	var snap = Snap("#eyes")
@@ -256,8 +262,8 @@ $(document).ready(function(){
 	var closedEye = 1;
 	var closeEyeDuration = 120;
 	var openEyeDuration = 200;
-	var fastCloseEyeDuration = 50;
-	var fastOpenEyeDuration = 100;
+	var fastCloseEyeDuration = 90;
+	var fastOpenEyeDuration = 120;
 	var blinkInterval = 4000;
 
 	var left_eye = snap.ellipse(202.5,330,eyeSize, eyeSize);
@@ -529,9 +535,9 @@ $(document).ready(function(){
 	}
 
 	// executed on socket message sent through server
-	socket.on("shutdown", function(msg){
+	// socket.on("shutdown", function(msg){
 
-	})
+	// })
 
 	
 	// ANNYANG CONFIGURATION
@@ -1028,8 +1034,16 @@ $(document).ready(function(){
 		shutdown();
 	})
 
-	showDiv("testWrapper");
+	$("#blink").on("click", function(){
+		blink();
+	})
 
-	startBlinking();
+	$("#fastBlink").on("click", function(){
+		fastBlink();
+	})
+
+	showDiv("eyeWrapper");
+
+	//startBlinking();
 
 })
