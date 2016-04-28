@@ -13,7 +13,7 @@ $(document).ready(function(){
 	// shuffle array
 	function shuffle(array) {
 	  	var m = array.length, t, i;
-
+ 
 	  		// While there remain elements to shuffle…
 	  	while (m) {
 
@@ -56,7 +56,7 @@ $(document).ready(function(){
 
 	// console.log(localGifs);
 
-	console.log(__dirname)
+	console.log(path.join(__dirname, 'images', 'local'))
 
 	function findRandomLocalGif(category, setDuration){
 		// further randomize gif selection by shuffling array
@@ -87,6 +87,8 @@ $(document).ready(function(){
 
 	function searchGiphy(query, prefix){
 
+		// put in check for size - only download below certain size 
+
 		giphy.search(query, function(err, res){
 
 			if(err || !res){
@@ -96,14 +98,18 @@ $(document).ready(function(){
 			}
 
 			var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
-			console.log(randomGif);
+			
+			var randomGifObj = randomGif.images
 
-			var url = randomGif.images.original.url;
+			var url = checkGifSize(randomGifObj)
 
 			playGiphyGif(url);
 
 			var uniqueName = shortid.generate();
-			var smallUrl = randomGif.images.fixed_width_small.url
+
+			// download fixed width small or fixed width height depending on size
+
+			var smallUrl = findSmallestGif(randomGifObj)
 
 			console.log(smallUrl);
 
@@ -123,6 +129,46 @@ $(document).ready(function(){
 		// })
 	}
 
+	var max_allowed_gif_size = 800000;
+
+	function checkGifSize(obj){
+		var original_gif_size = parseInt(obj.original.size);
+
+		if(original_gif_size <= max_allowed_gif_size){
+			return obj.url
+		} else {
+			return findLargerGif(obj);
+		}
+	}
+
+	function findLargerGif(obj){
+		// find higher quality gif if original is too large
+		// and use it to be displayed
+
+		var fixed_height_size = parseInt(obj.fixed_height_small.size);
+		var fixed_width_size = parseInt(obj.fixed_width_small.size)
+
+		if(fixed_width_size >= fixed_height_size){
+			return obj.fixed_width_small.url
+		} else {
+			return obj.fixed_height_small.url
+		}
+	}
+
+	function findSmallestGif(obj){
+
+		// find the smaller of the two gifs to download and calculate duration
+
+		var fixed_height_size = parseInt(obj.fixed_height_small.size);
+		var fixed_width_size = parseInt(obj.fixed_width_small.size)
+
+		if(fixed_width_size <= fixed_height_size){
+			return obj.fixed_width_small.url
+		} else {
+			return obj.fixed_height_small.url
+		}
+	}
+
 	
 
 	var request = require('request');
@@ -140,6 +186,7 @@ $(document).ready(function(){
 	var spawn = require('child_process').spawn;
 
 	function findGifDuration(path, is_downloaded){
+
 		console.log("gif")
 		// folder can be either local or downloaded
 
@@ -179,6 +226,18 @@ $(document).ready(function(){
 		// display gif for exactly 2 loops by passing in its duration
 
 		var dur = parseInt(duration)
+
+		// check here to decide how many times to loop based on length of gif
+
+		if(dur<=500){
+			loop = 4
+		} else if(dur<=1500){
+			loop = 3
+		} else if(dur<=3000){
+			loop = 2
+		} else {
+			loop = 1
+		}
 
 		if(isNaN(dur)){
 
