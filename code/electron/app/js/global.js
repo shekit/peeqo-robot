@@ -1,5 +1,15 @@
 $(document).ready(function(){
 
+	
+	var connected = true;
+
+	var allTimers = new Array();
+
+	var config = require('./config/config.js');
+
+
+	/////**** GIFS *****/////
+
 	var gifs = {
 		"happy":[
 			{
@@ -7,27 +17,206 @@ $(document).ready(function(){
 				"duration":""
 			}
 		],
+		"sad":[
+		],
+		"angry":[
+		],
+		"annoyed":[
+		],
+		"high_five":[
+		],
+		"excited":[
+		],
+		"no_internet":[
+		],
+		"learning":[
+		],
+		"picture":[
+		],
+		"compliments":[
+		],
+		"abuses":[
+		],
+		"thanks":[
+		],
+		"sleepy":[
+		]
 
 	}
 
-	var connected = true;
-
-	var allTimers = new Array();
-
-	var config = require('./config/config.js');
-
-	function findRandomLocalGif(category){
+	function findRandomLocalGif(category, setDuration){
 		var gifCategory = gifs[category]
 		var randomGifNumber = Math.floor(Math.random()*gifsCategory.length)
 
 		var randomGif = gifsCategory[randomGifNumber]
 
 		return {"path":randomGif.path, "duration":randomGif.duration}
+
+		var path = __dirname + "/images/downloaded/"+randomGif+".gif"
+
+		if(setDuration){
+			findGifDuration(path, false)
+		} else {
+			playLocalGif(path)
+		}
+		
 	}
+
+	
+
+	var giphy = require('giphy-api')(config.giphyKey);
+
+	////// GIPHY API //////
+
+	var smallUrl = null;
+
+	var shortid = require('shortid')
+
+	function searchGiphy(query, prefix){
+
+		giphy.search(query, function(err, res){
+
+			if(err || !res){
+				//show sad local gif
+				//try again
+				return
+			}
+
+			var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
+			console.log(randomGif);
+
+			var url = randomGif.images.original.url;
+
+			playGiphyGif(url);
+
+			var uniqueName = shortid.generate();
+			var smallUrl = randomGif.images.fixed_width_small.url
+
+			console.log(smallUrl);
+
+			downloadGif(smallUrl,uniqueName)
+		})
+
+		// giphy.random(query, function(err, res){
+
+		// 	var url = res.data.images['original'].url;
+		// 	return url;
+
+		// })
+
+		// giphy.translate(query, function(err, res){
+		// 	var url = res.data.images['original'].url;
+		// 	return url;
+		// })
+	}
+
+	
+
+	var request = require('request');
+
+	function downloadGif(url,name){
+		var path = __dirname + "/images/downloaded/"+name+".gif"
+		request(url).pipe(fs.createWriteStream(path)).on('close', function(){
+			console.log('downloaded gif')
+
+			findGifDuration(path, true)
+		})
+	}
+
+	var spawn = require('child_process').spawn;
+
+	function findGifDuration(path, is_downloaded){
+		console.log("gif")
+		// folder can be either local or downloaded
+
+		var python = spawn('python', [__dirname + '/gifduration/gifduration.py', path])
+
+		var gifLength = ''
+
+		python.stdout.on('data', function(data){
+			gifLength+=data;
+		})
+
+		python.stdout.on('close', function(){
+			console.log(gifLength)
+			// set timer to play gif based on this duration
+			setGifTimer(gifLength);
+
+			if(is_downloaded){
+				deleteDownloadedGif(path);
+			}
+			
+			if(!is_downloaded){
+				playLocalGif(path);
+			}
+			
+		})
+	}
+
+	function deleteDownloadedGif(path){
+		fs.unlink(path, function(err){
+			console.log("deleted file")
+		})
+	}
+
+	var gifLoopTimer = null;
+
+	function setGifTimer(duration,loop=2){
+		// display gif for exactly 2 loops by passing in its duration
+
+		var dur = parseInt(duration)
+
+		if(isNaN(dur)){
+
+			showDiv("eyeWrapper")
+
+		} else {
+			gifLoopTimer = setTimeout(function(){
+				showDiv("eyeWrapper");
+			}, dur*loop)
+		}		
+		//allTimers.push(gifLoopTimer);
+	}
+
+	var gif = $("gif");
+
+	function playGiphyGif(url){
+		// puts giphy gif in wrapper
+		showGif(path);
+
+		gif.on('load', function(){
+			showDiv("gifWrapper");
+		})
+	}
+
+	function playLocalGif(path){
+		console.log("replace gif in img tag")
+		showGif(path);
+		showDiv("gifWrapper");
+	}
+
+	
+	function showGif(path){
+		gif.attr({'src',path});
+	}
+
+	function playDownloadedGif(query){
+		searchGiphy()
+	}
+
+	function playLocalGif(category){
+
+	}
+
+
+	////**** TEMPLATES ****////
+
+	var wrapper = $("#wrapper");
 
 	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "testWrapper"]
 	
 	// show div and hide all others
+
 	function showDiv(div){
 		for(var i in majorDivs){
 			if(majorDivs[i] != div){
@@ -38,9 +227,7 @@ $(document).ready(function(){
 		}
 	}
 
-	////**** TEMPLATES ****////
-
-	var wrapper = $("#wrapper");
+	////**** HANDLEBAR TEMPLATES ****////
 
 	var eye_template = Handlebars.templates.eyes;
 	var gif_template = Handlebars.templates.gif;
@@ -132,16 +319,9 @@ $(document).ready(function(){
 		console.log("CHECKING CONN")
 	})
 
-	function stringToBytes(string){
-	    var array = new Uint8Array(string.length);
-	    for(var i=0, l=string.length; i<l;i++){
-	        array[i] = string.charCodeAt(i);
-	    }
-	    return array.buffer;
-	}
 
 	////**** i2c ******//////
-	
+	/*
 	var i2c = require('i2c-bus')
 	var i2c1 = null
 
@@ -172,6 +352,7 @@ $(document).ready(function(){
 			console.log("sent i2c message to: "+addr)
 		})
 	}
+	*/
 
 
 	////**** WIFI SCANNING ****////
@@ -265,13 +446,8 @@ $(document).ready(function(){
 	})
 
 	
-
-	var giphy = require('giphy-api')(config.giphyKey);
-
 	var fs = require('fs');
 	
-	
-
 	var userPreferences = {}; //make an object containing all user related prefs
 
 	// track blocked sites
@@ -290,26 +466,7 @@ $(document).ready(function(){
 		}
 	}
 
-	// FIND GIF DURATION //
-
-	var spawn = require('child_process').spawn;
-
-	function findGifDuration(gif){
-		console.log("gif")
-		
-		var python = spawn('python', [__dirname + '/gifduration/gifduration.py', __dirname + '/images/downloaded_gifs/beyonce.gif'])
-
-		var gifLength = ''
-
-		python.stdout.on('data', function(data){
-			gifLength+=data;
-		})
-
-		python.stdout.on('close', function(){
-			console.log(gifLength)
-			// set timer to play gif based on this duration
-		})
-	}
+	
 
 	////**** SHUTDOWN PI ****/////
 
@@ -318,6 +475,12 @@ $(document).ready(function(){
 	function shutdown(){
 		execSync('sudo shutdown -h now')
 	}
+
+	// executed on socket message sent through server
+	socket.on("shutdown", function(msg){
+
+	})
+
 	
 	// ANNYANG CONFIGURATION
 
@@ -689,63 +852,7 @@ $(document).ready(function(){
 	}
 
 
-	////// GIPHY API //////
-
-	var smallUrl = null;
-
-	function searchGiphy(query, prefix){
-
-
-		giphy.search(query, function(err, res){
-
-			if(err || !res){
-				//show sad local gif
-				//try again
-			}
-
-			var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
-			console.log(randomGif);
-			var url = randomGif.images.original.url;
-			smallUrl = randomGif.images.fixed_width_small.url
-			console.log(smallUrl);
-		})
-
-		// giphy.random(query, function(err, res){
-
-		// 	var url = res.data.images['original'].url;
-		// 	return url;
-
-		// })
-
-		// giphy.translate(query, function(err, res){
-		// 	var url = res.data.images['original'].url;
-		// 	return url;
-		// })
-	}
-
-	var request = require('request');
-
-	function downloadGif(url, name){
-		request(url).pipe(fs.createWriteStream(__dirname + "/images/downloaded_gifs/"+name+".gif")).on('close', function(){
-			console.log('downloaded gif')
-		})
-	}
-
-	var gifLoopTimer = null;
-
-	function setGifTimer(duration,loop=2){
-		// display gif for exactly 2 loops by passing in its duration
-
-		gifLoopTimer = setTimeout(function(){
-			showEyeGif();
-		}, duration*loop)
-
-		//allTimers.push(gifLoopTimer);
-	}
-
-	function showEyeGif(){
-		console.log("EYES EYES EYES")
-	}
+	
 
 	var video = $("video")
 	var track = null;
