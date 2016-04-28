@@ -73,12 +73,24 @@
             </div>
         </script>
 
-        <script id="wifi" type="text/x-handlebars-template">
+        <script id="wifi_name" type="text/x-handlebars-template">
             {{> empty_header}}
             <div class="content-padded">
-                <h3 class="text-center setup">Enter wifi detail</h3>
+                <h3 class="text-center setup">Enter Wifi Name</h3>
                 
                 <input type="text" id="wifi_ssid" placeholder="Wifi Name">
+
+                <div class="btn-bottom">
+                    <a href="#" id="enter_wifi_name" class="btn btn-block btn-primary btn_custom_connect">Next</a>
+                </div>
+            </div>
+        </script>
+
+        <script id="wifi_password" type="text/x-handlebars-template">
+            {{> back_header }}
+            <div class="content-padded">
+            <h3 class="text-center setup">Enter Wifi Password</h3>
+                
                 <input type="text" id="wifi_pass" placeholder="Wifi Password">
 
                 <div class="btn-bottom">
