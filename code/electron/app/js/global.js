@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-	
 	var connected = true;
 
 	var fs = require('fs');
@@ -381,9 +380,17 @@ $(document).ready(function(){
 		password: config.sandboxPass
 	}
 
+	var newWifi = {
+		ssid: "",
+		password: ""
+	}
+
 	function connectToWifi(network){
+
 		WiFiControl.connectToAP(network, function(error, response) {
-		  if (error) console.log(error);
+		  if (error) {
+		  	console.log(error);
+		  }
 		  console.log(response);
 		});
 	}
@@ -412,18 +419,11 @@ $(document).ready(function(){
 							uuid: '34cd',
 							properties: ['read', 'write'],
 
-							onReadRequest: function(offset, callback){
-								console.log("Read request received");
-								this._value = new Buffer(JSON.stringify({
-									'hello':'2'
-								}));
-								callback(this.RESULT_SUCCESS, this._value)
-							},
-
 							onWriteRequest: function(data, offset, withoutResponse, callback){
 								this.value = data;
 								console.log(data[0])
 								console.log('Wifi SSID: '+this.value.toString("utf-8"));
+								newWifi.ssid = this.value.toString("utf-8")
 								callback(this.RESULT_SUCCESS);
 							}
 						}),
@@ -435,6 +435,10 @@ $(document).ready(function(){
 							onWriteRequest: function(data, offset, withoutResponse, callback){
 								this.value = data
 								console.log("Wifi Password: "+this.value.toString("utf-8"))
+								newWifi.password = this.value.toString("utf-8")
+
+								connectToWifi(newWifi);
+
 								callback(this.RESULT_SUCCESS);
 							}
 						})
