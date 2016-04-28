@@ -47,12 +47,12 @@ function stringToBytes(string){
 
     Handlebars.registerPartial({
         'empty_header': '<header class="bar bar-nav">'+
-                            '<a href="#" class="icon icon-right-nav pull-right stop_ble"></a>'+
+                            '<a href="#" class="pull-right stop_ble"><span class="icon icon-stop"></span></a>'+
                             '<h1 class="title">Peeqo</h1>'+
                         '</header>',
         'back_header' : '<header class="bar bar-nav">'+
-                            '<a href="#" class="icon icon-right-nav pull-right stop_ble"></a>'+
-                            '<a href="javascript:void(0);" class="icon icon-left-nav pull-left back_to_wifi_name"></a>'+
+                            '<a href="#" class="pull-right stop_ble"><span class="icon icon-stop"></span></a>'+
+                            '<a href="javascript:void(0);" class="pull-left back_to_wifi_name"><span class="icon icon-left-nav"></span></a>'+
                             '<h1 class="title">Wifi Password</h1>'+
                         '</header>'
     })
