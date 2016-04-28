@@ -3,63 +3,64 @@ $(document).ready(function(){
 	
 	var connected = true;
 
+	var fs = require('fs');
+
 	var allTimers = new Array();
 
 	var config = require('./config/config.js');
 
+	// shuffle array
+	function shuffle(array) {
+	  	var m = array.length, t, i;
+
+	  		// While there remain elements to shuffle…
+	  	while (m) {
+
+	    	// Pick a remaining element…
+	    	i = Math.floor(Math.random() * m--);
+
+	    	// And swap it with the current element.
+	    	t = array[m];
+	    	array[m] = array[i];
+	    	array[i] = t;
+	  	}
+
+	  	return array;
+	}
 
 	/////**** GIFS *****/////
 
-	var gifs = {
-		"happy":[
-			{
-				"path":"",
-				"duration":""
-			}
-		],
-		"sad":[
-		],
-		"angry":[
-		],
-		"annoyed":[
-		],
-		"high_five":[
-		],
-		"excited":[
-		],
-		"no_internet":[
-		],
-		"learning":[
-		],
-		"picture":[
-		],
-		"compliments":[
-		],
-		"abuses":[
-		],
-		"thanks":[
-		],
-		"sleepy":[
-		]
-
+	var localGifs = {
+		"happy":[],
+		"sad":[],
+		"angry":[],
+		"annoyed":[],
+		"high_five":[],
+		"excited":[],
+		"no_internet":[],
+		"learning":[],
+		"picture":[],
+		"compliments":[],
+		"abuses":[],
+		"thanks":[],
+		"sleepy":[]
 	}
 
 	function findRandomLocalGif(category, setDuration){
-		var gifCategory = gifs[category]
-		var randomGifNumber = Math.floor(Math.random()*gifsCategory.length)
+		// further randomize gif selection by shuffling array
+		var gifCategory = shuffle(localGifs.category);
+
+		var randomGifNumber = Math.floor(Math.random()*gifCategory.length)
 
 		var randomGif = gifsCategory[randomGifNumber]
 
-		return {"path":randomGif.path, "duration":randomGif.duration}
-
-		var path = __dirname + "/images/downloaded/"+randomGif+".gif"
+		var path = __dirname + "/images/local/"+randomGif+".gif"
 
 		if(setDuration){
 			findGifDuration(path, false)
 		} else {
 			playLocalGif(path)
-		}
-		
+		}	
 	}
 
 	
@@ -198,14 +199,6 @@ $(document).ready(function(){
 	
 	function showGif(path){
 		gif.attr({'src',path});
-	}
-
-	function playDownloadedGif(query){
-		searchGiphy()
-	}
-
-	function playLocalGif(category){
-
 	}
 
 
@@ -446,7 +439,7 @@ $(document).ready(function(){
 	})
 
 	
-	var fs = require('fs');
+	
 	
 	var userPreferences = {}; //make an object containing all user related prefs
 
