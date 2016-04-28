@@ -4,6 +4,8 @@ $(document).ready(function(){
 
 	var fs = require('fs');
 
+	var path = require('path');
+
 	var allTimers = new Array();
 
 	var config = require('./config/config.js');
@@ -52,7 +54,9 @@ $(document).ready(function(){
 
 	var localGifs = require('./images/local_gifs.json')
 
-	console.log(localGifs);
+	// console.log(localGifs);
+
+	console.log(__dirname)
 
 	function findRandomLocalGif(category, setDuration){
 		// further randomize gif selection by shuffling array
@@ -62,12 +66,12 @@ $(document).ready(function(){
 
 		var randomGif = gifsCategory[randomGifNumber]
 
-		var path = __dirname + "/images/local/"+randomGif+".gif"
+		var gifpath = path.join(__dirname, 'images', 'local', randomGif)
 
 		if(setDuration){
-			findGifDuration(path, false) // false since they are local files
+			findGifDuration(gifpath, false) // false since they are local files
 		} else {
-			playLocalGif(path)
+			playLocalGif(gifpath)
 		}	
 	}
 
@@ -124,11 +128,12 @@ $(document).ready(function(){
 	var request = require('request');
 
 	function downloadGif(url,name){
-		var path = __dirname + "/images/downloaded/"+name+".gif"
-		request(url).pipe(fs.createWriteStream(path)).on('close', function(){
+		var gifPath = path.join(__dirname, "images", "downloaded",name+".gif")
+		// var path = __dirname + "/images/downloaded/"+name+".gif"
+		request(url).pipe(fs.createWriteStream(gifPath)).on('close', function(){
 			console.log('downloaded gif')
 
-			findGifDuration(path, true)
+			findGifDuration(gifPath, true)
 		})
 	}
 
@@ -322,8 +327,9 @@ $(document).ready(function(){
 
 	function changeGlasses(){
 		var randomGlass = glassPics[Math.floor(Math.random()*(glassPics.length))]
-		var path = __dirname + '/images/glasses/'+randomGlass
-		glasses.attr({'src':path});
+		var glassPath = path.join(__dirname,"images","glasses",randomGlass)
+		//var path = __dirname + '/images/glasses/'+randomGlass
+		glasses.attr({'src':glassPath});
 	}
 
 	////***** CHECK ONLINE OFFLINE STATUS ****////
