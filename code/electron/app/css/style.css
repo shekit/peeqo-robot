@@ -8,23 +8,43 @@ video {
 	tranform: rotateY(-180deg);
 }
 
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #eyes {
 	width: 800px;
 	height: 480px;
 	background: white;
 }
 
-#gif {
-	width: 800px;
-	height: 480px;
-}
-
 #testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper {
 	display: none;
+	height: 800px;
+	width: 480px;
+	overflow: hidden;
 }
 
 #gifWrapper {
 	background: #000;
+}
+
+#gif_container {
+	position: relative;
+	height: 800px;
+	width: 480px;
+}
+
+#gif {
+	/*width: 800px;
+	height: 480px;*/
+	/*position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);*/
+	object-fit:cover;
 }
 
 #wrapper {

@@ -252,7 +252,7 @@ $(document).ready(function(){
 		//allTimers.push(gifLoopTimer);
 	}
 
-	var gif = $("gif");
+	var gif = $("#gif");
 
 	function playGiphyGif(url){
 		// puts giphy gif in wrapper
@@ -340,7 +340,15 @@ $(document).ready(function(){
 		fill:"#000000"
 	})
 
+	function randRange(data){
+		var newTime = data[Math.floor(data.length * Math.random())];
+       	return newTime;
+	}
+
 	function blink(){
+		// randomize blinking
+		var timeArray = [4000, 6000, 10000, 1000, 500, 8000]
+
 		left_eye.animate({ry:closedEye}, closeEyeDuration,mina.elastic(), function(){
 			left_eye.animate({ry:eyeSize}, openEyeDuration, mina.easein());
 		})
@@ -348,6 +356,10 @@ $(document).ready(function(){
 		right_eye.animate({ry:closedEye}, closeEyeDuration,mina.elastic(), function(){
 			right_eye.animate({ry:eyeSize}, openEyeDuration, mina.easein());
 		})
+
+		clearInterval(blinking)
+
+		blinking = setInterval(blink, randRange(timeArray));
 	}
 
 	function fastBlink(){
