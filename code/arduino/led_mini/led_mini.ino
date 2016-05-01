@@ -12,6 +12,7 @@ Adafruit_NeoPixel ring = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO
 unsigned long previousMillis=0;
 
 int animationCount = 0;
+boolean limitAnimation = false;
 
 // WIPE ANIMATION
 unsigned long wipeInterval=50;
@@ -41,7 +42,9 @@ boolean off = false;
 boolean fadeRed = false;
 boolean fadeGreen = false;
 boolean fadeBlue = false;
-boolean blinky = false;
+boolean redBlink = false;
+boolean greenBlink = false;
+boolean blueBlink = false;
 
 // colors
 const uint32_t redColor = ring.Color(255,0,0);
@@ -107,32 +110,32 @@ void loop() {
   if(red){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(redColor); 
+       colorWipeMillis(redColor, limitAnimation); 
     }
   }
   
   if(green){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(greenColor); 
+       colorWipeMillis(greenColor, limitAnimation); 
     }
   }
   
   if(blue){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(blueColor); 
+       colorWipeMillis(blueColor, limitAnimation); 
     }
   }
   
   if(black){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(offColor); 
+       colorWipeMillis(offColor, true); 
     }
   }
   
-  if(blinky){
+  if(redBlink){
       if(millis()-previousMillis >= blinkinterval){
          previousMillis = millis();
          if(lightsOn == false){
@@ -141,7 +144,33 @@ void loop() {
            lightsOn = false; 
          }
          
-         lightsBlink(lightsOn);
+         lightsBlink(lightsOn, redColor, limitAnimation);
+       }
+  }
+  
+  if(greenBlink){
+      if(millis()-previousMillis >= blinkinterval){
+         previousMillis = millis();
+         if(lightsOn == false){
+           lightsOn = true;
+         } else {
+           lightsOn = false; 
+         }
+         
+         lightsBlink(lightsOn, greenColor, limitAnimation);
+       }
+  }
+  
+  if(blueBlink){
+      if(millis()-previousMillis >= blinkinterval){
+         previousMillis = millis();
+         if(lightsOn == false){
+           lightsOn = true;
+         } else {
+           lightsOn = false; 
+         }
+         
+         lightsBlink(lightsOn, blueColor, limitAnimation);
        }
   }
     
@@ -172,10 +201,10 @@ void loop() {
   
 }
 
-void lightsBlink(boolean lightState){
+void lightsBlink(boolean lightState, uint32_t c, boolean limitBlinks){
    if(lightState==true){
       for(uint16_t i=0; i<ring.numPixels(); i++) {
-        ring.setPixelColor(i, redColor);
+        ring.setPixelColor(i, c);
         ring.show();
       }  
    } else {
@@ -185,14 +214,16 @@ void lightsBlink(boolean lightState){
       }
    }
    
-   animationCount++;
-   
-   if(animationCount >= numBlinks){
-      setStatesToFalse(); 
+   if(limitBlinks){
+     animationCount++;
+     
+     if(animationCount >= numBlinks){
+        setStatesToFalse(); 
+     }
    }
 }
 
-void colorWipeMillis(uint32_t c){
+void colorWipeMillis(uint32_t c, boolean limitWipes){
    ring.setPixelColor(currentPixel, c);
    ring.show();
    currentPixel++;
@@ -205,8 +236,10 @@ void colorWipeMillis(uint32_t c){
       }
    }
    
-   if(animationCount >= numWipes){
-      setStatesToFalse();
+   if(limitWipes){
+     if(animationCount >= numWipes){
+        setStatesToFalse();
+     }
    }
 }
 
@@ -279,12 +312,15 @@ void setStatesToFalse(){
    blue = false;
    black = false;
    off = false;
-   blinky = false;
+   redBlink = false;
+   greenBlink = false;
+   blueBlink = false;
    fadeRed = false;
    fadeGreen = false;
    fadeBlue = false;
    
-   // reset counter variables
+   // reset counter and common variables
+   limitAnimation = false;
    animationCount = 0;
    currentPixel = 0;
    
@@ -295,10 +331,12 @@ void setLightState(int val){
       case 2:
         setStatesToFalse();
         red = true;
+        limitAnimation = true;
         break;
       case 3:
         setStatesToFalse();
-        blinky = true;
+        red = true;
+        limitAnimation = false;
         break;
       case 4:
         setStatesToFalse();
