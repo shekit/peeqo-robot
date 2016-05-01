@@ -11,10 +11,12 @@ Adafruit_NeoPixel ring = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO
 
 unsigned long previousMillis=0;
 
+int animationCount = 0;
+
 // WIPE ANIMATION
 unsigned long wipeInterval=50;
 int currentPixel = 0;
-int wipeCount = 0;
+int numWipes = 3;
 
 // FADE ANIMATION
 int r = 0;
@@ -27,6 +29,7 @@ int bspeed = 5;
 // BLINK ANIMATION
 unsigned long blinkinterval = 300;
 boolean lightsOn = false;
+int numBlinks = 6;
 
 // LED STATES
 // add all to setStatesToFalse function
@@ -181,6 +184,12 @@ void lightsBlink(boolean lightState){
         ring.show();
       }
    }
+   
+   animationCount++;
+   
+   if(animationCount >= numBlinks){
+      setStatesToFalse(); 
+   }
 }
 
 void colorWipeMillis(uint32_t c){
@@ -188,7 +197,7 @@ void colorWipeMillis(uint32_t c){
    ring.show();
    currentPixel++;
    if(currentPixel >= PIXEL_COUNT){
-      wipeCount++;
+      animationCount++;
       currentPixel = 0; 
       for(uint16_t i=0; i<ring.numPixels(); i++) {
         ring.setPixelColor(i, offColor);
@@ -196,9 +205,8 @@ void colorWipeMillis(uint32_t c){
       }
    }
    
-   if(wipeCount >=3){
-      red = false;
-      wipeCount = 0;
+   if(animationCount >= numWipes){
+      setStatesToFalse();
    }
 }
 
@@ -277,7 +285,7 @@ void setStatesToFalse(){
    fadeBlue = false;
    
    // reset counter variables
-   wipeCount = 0;
+   animationCount = 0;
    currentPixel = 0;
    
 }
@@ -290,7 +298,7 @@ void setLightState(int val){
         break;
       case 3:
         setStatesToFalse();
-        black = true;
+        blinky = true;
         break;
       case 4:
         setStatesToFalse();
