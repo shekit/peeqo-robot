@@ -14,6 +14,7 @@ unsigned long previousMillis=0;
 // WIPE ANIMATION
 unsigned long wipeInterval=50;
 int currentPixel = 0;
+int wipeCount = 0;
 
 // FADE ANIMATION
 int r = 0;
@@ -25,21 +26,25 @@ int bspeed = 5;
 
 // BLINK ANIMATION
 unsigned long blinkinterval = 300;
-boolean lights = false;
+boolean lightsOn = false;
 
 // LED STATES
+// add all to setStatesToFalse function
 boolean red = false;
 boolean green = false;
 boolean blue = false;
+boolean black = false;
 boolean off = false;
-boolean fade = false;
+boolean fadeRed = false;
+boolean fadeGreen = false;
+boolean fadeBlue = false;
 boolean blinky = false;
 
 // colors
-uint32_t redColor = ring.Color(255,0,0);
-uint32_t greenColor = ring.Color(0,255,0);
-uint32_t blueColor = ring.Color(0,0,255);
-uint32_t offColor = ring.Color(0,0,0);
+const uint32_t redColor = ring.Color(255,0,0);
+const uint32_t greenColor = ring.Color(0,255,0);
+const uint32_t blueColor = ring.Color(0,0,255);
+const uint32_t offColor = ring.Color(0,0,0);
 
 void setup() {
   
@@ -117,35 +122,57 @@ void loop() {
     }
   }
   
+  if(black){
+    if(millis()-previousMillis >= wipeInterval){
+       previousMillis = millis();
+       colorWipeMillis(offColor); 
+    }
+  }
+  
   if(blinky){
       if(millis()-previousMillis >= blinkinterval){
          previousMillis = millis();
-         if(lights == false){
-           lights = true;
+         if(lightsOn == false){
+           lightsOn = true;
          } else {
-           lights = false; 
+           lightsOn = false; 
          }
          
-         lightsBlink(lights);
+         lightsBlink(lightsOn);
        }
   }
     
-  if(fade){
+  if(fadeRed){
     if(millis()-previousMillis >= 20){
        previousMillis = millis();
-       fadeLights();
+       fadeRedLights();
+    }
+  }
+  
+  if(fadeGreen){
+    if(millis()-previousMillis >= 20){
+       previousMillis = millis();
+       fadeGreenLights();
+    }
+  }
+  
+  if(fadeBlue){
+    if(millis()-previousMillis >= 20){
+       previousMillis = millis();
+       fadeBlueLights();
     }
   }
   
   if(off){
     switchOff();
   }
+  
 }
 
-void lightsBlink(boolean f){
-   if(f==true){
+void lightsBlink(boolean lightState){
+   if(lightState==true){
       for(uint16_t i=0; i<ring.numPixels(); i++) {
-        ring.setPixelColor(i, ring.Color(255,0,0));
+        ring.setPixelColor(i, redColor);
         ring.show();
       }  
    } else {
@@ -161,28 +188,59 @@ void colorWipeMillis(uint32_t c){
    ring.show();
    currentPixel++;
    if(currentPixel >= PIXEL_COUNT){
+      wipeCount++;
       currentPixel = 0; 
       for(uint16_t i=0; i<ring.numPixels(); i++) {
         ring.setPixelColor(i, offColor);
         ring.show();
       }
    }
+   
+   if(wipeCount >=3){
+      red = false;
+      wipeCount = 0;
+   }
 }
 
-void fadeLights(){
+void fadeRedLights(){
    
    for(int i=0; i<ring.numPixels();i++){
-      ring.setPixelColor(i,ring.Color(r,g,0));
+      ring.setPixelColor(i,ring.Color(r,0,0));
       ring.show();
    } 
-   //r+=5;
    
    r+=rspeed;
-   g+=gspeed;
    
    if(r >= 255 || r<=0){
       rspeed *= -1; 
-      gspeed *= -1;
+   }
+}
+
+void fadeGreenLights(){
+   
+   for(int i=0; i<ring.numPixels();i++){
+      ring.setPixelColor(i,ring.Color(0,g,0));
+      ring.show();
+   } 
+   
+   g+=gspeed;
+   
+   if(g >= 255 || g<=0){
+      gspeed *= -1; 
+   }
+}
+
+void fadeBlueLights(){
+   
+   for(int i=0; i<ring.numPixels();i++){
+      ring.setPixelColor(i,ring.Color(0,0,b));
+      ring.show();
+   } 
+   
+   b+=bspeed;
+   
+   if(b >= 255 || b<=0){
+      bspeed *= -1; 
    }
 }
 
@@ -199,10 +257,29 @@ void receiveEvent(int howMany){
    while(Wire.available()>0){
       int c = Wire.read();
       
+      // the first byte is the command parameter sent from node 0x01 so ignore it
       if(c!=1){
          setLightState(c);
       }
    } 
+}
+
+void setStatesToFalse(){
+   //set all states to false
+   red = false;
+   green = false;
+   blue = false;
+   black = false;
+   off = false;
+   blinky = false;
+   fadeRed = false;
+   fadeGreen = false;
+   fadeBlue = false;
+   
+   // reset counter variables
+   wipeCount = 0;
+   currentPixel = 0;
+   
 }
 
 void setLightState(int val){
@@ -213,25 +290,16 @@ void setLightState(int val){
         break;
       case 3:
         setStatesToFalse();
-        blinky = true;
+        black = true;
         break;
       case 4:
         setStatesToFalse();
         off = true;
         break;
       default:
-        Serial.println("rubbish");
         break;
    } 
 }
 
-void setStatesToFalse(){
-   //set all states to false
-   red = false;
-   green = false;
-   blue = false;
-   off = false;
-   blinky = false;
-   fade = false;
-}
+
 
