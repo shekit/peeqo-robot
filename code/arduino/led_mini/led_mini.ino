@@ -352,17 +352,18 @@ void receiveEvent(int howMany){
 
 
 // set cases based on i2c commands
+// have different cases to limit animation or not to
 void setLightState(int val){
    switch(val){
       case 2:
         setStatesToFalse();
         red = true;
-        limitAnimation = true;
+        limitAnimation = false;  // will go on forever or till other command
         break;
       case 3:
         setStatesToFalse();
         fadeBlue = true;
-        limitAnimation = true;
+        limitAnimation = true;   // will be limited by variable set for this functions animation limit
         break;
       case 4:
         setStatesToFalse();
