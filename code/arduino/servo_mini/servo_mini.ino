@@ -12,23 +12,10 @@ int servoFrameMillis = 20; // min time between servo updates
 
 int easeDuration = 1000;
 
+
+
 Servo servo[6];
 ServoEaser servoEaser[6];
-
-int myServoMovesCount = 8;
-// configurable list of servo moves
-ServoMove myServoMoves[] = {
-// angle, duration
-    {0,   500},
-    {45,  500},
-    {20,   500},
-    {90,  1000},
-    {45,  500},
-    {135, 2000},
-    {75,  500},
-    {165, 1000},
-};
-
 
 // EASING FUNCTIONS
 
@@ -79,6 +66,8 @@ void setup() {
     servoEaser[i].setEasingFunc(easeInOutCubic);
   }
   
+  resetServos();
+  
 }
 
 void loop() {
@@ -110,10 +99,15 @@ void receiveEvent(int howMany){
       if(c==3){
          easeDuration = 4000; 
       }
+      
+      // define a cmd or char to reset servos
+      if(c==4){
+         resetServos();
+      }
        
       // this is done only if the bytes dont match the cmd parameter
       // helps eliminate first cmd para sent from node
-      if(c>3){
+      if(c>4){
          myAngles[i] = c;
       } 
       
@@ -127,5 +121,13 @@ void receiveEvent(int howMany){
 
 void runServo(uint8_t servoNum, uint8_t angle){
     servoEaser[servoNum].easeTo(angle, easeDuration);
-    //servoEaser[servoNum].play( myServoMoves, myServoMovesCount );
+}
+
+void resetServos(){
+  servo[0].writeMicroseconds(1515);
+  servo[1].writeMicroseconds(1485);
+  servo[2].writeMicroseconds(1465);
+  servo[3].writeMicroseconds(1455);
+  servo[4].writeMicroseconds(1450);
+  servo[5].writeMicroseconds(1500);
 }
