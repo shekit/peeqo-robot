@@ -19,7 +19,9 @@ int currentPixel = 0;
 int r = 0;
 int rspeed = 5;
 int g = 0;
-int gspeed = 2;
+int gspeed = 5;
+int b = 0;
+int bspeed = 5;
 
 // BLINK ANIMATION
 unsigned long blinkinterval = 300;
@@ -32,15 +34,20 @@ boolean blue = false;
 boolean off = false;
 boolean fade = false;
 boolean blinky = false;
-boolean rainbow = false;
 
+// colors
+uint32_t redColor = ring.Color(255,0,0);
+uint32_t greenColor = ring.Color(0,255,0);
+uint32_t blueColor = ring.Color(0,0,255);
+uint32_t offColor = ring.Color(0,0,0);
 
 void setup() {
-  // put your setup code here, to run once:
+  
   Wire.begin(I2C_ADDR);
   Wire.onReceive(receiveEvent);
   
-  Serial.begin(9600);
+  // turn on for debugging
+  //Serial.begin(9600);
   
   ring.begin();
   ring.setBrightness(RING_BRIGHTNESS);
@@ -48,101 +55,65 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  if(Serial.available()>0){
-     //char i = Serial.read();
-     //runLights(i); 
-     //runLights(i);
-     char i = Serial.read();
-     
-     switch(i){
-        case 'r':
-           red = true;
-           green = false;
-           blue = false;
-           off = false;
-           blinky = false;
-           rainbow = false;
-           fade = false;
-           break;
-        case 'g':
-           green = true;
-           red = false;
-           blue = false;
-           off = false;
-           blinky = false;
-           rainbow = false;
-           fade = false;
-           break;
-        case 'b':
-           blue = true;
-           green = false;
-           red = false;
-           off = false;
-           blinky = false;
-           rainbow = false;
-           fade = false;
-           break; 
-        case 'o':
-           red = false;
-           green = false;
-           blue = false;
-           off = true;
-           blinky = false;
-           rainbow = false;
-           fade = false;
-           break;
-        case 't':
-           red = false;
-           green = false;
-           blue = false;
-           off = false;
-           blinky = true;
-           rainbow = false;
-           fade = false;
-           break;
-        case 'p':
-           red = false;
-           green = false;
-           blue = false;
-           off = false;
-           blinky = false;
-           rainbow = true;
-           fade = false;
-           break;
-        case 'f':
-           red = false;
-           green = false;
-           blue = false;
-           off = false;
-           blinky = false;
-           rainbow = false;
-           fade = true;
-           break;
-        default:
-          break;
-     }
-     
-  }
+  // DEBUG CODE
+//  if(Serial.available()>0){
+//     char i = Serial.read();
+//     
+//     switch(i){
+//        case 'r':
+//          setStatesToFalse()
+//           red = true;
+//           break;
+//        case 'g':
+//          setStatesToFalse()
+//           green = true;
+//           break;
+//        case 'b':
+//          setStatesToFalse()
+//           blue = true;
+//           break; 
+//        case 'o':
+//          setStatesToFalse()
+//           off = true;
+//           break;
+//        case 't':
+//          setStatesToFalse()
+//           blinky = true;
+//           break;
+//        case 'p':
+//          setStatesToFalse()
+//           rainbow = true;
+//           break;
+//        case 'f':
+//          setStatesToFalse()
+//           fade = true;
+//           break;
+//        default:
+//          break;
+//     }  
+//  }
+  
+  
+  //i2c commands set these states
   
   if(red){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(ring.Color(255,0,0)); 
+       colorWipeMillis(redColor); 
     }
   }
   
   if(green){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(ring.Color(0,255,0)); 
+       colorWipeMillis(greenColor); 
     }
   }
   
   if(blue){
     if(millis()-previousMillis >= wipeInterval){
        previousMillis = millis();
-       colorWipeMillis(ring.Color(0,0,255)); 
+       colorWipeMillis(blueColor); 
     }
   }
   
@@ -158,18 +129,11 @@ void loop() {
          lightsBlink(lights);
        }
   }
-  
-  if(rainbow){
-    if(millis()-previousMillis >= 20){
-       previousMillis = millis();
-       fade2();
-    }
-  }
-  
+    
   if(fade){
     if(millis()-previousMillis >= 20){
        previousMillis = millis();
-       fade2();
+       fadeLights();
     }
   }
   
@@ -186,7 +150,7 @@ void lightsBlink(boolean f){
       }  
    } else {
        for(uint16_t i=0; i<ring.numPixels(); i++) {
-        ring.setPixelColor(i, ring.Color(0,0,0));
+        ring.setPixelColor(i, offColor);
         ring.show();
       }
    }
@@ -199,16 +163,33 @@ void colorWipeMillis(uint32_t c){
    if(currentPixel >= PIXEL_COUNT){
       currentPixel = 0; 
       for(uint16_t i=0; i<ring.numPixels(); i++) {
-        ring.setPixelColor(i, ring.Color(0,0,0));
+        ring.setPixelColor(i, offColor);
         ring.show();
       }
+   }
+}
+
+void fadeLights(){
+   
+   for(int i=0; i<ring.numPixels();i++){
+      ring.setPixelColor(i,ring.Color(r,g,0));
+      ring.show();
+   } 
+   //r+=5;
+   
+   r+=rspeed;
+   g+=gspeed;
+   
+   if(r >= 255 || r<=0){
+      rspeed *= -1; 
+      gspeed *= -1;
    }
 }
 
 void switchOff(){
   currentPixel = 0;
   for(uint16_t i=0; i<ring.numPixels(); i++) {
-     ring.setPixelColor(i, ring.Color(0,0,0));
+     ring.setPixelColor(i, offColor);
      ring.show();
   }
 }
@@ -219,7 +200,6 @@ void receiveEvent(int howMany){
       int c = Wire.read();
       
       if(c!=1){
-         //runLights(c); 
          setLightState(c);
       }
    } 
@@ -245,23 +225,6 @@ void setLightState(int val){
    } 
 }
 
-void fade2(){
-   
-   for(int i=0; i<ring.numPixels();i++){
-      ring.setPixelColor(i,ring.Color(r,g,0));
-      ring.show();
-   } 
-   //r+=5;
-   
-   r+=rspeed;
-   g+=gspeed;
-   
-   if(r >= 255 || r<=0){
-      rspeed *= -1; 
-      gspeed *= -1;
-   }
-}
-
 void setStatesToFalse(){
    //set all states to false
    red = false;
@@ -269,21 +232,6 @@ void setStatesToFalse(){
    blue = false;
    off = false;
    blinky = false;
-   rainbow = false;
    fade = false;
 }
 
-// Input a value 0 to 255 to get a color value.
-// The colours are a transition r - g - b - back to r.
-uint32_t Wheel(byte WheelPos) {
-  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-   return ring.Color(255 - WheelPos * 3, 0, WheelPos * 3);
-  } else if(WheelPos < 170) {
-    WheelPos -= 85;
-   return ring.Color(0, WheelPos * 3, 255 - WheelPos * 3);
-  } else {
-   WheelPos -= 170;
-   return ring.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
-  }
-}
