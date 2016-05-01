@@ -23,6 +23,7 @@ int gspeed = 2;
 
 // BLINK ANIMATION
 unsigned long blinkinterval = 300;
+boolean lights = false;
 
 // LED STATES
 boolean red = false;
@@ -31,8 +32,6 @@ boolean blue = false;
 boolean off = false;
 boolean fade = false;
 boolean blinky = false;
-
-boolean lights = false;
 boolean rainbow = false;
 
 
@@ -153,7 +152,7 @@ void loop() {
          if(lights == false){
            lights = true;
          } else {
-            lights = false; 
+           lights = false; 
          }
          
          lightsBlink(lights);
@@ -229,31 +228,16 @@ void receiveEvent(int howMany){
 void setLightState(int val){
    switch(val){
       case 2:
+        setStatesToFalse();
         red = true;
-        green = false;
-        blue = false;
-        off = false;
-        blinky = false;
-        rainbow = false;
-        fade = false;
         break;
       case 3:
-        red = false;
-        green = false;
-        blue = false;
-        off = false;
+        setStatesToFalse();
         blinky = true;
-        rainbow = false;
-        fade = false;
         break;
       case 4:
-        red = false;
-        green = false;
-        blue = false;
+        setStatesToFalse();
         off = true;
-        blinky = false;
-        rainbow = false;
-        fade = false;
         break;
       default:
         Serial.println("rubbish");
@@ -276,6 +260,17 @@ void fade2(){
       rspeed *= -1; 
       gspeed *= -1;
    }
+}
+
+void setStatesToFalse(){
+   //set all states to false
+   red = false;
+   green = false;
+   blue = false;
+   off = false;
+   blinky = false;
+   rainbow = false;
+   fade = false;
 }
 
 // Input a value 0 to 255 to get a color value.
