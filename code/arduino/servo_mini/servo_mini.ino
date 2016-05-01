@@ -4,18 +4,13 @@
 
 #define I2C_ADDR 0x04
 
-const int servo0pin = 2;
-const int servo1pin = 3;
-const int servo2pin = 4;
-const int servo3pin = 5;
-const int servo4pin = 6;
-const int servo5pin = 7;
-
 const int numServos = 2;
 
 int servoPins[6] = {2,3,4,5,6,7};
 
 int servoFrameMillis = 20; // min time between servo updates
+
+int easeDuration = 1000;
 
 Servo servo[6];
 ServoEaser servoEaser[6];
@@ -102,8 +97,23 @@ void receiveEvent(int howMany){
    
    while(Wire.available()>0){
       uint8_t c = Wire.read();
-     
-      if(c!=1){
+      
+      // use cmd parameter from node to set duration of easing
+      if(c==1){
+         easeDuration = 1000; 
+      }
+      
+      if(c==2){
+         easeDuration = 2000; 
+      }
+      
+      if(c==3){
+         easeDuration = 4000; 
+      }
+       
+      // this is done only if the bytes dont match the cmd parameter
+      // helps eliminate first cmd para sent from node
+      if(c>3){
          myAngles[i] = c;
       } 
       
@@ -116,6 +126,6 @@ void receiveEvent(int howMany){
 }
 
 void runServo(uint8_t servoNum, uint8_t angle){
-    servoEaser[servoNum].easeTo(angle, 1000);
+    servoEaser[servoNum].easeTo(angle, easeDuration);
     //servoEaser[servoNum].play( myServoMoves, myServoMovesCount );
 }
