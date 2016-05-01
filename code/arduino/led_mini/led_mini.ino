@@ -20,6 +20,8 @@ int currentPixel = 0;
 int numWipes = 3;
 
 // FADE ANIMATION
+int fadeInterval = 20;
+int numFades = 8;
 int r = 0;
 int rspeed = 5;
 int g = 0;
@@ -175,23 +177,23 @@ void loop() {
   }
     
   if(fadeRed){
-    if(millis()-previousMillis >= 20){
+    if(millis()-previousMillis >= fadeInterval){
        previousMillis = millis();
-       fadeRedLights();
+       fadeRedLights(limitAnimation);
     }
   }
   
   if(fadeGreen){
-    if(millis()-previousMillis >= 20){
+    if(millis()-previousMillis >= fadeInterval){
        previousMillis = millis();
-       fadeGreenLights();
+       fadeGreenLights(limitAnimation);
     }
   }
   
   if(fadeBlue){
-    if(millis()-previousMillis >= 20){
+    if(millis()-previousMillis >= fadeInterval){
        previousMillis = millis();
-       fadeBlueLights();
+       fadeBlueLights(limitAnimation);
     }
   }
   
@@ -243,7 +245,7 @@ void colorWipeMillis(uint32_t c, boolean limitWipes){
    }
 }
 
-void fadeRedLights(){
+void fadeRedLights(boolean limitFade){
    
    for(int i=0; i<ring.numPixels();i++){
       ring.setPixelColor(i,ring.Color(r,0,0));
@@ -254,10 +256,18 @@ void fadeRedLights(){
    
    if(r >= 255 || r<=0){
       rspeed *= -1; 
+      
+      if(limitFade){
+          animationCount++;
+          if(animationCount >= numFades){
+            setStatesToFalse();  
+          } 
+      }
+      
    }
 }
 
-void fadeGreenLights(){
+void fadeGreenLights(boolean limitFade){
    
    for(int i=0; i<ring.numPixels();i++){
       ring.setPixelColor(i,ring.Color(0,g,0));
@@ -268,10 +278,17 @@ void fadeGreenLights(){
    
    if(g >= 255 || g<=0){
       gspeed *= -1; 
+      
+      if(limitFade){
+          animationCount++;
+          if(animationCount >= numFades){
+            setStatesToFalse();  
+          } 
+      }
    }
 }
 
-void fadeBlueLights(){
+void fadeBlueLights(boolean limitFade){
    
    for(int i=0; i<ring.numPixels();i++){
       ring.setPixelColor(i,ring.Color(0,0,b));
@@ -282,27 +299,22 @@ void fadeBlueLights(){
    
    if(b >= 255 || b<=0){
       bspeed *= -1; 
+      
+      if(limitFade){
+          animationCount++;
+          if(animationCount >= numFades){
+            setStatesToFalse();  
+          } 
+      }
+      
    }
 }
 
 void switchOff(){
-  currentPixel = 0;
   for(uint16_t i=0; i<ring.numPixels(); i++) {
      ring.setPixelColor(i, offColor);
      ring.show();
   }
-}
-
-
-void receiveEvent(int howMany){
-   while(Wire.available()>0){
-      int c = Wire.read();
-      
-      // the first byte is the command parameter sent from node 0x01 so ignore it
-      if(c!=1){
-         setLightState(c);
-      }
-   } 
 }
 
 void setStatesToFalse(){
@@ -326,6 +338,20 @@ void setStatesToFalse(){
    
 }
 
+// function called when i2c data received from rpi
+void receiveEvent(int howMany){
+   while(Wire.available()>0){
+      int c = Wire.read();
+      
+      // the first byte is the command parameter sent from node 0x01 so ignore it
+      if(c!=1){
+         setLightState(c);
+      }
+   } 
+}
+
+
+// set cases based on i2c commands
 void setLightState(int val){
    switch(val){
       case 2:
@@ -335,8 +361,8 @@ void setLightState(int val){
         break;
       case 3:
         setStatesToFalse();
-        red = true;
-        limitAnimation = false;
+        fadeBlue = true;
+        limitAnimation = true;
         break;
       case 4:
         setStatesToFalse();
