@@ -2,7 +2,7 @@
 #include <Servo.h>
 #include "ServoEaser.h"
 
-#define I2C_ADDR 0x04
+#define I2C_ADDR 0x07
 
 const int numServos = 2;
 
@@ -10,7 +10,7 @@ int servoPins[6] = {2,3,4,5,6,7};
 
 int servoFrameMillis = 20; // min time between servo updates
 
-int easeDuration = 1000;
+int easeDuration = 1000; //default duration
 
 
 
@@ -88,6 +88,7 @@ void receiveEvent(int howMany){
       uint8_t c = Wire.read();
       
       // use cmd parameter from node to set duration of easing
+      // since they are so small i can expect servo angles to not conflict with these
       if(c==1){
          easeDuration = 1000; 
       }
@@ -124,6 +125,9 @@ void runServo(uint8_t servoNum, uint8_t angle){
 }
 
 void resetServos(){
+  
+  // these values were calibrated for each servo
+  
   servo[0].writeMicroseconds(1515);
   servo[1].writeMicroseconds(1485);
   servo[2].writeMicroseconds(1465);
