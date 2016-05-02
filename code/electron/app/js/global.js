@@ -71,13 +71,15 @@ $(document).ready(function(){
 
 	function findRandomLocalGif(category, setDuration){
 		// further randomize gif selection by shuffling array
-		var gifCategory = shuffle(localGifs.category);
+		// pass in false for set duration for gif to continuously loop e.g no internet
+
+		var gifCategory = shuffle(localGifs[category]);
 
 		var randomGifNumber = Math.floor(Math.random()*gifCategory.length)
 
-		var randomGif = gifsCategory[randomGifNumber]
+		var randomGif = gifCategory[randomGifNumber]
 
-		var gifpath = path.join(__dirname, 'images', 'local', randomGif)
+		var gifpath = path.join(__dirname, 'images', 'local',category, randomGif)
 
 		if(setDuration){
 			findGifDuration(gifpath, false) // false since they are local files
@@ -148,11 +150,11 @@ $(document).ready(function(){
 		if(original_gif_size <= max_allowed_gif_size){
 			return obj.url
 		} else {
-			return findLargerGif(obj);
+			return findSmallerLargerGif(obj);
 		}
 	}
 
-	function findLargerGif(obj){
+	function findSmallerLargerGif(obj){
 		// find higher quality gif if original is too large
 		// and use it to be displayed
 
@@ -358,7 +360,7 @@ $(document).ready(function(){
 
 	function blink(){
 		// randomize blinking
-		var timeArray = [4000, 6000, 10000, 1000, 500, 8000]
+		var timeArray = [4000, 6000, 10000, 1000, 500, 8000, 500]
 
 		left_eye.animate({ry:closedEye}, closeEyeDuration,mina.elastic(), function(){
 			left_eye.animate({ry:eyeSize}, openEyeDuration, mina.easein());
@@ -428,12 +430,18 @@ $(document).ready(function(){
 		console.log('lost connection');
 		console.log("State: " + Offline.state);
 		connected = false;
+
+		// send out ble signal so new wifi can be configured
+		startBleAdvertising();
 	})
 
 	Offline.on('up', function(){
 		console.log('connection returned')
 		console.log("State: " + Offline.state)
 		connected = true;
+
+		// stop sending ble signal as wifi has been configured
+		stopBleAdvertising();
 	})
 
 	Offline.on('checking', function(){
@@ -753,6 +761,8 @@ $(document).ready(function(){
 
 	var apiAi = new ApiAi(config);
 
+	var listeningDuration = 3000;
+
 	// API.AI EVENTS
 
 	apiAi.onInit = function(){
@@ -793,6 +803,14 @@ $(document).ready(function(){
 
 	apiAi.onResults = function(data){
 		console.log(data.result);
+		console.log(data);
+
+		if(data.parameters){
+			window[data.results](data.parameters)
+		} else {
+			window[data.result]
+		}
+		
 		//apiAi.stopListening();
 		apiAi.close();
 
@@ -808,7 +826,7 @@ $(document).ready(function(){
 		console.log("start timer")
 		setTimeout(function(){
 			apiAi.stopListening();
-		}, 3000)
+		}, listeningDuration)
 	}
 
 	// ACTION FUNCTIONS - BASED ON API AI RESPONSES
@@ -826,6 +844,8 @@ $(document).ready(function(){
 			unit: 'c',
 			success: function(weather){
 				console.log(weather);
+				// use this to find gif
+				console.log(weather.currently);
 			},
 
 			error: function(error){
@@ -847,7 +867,8 @@ $(document).ready(function(){
 			method: "GET",
 			success: function(obj){
 				var date = moment(obj.data.time_zone[0].localtime)  // converts string of time at location to date moment object
-				console.log(date._d.getHours()) // gets hours from moment date object
+				console.log(date._d.getHours()) // gets hours from moment date object use for logic
+				console.log(date);
 			},
 			error: function(err){
 				console.log(err)
@@ -933,7 +954,7 @@ $(document).ready(function(){
 			'numFrames': 10,
 			'keepCameraOn': false,
 			'completeCallback':function(){
-				console.log('done');
+				console.log("done");
 			}
 			//'saveRenderingContexts': true,
 
@@ -947,8 +968,6 @@ $(document).ready(function(){
 				// use this to save the image to be able to send/email
 				latestImage = image
 
-				console.log(image);
-				console.log(obj.cameraStream);
 
 				//stop this stream
 				obj.cameraStream.getTracks()[0].stop();
@@ -959,12 +978,42 @@ $(document).ready(function(){
 				}
 				
 				showDiv("pictureWrapper")
+				console.log("started cb")
+				setTimeout(function(){
+					showDiv("eyeWrapper")
+				},4000);
 
-				
 			}
 		})
-
 		// send picture to chrome extension
+	}
+
+	var video = $("video")
+	var track = null;
+
+	function getCameraFeed(){
+		showDiv("cameraWrapper");
+
+		navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
+		var constraints = {audio:false, video:{width:800, height:480}}
+
+		navigator.getUserMedia(constraints, function(stream){
+			video.attr({'src':URL.createObjectURL(stream)})
+			track = stream.getTracks()[0]
+
+			video.on('loadedmetadata', function(e){
+				video.get(0).play();
+
+				//start gifshot once camera is loaded
+				takePicture();
+			})			
+
+		}, function(err){
+			alert("Error accessing camera");
+			console.log("error: " + err)
+		})
+		
 	}
 
 	function sendPicture(img){
@@ -1009,33 +1058,41 @@ $(document).ready(function(){
 
 	function searchSpotify(query, searchLimit=10){
 
-		spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
-			if(!err){
+		if(canPlayMusic){
+			spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
+				if(!err){
 
-				var randomSong = Math.floor(Math.random()*searchLimit);
-				console.log(data.tracks)
-				console.log(data.tracks.items[randomSong].preview_url);
+					var randomSong = Math.floor(Math.random()*searchLimit);
+					//console.log(data.tracks)
+					//console.log(data.tracks.items[randomSong].preview_url);
 
-				var song = data.tracks.items[randomSong]
-				var url = song.preview_url
-				var artistName = song.artists[0].name;
-				var albumCover = song.album.images[0].url;
-				var albumName = song.album.name
+					var song = data.tracks.items[randomSong]
+					var url = song.preview_url
+					var artistName = song.artists[0].name;
+					var albumCover = song.album.images[0].url;
+					var albumName = song.album.name
 
-				console.log(artistName, albumName, albumCover)
+					console.log(artistName, albumName, albumCover)
 
-				playMusic(url);
+					playMusic(url);
 
-				getArtistImage(artistName)
-			} else {
-				console.log("ERROR: " + err)
-			}
-		})
+					getArtistImage(artistName)
+				} else {
+					console.log("ERROR: " + err)
+				}
+			})
+		} else {
+			findRandomLocalGif("cant" ,true)
+		}
 	}
 
 	function playMusic(url){
 		song.attr('autoplay','true');
 		song.attr({'src':url});
+
+		setTimeout(function(){
+			showDiv("eyeWrapper");
+		}, 30000)
 	}
 
 	function getArtistImage(artist, searchLimit=10){
@@ -1051,39 +1108,18 @@ $(document).ready(function(){
 		})
 	}
 
-	function showArtistImage(artist){
+	function showArtistImage(path){
 		console.log("show artist image")
+		showGif(path);
+		showDiv("gifWrapper");
 		// show a gif 
 		// switch to static image
 	}
 
-
-	
-
-	var video = $("video")
-	var track = null;
-
-	function getCameraFeed(){
-		navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-
-		var constraints = {audio:false, video:{width:800, height:480}}
-
-		navigator.getUserMedia(constraints, function(stream){
-			video.attr({'src':URL.createObjectURL(stream)})
-			window.pictureStream = stream;
-			track = stream.getTracks()[0]
-
-			video.on('loadedmetadata', function(e){
-				video.get(0).play();
-			})			
-
-		}, function(err){
-			alert("Error accessing camera");
-			console.log("error: " + err)
-		})
-		
+	function learn(){
+		findRandomLocalGif("learning", true);
+		canPlayMusic = true;
 	}
-
 
 
 	/////********* SOCKET EVENTS  *******//////
@@ -1112,6 +1148,10 @@ $(document).ready(function(){
 		searchSpotify('beatles',10);
 	})
 
+	$("#activateMusic").on('click', function(){
+		learn();
+	})
+
 	$("#getArtist").on("click", function(){
 		getArtistImage("beatles")
 	})
@@ -1121,11 +1161,11 @@ $(document).ready(function(){
 	})
 
 	$("#takePicture").on("click", function(){
-		takePicture();
+		getCameraFeed();
 	})
 
 	$("#getWeather").on("click", function(){
-		getWeather('New York');
+		getWeather('Mumbai');
 	})
 
 	$("#scanWifi2").on('click', function(){
@@ -1192,12 +1232,16 @@ $(document).ready(function(){
 		fastBlink();
 	})
 
+	$("#showTest").on("click", function(){
+		showDiv("testWrapper");
+	})
+
 	$("#buffer").on("click", function(){
 		arrayBuffer();
 	})
 
 	showDiv("testWrapper");
 
-	//startBlinking();
+	startBlinking();
 
 })

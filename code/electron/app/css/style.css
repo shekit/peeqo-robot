@@ -3,7 +3,7 @@ body, div {
 	margin: 0;
 }
 
-video {
+video, #selfie {
 	-webkit-transform: rotateY(-180deg);
 	tranform: rotateY(-180deg);
 }
@@ -50,6 +50,9 @@ img {
 
 #wrapper {
 	position: relative;
+	height: 800px;
+	width: 480px;
+	overflow: hidden;
 }
 
 #glasses{
