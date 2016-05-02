@@ -115,6 +115,7 @@ $(document).ready(function(){
 			var randomGifObj = randomGif.images
 
 			var url = checkGifSize(randomGifObj)
+			console.log(randomGif);
 
 			playGiphyGif(url);
 
@@ -124,7 +125,6 @@ $(document).ready(function(){
 
 			var smallUrl = findSmallestGif(randomGifObj)
 
-			console.log(smallUrl);
 
 			downloadGif(smallUrl,uniqueName)
 		})
@@ -194,6 +194,7 @@ $(document).ready(function(){
 
 			findGifDuration(gifPath, true)
 		})
+
 	}
 
 	var spawn = require('child_process').spawn;
@@ -243,7 +244,7 @@ $(document).ready(function(){
 		// check here to decide how many times to loop based on length of gif
 		if(dur<=300){
 			loop = 6
-		} else if(dur<=500){
+		} else if(dur<=800){
 			loop = 4
 		} else if(dur<=1500){
 			loop = 3
@@ -267,8 +268,9 @@ $(document).ready(function(){
 
 	var gif = $("#gif");
 
-	function playGiphyGif(url){
+	function playGiphyGif(path){
 		// puts giphy gif in wrapper
+		console.log("show giphy gif")
 		showGif(path);
 
 		// when gif has loaded display it
@@ -430,7 +432,7 @@ $(document).ready(function(){
 		console.log('lost connection');
 		console.log("State: " + Offline.state);
 		connected = false;
-
+		findRandomLocalGif("no_internet", false);
 		// send out ble signal so new wifi can be configured
 		startBleAdvertising();
 	})
@@ -439,7 +441,7 @@ $(document).ready(function(){
 		console.log('connection returned')
 		console.log("State: " + Offline.state)
 		connected = true;
-
+		findRandomLocalGif("excited", true);
 		// stop sending ble signal as wifi has been configured
 		stopBleAdvertising();
 	})
@@ -846,6 +848,7 @@ $(document).ready(function(){
 				console.log(weather);
 				// use this to find gif
 				console.log(weather.currently);
+				searchGiphy(weather.currently);
 			},
 
 			error: function(error){
@@ -1032,9 +1035,23 @@ $(document).ready(function(){
 		// activate a disabled skill set
 	}
 
+	var petTimer = null;
+	var pettingPeeqo = false;
+
 	function petting(){
 		// show getting pet gif
+		//clearTimeout(petTimer);
 		console.log("petting");
+		findRandomLocalGif("petting",false)
+
+		
+	}
+
+	function stopPetting(){
+		pettingPeeqo = false;
+		petTimer = setTimeout(function(){
+			showDiv("eyeWrapper");
+		}, 500);
 	}
 
 	function annoy(){
@@ -1168,6 +1185,10 @@ $(document).ready(function(){
 		getWeather('Mumbai');
 	})
 
+	$("#getGiphy").on("click", function(){
+		searchGiphy("superman");
+	})
+
 	$("#scanWifi2").on('click', function(){
 		scanWifi();
 	})
@@ -1189,7 +1210,17 @@ $(document).ready(function(){
 	})	
 
 	$("body").hammer().bind('pan', function(e){
-		petting();
+		//petting();
+		console.log("pan")
+		if(pettingPeeqo == false){
+			pettingPeeqo = true;
+			petting();
+		}
+	})
+
+	$("body").hammer().bind('panend', function(e){
+		console.log("stopped panning")
+		stopPetting();
 	})
 
 	// $("body").hammer().bind('tap', function(e){
