@@ -29,6 +29,17 @@ $(document).ready(function(){
 	  	return array;
 	}
 
+	function arrayBuffer(){
+		var arr = new Uint8Array([30,56,78,22,44,55]);
+		var buff = Buffer.from(arr)
+		console.log(arr.buffer);
+		console.log(buff);
+	}
+	
+
+
+
+
 	/////**** GIFS *****/////
 
 	// var localGifs = {
@@ -435,12 +446,6 @@ $(document).ready(function(){
 	var i2c = require('i2c-bus')
 	var i2c1 = null
 
-	var ledMiniAddress = 0x04
-	var ledMiniAccessCmd = 0xa1
-
-	var servoMiniAddress = 0x07
-	var servoMiniAccessCmd = 0xa2
-
 	i2c1 = i2c.open(1, function(err){
 		if(err){
 			console.log("i2c error: "+err )
@@ -449,21 +454,88 @@ $(document).ready(function(){
 		}
 	})
 
-	i2c1.receiveByte(ledMiniAddress, function(err, byte){
-		console.log("led mini finished task")
-	})
 
-	i2c1.receiveByte(servoMiniAddress, function(err, byte){
-		console.log("servo mini finished task")
-	})
+	var ledMiniAddress = 0x04;
+	var ledMiniAccessCmd = 0x01;
 
-	function sendI2C(addr, code, byte){
-		i2c1.writeByte(addr, code, byte, function(){
-			console.log("sent i2c message to: "+addr)
-		})
+	var ledCommands = {
+		error:{
+			desc: "",
+			cmd: 0x02
+		},
+		success:{
+			desc: "",
+			cmd: 0x03
+		},
+		alert:{
+			desc: "",
+			cmd: 0x04
+		},
+		listen:{
+			desc: "",
+			cmd: 0x05
+		},
+		fade:{
+			desc: "",
+			cmd: 0x06
+		}
 	}
-	*/
 
+	var servoMiniAddress = 0x07;
+
+	var servoMiniAccessCmd = {
+		easing1:{
+			duration:1000,
+			cmd:0x01;
+		},
+		easing2:{
+			duration:2000,
+			cmd:0x02;
+		},
+		easing3:{
+			duration:3000,
+			cmd:0x03;
+		}
+
+	}
+
+	var servoCommands = {
+		yes:{
+			desc:"",
+			cmd:[34,56,33,55,66,66]	
+		},
+		no:{
+			desc:"",
+			cmd:[34,56,33,55,66,66]	
+		},
+		twist:{
+			desc:"",
+			cmd:[34,56,33,55,66,66]	
+		},
+		idle:{
+			desc:"",
+			cmd:[34,56,33,55,66,66]	
+		},
+		alert:{
+			desc:"",
+			cmd:[34,56,33,55,66,66]	
+		},
+		sleepy:{
+			desc:"",
+			cmd:[34,56,33,55,66,66]	
+		},
+	}
+
+	function sendi2cByte(addr, cmd, byte){
+		i2c1.writeByte(addr, cmd, byte, function(){})
+	}
+
+	function sendi2cBuffer(addr, cmd, array){
+		var buffer = Buffer.from(array);
+
+		i2c1.writeI2cBlock(addr, cmd, array.length, buffer, function(){})
+	}
+*/
 
 	////**** WIFI SCANNING ****////
 
@@ -1120,7 +1192,11 @@ $(document).ready(function(){
 		fastBlink();
 	})
 
-	showDiv("eyeWrapper");
+	$("#buffer").on("click", function(){
+		arrayBuffer();
+	})
+
+	showDiv("testWrapper");
 
 	//startBlinking();
 
