@@ -489,6 +489,10 @@ $(document).ready(function(){
 		}
 	}
 
+	function sendLedAnimation(anim){
+		//sendi2cByte(ledMiniAddress, ledMiniAccessCmd, ledCommands[anim].cmd)
+	}
+
 	var servoMiniAddress = 0x07;
 
 	// these durations and cmds should match those set in arduino
@@ -687,7 +691,7 @@ $(document).ready(function(){
 					}
 				}
 
-				console.log(totalAnimationDuration);
+				//console.log(totalAnimationDuration);
 
 				setExpressionTimer(expressions[i], totalAnimationDuration);
 			}
@@ -697,9 +701,12 @@ $(document).ready(function(){
 
 	function setExpressionTimer(expression, totalDuration){
 		var timer = setTimeout(function(){
-			console.log("EXPRESSION: "+expression);
-			console.log("TOTAL DUR: "+totalDuration)
+			//console.log("EXPRESSION: "+expression);
+			//console.log("TOTAL DUR: "+totalDuration)
+
+			//findRandomLocalGif(expression, false)
 			sendMovementSequence(expression);
+
 		}, totalDuration)
 	}
 
