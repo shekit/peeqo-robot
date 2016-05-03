@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var socket_url = 'http://localhost:3000'
+	var socket_url = 'http://107.170.76.97:3000'
 
 	var socket = io(socket_url + '/controlpanel')
 
