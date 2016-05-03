@@ -14,16 +14,23 @@ img {
 	margin-right: auto;
 }
 
-#eyes {
+#wrapper{
 	width: 800px;
 	height: 480px;
+	margin:0 !important;
+	padding:0;
+}
+
+#eyes {
+	width: 100%;
+	height: 100%;
 	background: white;
 }
 
 #testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper {
 	display: none;
-	height: 800px;
-	width: 480px;
+	height: 100%;
+	width: 100%;
 	overflow: hidden;
 }
 
