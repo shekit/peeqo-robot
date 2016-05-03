@@ -3,7 +3,7 @@
 
 #define PIXEL_PIN 6
 #define PIXEL_COUNT 12
-#define RING_BRIGHTNESS 32
+#define RING_BRIGHTNESS 64
 
 #define I2C_ADDR 0x04
 
@@ -355,19 +355,35 @@ void receiveEvent(int howMany){
 // have different cases to limit animation or not to
 void setLightState(int val){
    switch(val){
-      case 2:
+      case 2: // ERROR state
         setStatesToFalse();
-        red = true;
-        limitAnimation = false;  // will go on forever or till other command
+        redBlink = true;
+        limitAnimation = true;  // will go on forever or till other command
         break;
-      case 3:
+      case 3: //success case
         setStatesToFalse();
-        fadeBlue = true;
+        fadeGreen = true;
         limitAnimation = true;   // will be limited by variable set for this functions animation limit
         break;
-      case 4:
+      case 4:  //alert case
         setStatesToFalse();
-        off = true;
+        blue = true;
+        limitAnimation = false;
+        break;
+      case 5: //fade red case
+        setStatesToFalse();
+        fadeRed = true;
+        limitAnimation = true;
+        break;
+      case 6: // off case
+        setStatesToFalse();
+        black = true;
+        limitAnimation = true;
+        break;
+      case 7:  //idle case
+        setStatesToFalse();
+        fadeBlue = true;
+        limitAnimation = false;
         break;
       default:
         break;

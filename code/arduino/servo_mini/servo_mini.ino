@@ -4,7 +4,7 @@
 
 #define I2C_ADDR 0x07
 
-const int numServos = 2;
+const int numServos = 6;
 
 int servoPins[6] = {2,3,4,5,6,7};
 
@@ -12,6 +12,11 @@ int servoFrameMillis = 20; // min time between servo updates
 
 int easeDuration = 1000; //default duration
 
+int easing1 = 500;
+int easing2 = 1000;
+int easing3 = 1500;
+int easing4 = 2000;
+int easing5 = 3000;
 
 
 Servo servo[6];
@@ -89,26 +94,43 @@ void receiveEvent(int howMany){
       
       // use cmd parameter from node to set duration of easing
       // since they are so small i can expect servo angles to not conflict with these
-      if(c==1){
-         easeDuration = 1000; 
-      }
       
-      if(c==2){
-         easeDuration = 2000; 
-      }
-      
-      if(c==3){
-         easeDuration = 4000; 
+      switch(c){
+         case 1:
+            easeDuration = easing1;
+            break;
+         case 2:
+            easeDuration = easing2; 
+            break;
+           
+        case 3:
+            easeDuration = easing3; 
+            break;
+        case 4:
+            easeDuration = easing4;
+            break;
+        case 5:
+            easeDuration = easing5;
+            break;
+        case 6:
+            easeDuration = easing2;
+            for(int i=0;i<numServos;i++){
+              servoEaser[i].setEasingFunc(easeOutBounce);
+            }
+            break;
+        default:
+            break;
+          
       }
       
       // define a cmd or char to reset servos
-      if(c==4){
-         resetServos();
-      }
+//      if(c==4){
+//         resetServos();
+//      }
        
       // this is done only if the bytes dont match the cmd parameter
       // helps eliminate first cmd para sent from node
-      if(c>4){
+      if(c>6){
          myAngles[i] = c;
       } 
       
