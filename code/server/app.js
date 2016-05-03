@@ -58,6 +58,47 @@ controlpanel_io.on('connection', function(socket){
 	socket.on("listen", function(msg){
 		peeqo_io.emit("listen","yes")
 	})
+
+	socket.on("sayHi", function(msg){
+		peeqo_io.emit("sayHi","yes")
+	})
+
+	socket.on("sayBye", function(msg){
+		peeqo_io.emit("sayBye", "yes")
+	})
+
+	socket.on('takePicture', function(msg){
+		peeqo_io.emit("camera","yes")
+	})
+
+	socket.on("startBle", function(msg){
+		peeqo_io.emit("startBle","yes")
+	})
+
+	socket.on("showExpressions", function(msg){
+		peeqo_io.emit("showExpressions","yes");
+	})
+
+	socket.on("move", function(msg){
+		peeqo_io.emit("move","yes")
+		console.log("got moving")
+	})
+
+	socket.on("playMusic", function(msg){
+		peeqo_io.emit("playMusic", "yes")
+	})
+
+	socket.on("activateMusic", function(msg){
+		peeqo_io.emit("activateMusic","yes")
+	})
+
+	socket.on("idle", function(msg){
+		peeqo_io.emit("idle","yes")
+	})
+
+	socket.on("stopIdle", function(msg){
+		peeqo_io.emit("stopIdle","yes")
+	})
 })
 
 // socket connections from chrome extension
@@ -68,8 +109,8 @@ extension_io.on('connection', function(socket){
 	console.log("extension connected")
 
 	socket.on('blocked', function(msg){
-		console.log("URL :" + msg.url)
-		peeqo_io.emit("blocked", "yes")
+		// console.log("URL :" + msg.url)
+		peeqo_io.emit("blocked", msg.url)
 	})
 
 	socket.on('notes', function(msg){
