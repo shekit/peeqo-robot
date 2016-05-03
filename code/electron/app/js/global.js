@@ -452,17 +452,17 @@ $(document).ready(function(){
 
 
 	////**** i2c ******//////
-	/*
-	var i2c = require('i2c-bus')
-	var i2c1 = null
+	
+	// var i2c = require('i2c-bus')
+	// var i2c1 = null
 
-	i2c1 = i2c.open(1, function(err){
-		if(err){
-			console.log("i2c error: "+err )
-		} else {
-			console.log("I2C OPEN")
-		}
-	})
+	// i2c1 = i2c.open(1, function(err){
+	// 	if(err){
+	// 		console.log("i2c error: "+err )
+	// 	} else {
+	// 		console.log("I2C OPEN")
+	// 	}
+	// })
 
 
 	var ledMiniAddress = 0x04;
@@ -496,27 +496,55 @@ $(document).ready(function(){
 	var servoMiniAccessCmd = {
 		easing1:{
 			duration:1000,
-			cmd:0x01;
+			cmd:0x01
 		},
 		easing2:{
 			duration:2000,
-			cmd:0x02;
+			cmd:0x02
 		},
 		easing3:{
 			duration:3000,
-			cmd:0x03;
+			cmd:0x03
 		}
 
 	}
 
-	var servoCommands = {
+	var movements = {
 		yes:{
 			desc:"",
-			cmd:[34,56,33,55,66,66]	
+			angles:[
+					[34,56,33,55,66,66]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing1.duration
+				]	
+		},
+		look: {
+			desc:"",
+			angles:[
+					[34,56,33,55,66,66],
+					[64,46,43,95,34,130],
+					[84,26,90,35,74,160]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,			// should match in length with angles
+					servoMiniAccessCmd.easing2.cmd,			// should access same commands as duration below
+					servoMiniAccessCmd.easing3.cmd,
+				],
+			duration:[
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing2.duration,
+					servoMiniAccessCmd.easing3.duration
+				]
 		},
 		no:{
 			desc:"",
-			cmd:[34,56,33,55,66,66]	
+			cmd:[
+					[34,56,33,55,66,66]	
+				]
 		},
 		twist:{
 			desc:"",
@@ -536,16 +564,92 @@ $(document).ready(function(){
 		},
 	}
 
-	function sendi2cByte(addr, cmd, byte){
-		i2c1.writeByte(addr, cmd, byte, function(){})
+	// function sendi2cByte(addr, cmd, byte){
+	// 	i2c1.writeByte(addr, cmd, byte, function(){})
+	// }
+
+	// function sendi2cBuffer(addr, cmd, array){
+	// 	var buffer = Buffer.from(array);
+
+	// 	i2c1.writeI2cBlock(addr, cmd, array.length, buffer, function(){})
+	// }
+
+	var movementTimeouts = [];
+
+	function clearMovementTimeouts(){
+		for(var i=0;i<movementTimeouts.length;i++){
+			clearTimeout(movementTimeouts[i])
+		}
+
+		movementTimeouts = [];
 	}
 
-	function sendi2cBuffer(addr, cmd, array){
-		var buffer = Buffer.from(array);
+	function sendMovementSequence(name){
 
-		i2c1.writeI2cBlock(addr, cmd, array.length, buffer, function(){})
+		// remove any prev store timers
+		clearMovementTimeouts();
+
+
+		var commands = movements[name].access_cmd;
+		var angles = movements[name].angles;
+		var durations = movements[name].duration;
+
+		console.log(angles);
+
+		// if by mistake sizes differ then set cmd seq to be equal to move seq and set easing to default
+		if(commands.length != angles.length){
+			commands.length = angles.length
+
+			for(var i in commands){
+				commands[i] = servoMiniAccessCmd.easing1.cmd;
+			}
+		}
+
+		// send first command immediately
+		//sendi2cBuffer(servoMiniAddress, commands[0], angles[0]);
+
+		//console.log(angles[0])
+		//movementTimeouts.push
+
+		//stagger and setTimers for the other moves
+		for(var i=0;i<angles.length;i++){
+
+
+			var timerDuration = 0;
+
+			// find sum of time of all previous angles
+			if(i>0){
+				for(var j=i-1;j>=0;j--){
+					timerDuration+=durations[j]
+				}
+			}
+
+			console.log(timerDuration);
+
+			// // run timeout to play command when time has elapsed.
+			// var timer = setTimeout(function(){
+			// 	//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
+			// 	console.log(angles[i]);
+			// }, timerDuration)
+
+			// //add to array so we can clear all of them later to interrupt timers
+			// movementTimeouts.push(timer);
+
+			addMovementTimer(i, angles, commands, timerDuration)
+		}
+
+		console.log(movementTimeouts);
+		
 	}
-*/
+
+	function addMovementTimer(i, angles, commands, duration){
+		var timer = setTimeout(function(){
+			console.log(angles[i])
+			//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
+		}, duration)
+
+		movementTimeouts.push(timer);
+	}
 
 	////**** WIFI SCANNING ****////
 
@@ -1265,6 +1369,10 @@ $(document).ready(function(){
 
 	$("#showTest").on("click", function(){
 		showDiv("testWrapper");
+	})
+
+	$("#moveDemo").on("click", function(){
+		sendMovementSequence("look");
 	})
 
 	$("#buffer").on("click", function(){
