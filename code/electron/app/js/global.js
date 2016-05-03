@@ -6,8 +6,6 @@ $(document).ready(function(){
 
 	var path = require('path');
 
-	var allTimers = new Array();
-
 	var config = require('./config/config.js');
 
 	// shuffle array
@@ -263,7 +261,7 @@ $(document).ready(function(){
 				showDiv("eyeWrapper");
 			}, dur*loop)
 		}		
-		//allTimers.push(gifLoopTimer);
+		
 	}
 
 	var gif = $("#gif");
@@ -510,7 +508,7 @@ $(document).ready(function(){
 	}
 
 	var movements = {
-		yes:{
+		excited:{
 			desc:"",
 			angles:[
 					[34,56,33,55,66,66]
@@ -522,7 +520,25 @@ $(document).ready(function(){
 					servoMiniAccessCmd.easing1.duration
 				]	
 		},
-		look: {
+		sad: {
+			desc:"",
+			angles:[
+					[34,56,33,55,66,66],
+					[64,46,43,95,34,130],
+					[84,26,90,35,74,160]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,			// should match in length with angles
+					servoMiniAccessCmd.easing2.cmd,			// should access same commands as duration below
+					servoMiniAccessCmd.easing3.cmd,
+				],
+			duration:[
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing2.duration,
+					servoMiniAccessCmd.easing3.duration
+				]
+		},
+		happy: {
 			desc:"",
 			angles:[
 					[34,56,33,55,66,66],
@@ -605,12 +621,6 @@ $(document).ready(function(){
 			}
 		}
 
-		// send first command immediately
-		//sendi2cBuffer(servoMiniAddress, commands[0], angles[0]);
-
-		//console.log(angles[0])
-		//movementTimeouts.push
-
 		//stagger and setTimers for the other moves
 		for(var i=0;i<angles.length;i++){
 
@@ -630,15 +640,6 @@ $(document).ready(function(){
 
 			console.log(timerDuration);
 
-			// // run timeout to play command when time has elapsed.
-			// var timer = setTimeout(function(){
-			// 	//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
-			// 	console.log(angles[i]);
-			// }, timerDuration)
-
-			// //add to array so we can clear all of them later to interrupt timers
-			// movementTimeouts.push(timer);
-
 			addMovementTimer(i, angles, commands, timerDuration)
 		}
 
@@ -653,6 +654,53 @@ $(document).ready(function(){
 		}, duration)
 
 		movementTimeouts.push(timer);
+	}
+
+	var expressions = ["happy","sad","excited","angry","confused","annoyed"]; // make sure names match movements obj keys
+
+	var expressionTimeouts = [];
+
+	function clearExpressionTimeouts(){
+		for(var i=0;i<expressionTimeouts.length;i++){
+			clearTimeout(expressionTimeouts[i])
+		}
+
+		expressionTimeouts = [];
+	}
+
+	function showAllExpressions(){
+
+		clearExpressionTimeouts();
+
+		// cycle through expressions array
+		for(var i in expressions){
+
+			// sanity check, only do if movements have been defined for it
+			if(expressions[i] in movements){
+
+				var totalAnimationDuration = 0;
+
+				// find total duration of sequence to show expression
+				if(i>0){
+					for(var j=0;j<movements[expressions[i]].duration.length;j++){
+						totalAnimationDuration+=movements[expressions[i]].duration[j]
+					}
+				}
+
+				console.log(totalAnimationDuration);
+
+				setExpressionTimer(expressions[i], totalAnimationDuration);
+			}
+			
+		}
+	}
+
+	function setExpressionTimer(expression, totalDuration){
+		var timer = setTimeout(function(){
+			console.log("EXPRESSION: "+expression);
+			console.log("TOTAL DUR: "+totalDuration)
+			sendMovementSequence(expression);
+		}, totalDuration)
 	}
 
 	// find out way to get angle value of this from arduino instead of microus
@@ -777,11 +825,16 @@ $(document).ready(function(){
 	})
 
 	function startBleAdvertising(){
-		bleno.startAdvertising(ble_name, serviceUuid)
+		if(bleAdvertising == false){
+			bleno.startAdvertising(ble_name, serviceUuid)
+		}
 	}
 
 	function stopBleAdvertising(){
-		bleno.stopAdvertising();
+		if(bleAdvertising == true){
+			bleno.stopAdvertising();
+		}
+		
 	}
 
 	
@@ -821,27 +874,11 @@ $(document).ready(function(){
 	
 	// ANNYANG CONFIGURATION
 
-	var startAnnyang = false;
-
-	if(annyang){
-		console.log("Annyang detected");
-
-		annyang.debug();
-
-		var commands = {
-			"pico": activateListening,
-			"peko": activateListening,
-			"piko": activateListening
-		}
-
-		annyang.addCommands(commands);
-
-		annyang.start();	
-	}
+	var isAnnyangOn = false; // use this to decide if annyang should be used or not
 
 	function startAnnyang(){
-		if(annyang || startAnnyang){
-			annyang.debug();
+		if(annyang && isAnnyangOn){
+			//annyang.debug();
 
 			var commands = {
 				"pico": activateListening,
@@ -852,8 +889,12 @@ $(document).ready(function(){
 			annyang.addCommands(commands);
 
 			annyang.start();
+		} else {
+			console.log("annyang is deactivated");
 		}
 	}
+
+	
 
 	function mimicAnnyang(){
 		// calls everything that happens when pico is detected
@@ -863,16 +904,18 @@ $(document).ready(function(){
 
 	function activateListening(){
 		console.log("You said peeqo");
-		annyang.abort(); // pause causes it to continue detecting
-		//annyang.pause();
-		//apiAi.open();
 
-		// init api.ai which will call subsequent functions to start detecting
+		if(isAnnyangOn){
+			annyang.abort();
+			// pause causes it to continue detecting
+			//annyang.pause();
+		}
+		 
+		// init api.ai which will call subsequent functions to trigger
 		apiAi.init();
 	}
 
 	// API.AI CONFIGURATION
-	
 
 	var apiConfig = {
 		server: config.server,
@@ -935,8 +978,10 @@ $(document).ready(function(){
 		//apiAi.stopListening();
 		apiAi.close();
 
-		// restart annyang to start listening for keyword peeqo
-		annyang.resume();
+		if(isAnnyangOn){
+			// restart annyang to start listening for keyword peeqo
+			annyang.resume();
+		}
 	}
 
 	apiAi.onError = function(code , data){
@@ -1018,6 +1063,7 @@ $(document).ready(function(){
 		// find gif from local filesystem or giphy depending on greeting and display
 
 		// send i2c message for lights and movement
+		findRandomLocalGif("hello", true);
 	}
 
 	function greetPrivate(){
@@ -1040,6 +1086,7 @@ $(document).ready(function(){
 
 	function motivate(){
 		// show you can do it or motivation gif
+		findRandomLocalGif("motivation", true);
 	}
 
 
@@ -1049,17 +1096,14 @@ $(document).ready(function(){
 
 	function showExpression(expression){
 
-		var dir_path = './images/gif/'+expression;
-		var files = fs.readdirSync(dir_path);
-		var numberOfGifs = files.length;
-		var randomGif = Math.floor(Math.random()*numberOfGifs);
-
-		var file_path = numberOfGifs[randomGif];
+		findRandomLocalGif("excited");
 
 		// put image on screen
 		// set gif preference prefix global variable
 
 	}
+
+	
 
 	var latestImage = null;
 
@@ -1387,7 +1431,7 @@ $(document).ready(function(){
 	})
 
 	$("#moveDemo").on("click", function(){
-		sendMovementSequence("look");
+		showAllExpressions();
 	})
 
 	$("#buffer").on("click", function(){
@@ -1397,5 +1441,7 @@ $(document).ready(function(){
 	showDiv("testWrapper");
 
 	startBlinking();
+
+	startAnnyang();
 
 })
