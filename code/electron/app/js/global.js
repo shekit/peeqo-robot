@@ -493,6 +493,7 @@ $(document).ready(function(){
 
 	var servoMiniAddress = 0x07;
 
+	// these durations and cmds should match those set in arduino
 	var servoMiniAccessCmd = {
 		easing1:{
 			duration:1000,
@@ -506,7 +507,6 @@ $(document).ready(function(){
 			duration:3000,
 			cmd:0x03
 		}
-
 	}
 
 	var movements = {
@@ -624,6 +624,10 @@ $(document).ready(function(){
 				}
 			}
 
+			if(i==angles.length-1){
+				resetServos(timerDuration+durations[i])
+			}
+
 			console.log(timerDuration);
 
 			// // run timeout to play command when time has elapsed.
@@ -645,6 +649,17 @@ $(document).ready(function(){
 	function addMovementTimer(i, angles, commands, duration){
 		var timer = setTimeout(function(){
 			console.log(angles[i])
+			//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
+		}, duration)
+
+		movementTimeouts.push(timer);
+	}
+
+	// find out way to get angle value of this from arduino instead of microus
+	function resetServos(duration){
+		var timer = setTimeout(function(){
+			console.log("RESET SERVO");
+			console.log(duration);
 			//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
 		}, duration)
 
