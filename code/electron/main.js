@@ -16,12 +16,15 @@ app.on('ready', function(){
 
 	mainWindow.loadURL('file://'+__dirname+'/app/index.html')
 
-	mainWindow.webContents.openDevTools();
+	if(process.platform == 'darwin'){
+		mainWindow.webContents.openDevTools();
+	} else {
+		// for full screen on pi
+		mainWindow.setMenu(null);
+		mainWindow.setFullScreen(true);
+		mainWindow.maximize();
+	}
 
-	//for full screen on pi
-	/*mainWindow.setMenu(null);
-	mainWindow.setFullScreen(true);
-	mainWindow.maximize();*/
 })
 
 app.on('window-all-closed', function(){
