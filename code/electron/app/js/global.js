@@ -417,55 +417,28 @@ $(document).ready(function(){
 		glasses.attr({'src':glassPath});
 	}
 
-	////***** CHECK ONLINE OFFLINE STATUS ****////
-
-	// replace this with the url of the peeqo server or some server you know is always up
-	Offline.options = {
-		checks: {xhr: {url: 'http://google.com'}},
-		requests: false,
-		checkOnLoad: true
-	}
-
-	Offline.on('down', function(){
-		console.log('lost connection');
-		console.log("State: " + Offline.state);
-		connected = false;
-		findRandomLocalGif("no_internet", false);
-		// send out ble signal so new wifi can be configured
-		startBleAdvertising();
-	})
-
-	Offline.on('up', function(){
-		console.log('connection returned')
-		console.log("State: " + Offline.state)
-		connected = true;
-		findRandomLocalGif("excited", true);
-		// stop sending ble signal as wifi has been configured
-		stopBleAdvertising();
-	})
-
-	Offline.on('checking', function(){
-		console.log("CHECKING CONN")
-	})
+	
 
 
 	////**** i2c ******//////
 	
-	// var i2c = require('i2c-bus')
-	// var i2c1 = null
+	var i2c = require('i2c-bus')
+	var i2c1 = null
 
-	// i2c1 = i2c.open(1, function(err){
-	// 	if(err){
-	// 		console.log("i2c error: "+err )
-	// 	} else {
-	// 		console.log("I2C OPEN")
-	// 	}
-	// })
+	i2c1 = i2c.open(1, function(err){
+		if(err){
+			console.log("i2c error: "+err )
+		} else {
+			console.log("I2C OPEN")
+		}
+	})
 
 
 	var ledMiniAddress = 0x04;
 	var ledMiniAccessCmd = 0x01;
 
+
+	// must match arduino codes
 	var ledCommands = {
 		error:{
 			desc: "",
@@ -479,18 +452,24 @@ $(document).ready(function(){
 			desc: "",
 			cmd: 0x04
 		},
-		listen:{
+		fadeRed:{
 			desc: "",
 			cmd: 0x05
 		},
-		fade:{
+		off: {
 			desc: "",
 			cmd: 0x06
+		},
+		idle: {
+			desc:"",
+			cmd: 0x07
 		}
 	}
 
 	function sendLedAnimation(anim){
-		//sendi2cByte(ledMiniAddress, ledMiniAccessCmd, ledCommands[anim].cmd)
+		if(ledCommands[anim]){
+			sendi2cByte(ledMiniAddress, ledMiniAccessCmd, ledCommands[anim].cmd)
+		}
 	}
 
 	var servoMiniAddress = 0x07;
@@ -498,101 +477,135 @@ $(document).ready(function(){
 	// these durations and cmds should match those set in arduino
 	var servoMiniAccessCmd = {
 		easing1:{
-			duration:1000,
+			duration:500,
 			cmd:0x01
 		},
 		easing2:{
-			duration:2000,
+			duration:1000,
 			cmd:0x02
 		},
 		easing3:{
-			duration:3000,
+			duration:1500,
 			cmd:0x03
+		},
+		easing4:{
+			duration:2000,
+			cmd:0x04
+		},
+		easing5:{
+			duration:3000,
+			cmd:0x05
+		},
+		bounceEasing:{
+			duration:1000,
+			cmd:0x06
 		}
+
 	}
 
 	var movements = {
-		excited:{
+		reset: {
 			desc:"",
 			angles:[
-					[34,56,33,55,66,66]
+					[94,91,89,88,87,92]
 				],
 			access_cmd:[
 					servoMiniAccessCmd.easing1.cmd
 				],
 			duration: [
 					servoMiniAccessCmd.easing1.duration
-				]	
+				]
+		},
+		alert: {
+			desc:"",
+			angles:[
+					[50,130,50,130,50,130]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.bounceEasing.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.bounceEasing.duration
+				]
 		},
 		sad: {
 			desc:"",
 			angles:[
-					[34,56,33,55,66,66],
-					[64,46,43,95,34,130],
-					[84,26,90,35,74,160]
+					[109,81,81,90,81,109]
 				],
 			access_cmd:[
-					servoMiniAccessCmd.easing1.cmd,			// should match in length with angles
-					servoMiniAccessCmd.easing2.cmd,			// should access same commands as duration below
-					servoMiniAccessCmd.easing3.cmd,
+					servoMiniAccessCmd.easing5.cmd
 				],
-			duration:[
-					servoMiniAccessCmd.easing1.duration,
-					servoMiniAccessCmd.easing2.duration,
-					servoMiniAccessCmd.easing3.duration
+			duration: [
+					servoMiniAccessCmd.easing5.duration
 				]
 		},
 		happy: {
 			desc:"",
 			angles:[
-					[34,56,33,55,66,66],
-					[64,46,43,95,34,130],
-					[84,26,90,35,74,160]
+					[109,90,71,109,90,71],
+					[65,90,115,65,90,115],
+					[109,90,71,109,90,71]
 				],
 			access_cmd:[
-					servoMiniAccessCmd.easing1.cmd,			// should match in length with angles
-					servoMiniAccessCmd.easing2.cmd,			// should access same commands as duration below
-					servoMiniAccessCmd.easing3.cmd,
+					servoMiniAccessCmd.easing2.cmd,
+					servoMiniAccessCmd.easing4.cmd,
+					servoMiniAccessCmd.easing4.cmd
 				],
-			duration:[
-					servoMiniAccessCmd.easing1.duration,
+			duration: [
 					servoMiniAccessCmd.easing2.duration,
-					servoMiniAccessCmd.easing3.duration
+					servoMiniAccessCmd.easing4.duration,
+					servoMiniAccessCmd.easing4.duration
 				]
 		},
-		no:{
+		curious: {
 			desc:"",
-			cmd:[
-					[34,56,33,55,66,66]	
+			angles:[
+					[97,77,77,103,103,83],		// double to increase duration that is stops for
+					[97,77,77,103,103,83],
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration
 				]
 		},
-		twist:{
+		no: {
 			desc:"",
-			cmd:[34,56,33,55,66,66]	
+			angles:[
+					[96,96,96,96,96,96],		// double to increase duration that is stops for
+					[84,84,84,84,84,84],
+					[96,96,96,96,96,96],
+					[84,84,84,84,84,84]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing2.cmd,
+					servoMiniAccessCmd.easing2.cmd,
+					servoMiniAccessCmd.easing2.cmd,
+					servoMiniAccessCmd.easing2.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing2.duration,
+					servoMiniAccessCmd.easing2.duration,
+					servoMiniAccessCmd.easing2.duration,
+					servoMiniAccessCmd.easing2.duration
+				]
 		},
-		idle:{
-			desc:"",
-			cmd:[34,56,33,55,66,66]	
-		},
-		alert:{
-			desc:"",
-			cmd:[34,56,33,55,66,66]	
-		},
-		sleepy:{
-			desc:"",
-			cmd:[34,56,33,55,66,66]	
-		},
+
 	}
 
-	// function sendi2cByte(addr, cmd, byte){
-	// 	i2c1.writeByte(addr, cmd, byte, function(){})
-	// }
+	function sendi2cByte(addr, cmd, byte){
+		i2c1.writeByte(addr, cmd, byte, function(){})
+	}
 
-	// function sendi2cBuffer(addr, cmd, array){
-	// 	var buffer = Buffer.from(array);
+	function sendi2cBuffer(addr, cmd, array){
+		var buffer = Buffer.from(array);
 
-	// 	i2c1.writeI2cBlock(addr, cmd, array.length, buffer, function(){})
-	// }
+		i2c1.writeI2cBlock(addr, cmd, array.length, buffer, function(){})
+	}
 
 	var movementTimeouts = [];
 
@@ -654,7 +667,7 @@ $(document).ready(function(){
 	function addMovementTimer(i, angles, commands, duration){
 		var timer = setTimeout(function(){
 			console.log(angles[i])
-			//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
+			sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
 		}, duration)
 
 		movementTimeouts.push(timer);
@@ -715,7 +728,7 @@ $(document).ready(function(){
 		var timer = setTimeout(function(){
 			console.log("RESET SERVO");
 			console.log(duration);
-			//sendi2cBuffer(servoMiniAddress, commands[i], angles[i])
+			sendMovementSequence("reset");
 		}, duration)
 
 		movementTimeouts.push(timer);
@@ -756,6 +769,37 @@ $(document).ready(function(){
 		  console.log(response);
 		});
 	}
+
+	////***** CHECK ONLINE OFFLINE STATUS ****////
+
+	// replace this with the url of the peeqo server or some server you know is always up
+	Offline.options = {
+		checks: {xhr: {url: 'http://google.com'}},
+		requests: false,
+		checkOnLoad: true
+	}
+
+	Offline.on('down', function(){
+		console.log('lost connection');
+		console.log("State: " + Offline.state);
+		connected = false;
+		findRandomLocalGif("no_internet", false);
+		// send out ble signal so new wifi can be configured
+		startBleAdvertising();
+	})
+
+	Offline.on('up', function(){
+		console.log('connection returned')
+		console.log("State: " + Offline.state)
+		connected = true;
+		findRandomLocalGif("excited", true);
+		// stop sending ble signal as wifi has been configured
+		stopBleAdvertising();
+	})
+
+	Offline.on('checking', function(){
+		console.log("CHECKING CONN")
+	})
 
 	////**** BLUETOOTH ****////
 
@@ -847,22 +891,6 @@ $(document).ready(function(){
 	
 	var userPreferences = {}; //make an object containing all user related prefs
 
-	// track blocked sites
-	var blocked_sites = {
-		"facebook":{
-			"blocked": false,
-			"offenceCount": 0
-		},
-		"twitter":{
-			"blocked": false,
-			"offenceCount": 0
-		},
-		"youtube":{
-			"blocked": false,
-			"offenceCount": 0
-		}
-	}
-
 	
 
 	////**** SHUTDOWN PI ****/////
@@ -872,11 +900,6 @@ $(document).ready(function(){
 	function shutdown(){
 		execSync('sudo shutdown -h now')
 	}
-
-	// executed on socket message sent through server
-	// socket.on("shutdown", function(msg){
-
-	// })
 
 	
 	// ANNYANG CONFIGURATION
@@ -919,7 +942,11 @@ $(document).ready(function(){
 		}
 		 
 		// init api.ai which will call subsequent functions to trigger
-		apiAi.init();
+		if(apiAi.isInitialise()){
+			apiAi.init();
+		} else {
+			apiAi.open();
+		}
 	}
 
 	// API.AI CONFIGURATION
@@ -966,21 +993,63 @@ $(document).ready(function(){
 
 	apiAi.onStartListening = function(){
 		console.log("APIAI STARTED LISTENING")
+
+		sendLedAnimation("alert");
+		sendMovementSequence("alert");
 	}
 
 	apiAi.onStopListening = function(){
 		console.log("APIAI STOP LISTENING")
+
+		sendLedAnimation("off");
+		sendMovementSequence("reset");
 	}
 
 	apiAi.onResults = function(data){
 		console.log(data.result);
 		console.log(data);
 
-		if(data.parameters){
-			window[data.results](data.parameters)
-		} else {
-			window[data.result]
-		}
+		sendLedAnimation("success")
+
+		var obj = data.result;
+		var action = data.result.action;
+
+		switch(action){
+			case 'playMusic':
+				if(obj.parameters.artist){
+					searchSpotify(obj.parameters.artist)
+				}
+				break;
+
+			case 'greetPublic':
+				findRandomLocalGif(obj.parameters.greeting, true)
+				break;
+
+			case 'blockSite':
+				findRandomLocalGif("got_it")
+				obj.parameters.sites;
+				break;
+
+			case 'takePicture':
+				getCameraFeed();
+				break;
+
+			case 'addSkill':
+				canPlayMusic = true;
+				findRandomLocalGif("learning",true);
+				break;
+
+			case 'default':
+				break;
+		}	
+
+		// if(data.result.parameters){
+		// 	//window[data.results](data.parameters)
+		// 	window[data.result.action].apply(this, data.result.parameters)
+		// } else {
+		// 	//window[data.result]
+		// 	window[data.result.action]
+		// }
 		
 		//apiAi.stopListening();
 		apiAi.close();
@@ -1311,15 +1380,37 @@ $(document).ready(function(){
 
 	/////********* SOCKET EVENTS  *******//////
 
-	var socket_url = "http://localhost:3000";
+	var socket_url = "http://107.170.76.97:3000";
 
 	//var socket_url = "";
 
-	//var socket = io(socket_url + '/peeqo');
+	var socket = io(socket_url + '/peeqo');
 
 	// socket.on('blocked', function(msg){
 	// 	console.log("BLOCKED: " + msg)
 	// })
+
+	// executed on socket message sent through server
+	socket.on("shutdown", function(msg){
+		shutdown();
+	})
+
+	socket.on("listen", function(msg){
+		activateListening();
+	})
+
+	socket.on("picture", function(msg){
+		getCameraFeed();
+	})
+
+	socket.on("blocked", function(msg){
+
+		if(msg.indexOf("facebook")>-1){
+
+		}
+	})
+
+
 	
 
 	// TEST EVENT LISTENERS
@@ -1445,7 +1536,7 @@ $(document).ready(function(){
 		arrayBuffer();
 	})
 
-	showDiv("testWrapper");
+	showDiv("eyeWrapper");
 
 	startBlinking();
 
