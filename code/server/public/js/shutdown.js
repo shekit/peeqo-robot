@@ -10,4 +10,10 @@ $(document).ready(function(){
 		socket.emit("shutdown","yes")
 	})
 
+	$("body").on("click","#reboot", function(event){
+		event.preventDefault();
+
+		socket.emit("reboot","yes")
+	})
+
 })
