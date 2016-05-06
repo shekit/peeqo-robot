@@ -422,7 +422,7 @@ $(document).ready(function(){
 
 	////**** i2c ******//////
 	
-	/*var i2c = require('i2c-bus')
+	var i2c = require('i2c-bus')
 	var i2c1 = null
 
 	i2c1 = i2c.open(1, function(err){
@@ -431,7 +431,7 @@ $(document).ready(function(){
 		} else {
 			console.log("I2C OPEN")
 		}
-	})*/
+	})
 
 
 	var ledMiniAddress = 0x04;
@@ -1410,6 +1410,45 @@ $(document).ready(function(){
 		}
 	})
 
+	socket.on("moveCurious", function(msg){
+		sendMovementSequence("curious")
+	})
+
+	socket.on("moveHappy", function(msg){
+		sendMovementSequence("happy")
+	})
+
+	socket.on("moveSad", function(msg){
+		sendMovementSequence("sad")
+	})
+
+	socket.on("moveNo", function(msg){
+		sendMovementSequence("no");
+	})
+
+	socket.on("moveAlert", function(msg){
+		sendMovementSequence("alert")
+	})
+
+	socket.on("moveReset", function(msg){
+		sendMovementSequence("reset")
+	})
+
+	socket.on("ledFade", function(msg){
+		sendLedAnimation("fade")
+	})
+
+	socket.on("ledAlert", function(msg){
+		sendLedAnimation("alert")
+	})
+
+	socket.on("ledError", function(msg){
+		sendLedAnimation("error")
+	})
+
+	socket.on("ledIdle", function(msg){
+		sendLedAnimation("idle");
+	})
 
 	
 
