@@ -103,6 +103,46 @@ controlpanel_io.on('connection', function(socket){
 	socket.on("stopIdle", function(msg){
 		peeqo_io.emit("stopIdle","yes")
 	})
+
+	socket.on("moveCurious", function(msg){
+		peeqo_io.emit("moveCurious","yes")
+	})
+
+	socket.on("moveHappy", function(msg){
+		peeqo_io.emit("moveHappy","yes")
+	})
+
+	socket.on("moveSad", function(msg){
+		peeqo_io.emit("moveSad","yes")
+	})
+
+	socket.on("moveNo", function(msg){
+		peeqo_io.emit("moveNo","yes")
+	})
+
+	socket.on("moveAlert", function(msg){
+		peeqo_io.emit("moveAlert","yes")
+	})
+
+	socket.on("moveReset", function(msg){
+		peeqo_io.emit("moveReset","yes")
+	})
+
+	socket.on("ledFade", function(msg){
+		peeqo_io.emit("ledFade","yes")
+	})
+
+	socket.on("ledAlert", function(msg){
+		peeqo_io.emit("ledAlert","yes")
+	})
+
+	socket.on("ledError", function(msg){
+		peeqo_io.emit("ledError","yes")
+	})
+
+	socket.on("ledIdle", function(msg){
+		peeqo_io.emit("ledIdle","yes")
+	})
 })
 
 // socket connections from chrome extension

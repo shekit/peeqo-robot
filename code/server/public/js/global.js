@@ -56,4 +56,54 @@ $(document).ready(function(){
 		socket.emit("stopIdle","yes")
 	})
 
+	$("body").on("click","#moveCurious", function(e){
+		e.preventDefault();
+		socket.emit("moveCurious","yes")
+	})
+
+	$("body").on("click","#moveHappy", function(e){
+		e.preventDefault();
+		socket.emit("moveHappy","yes")
+	})
+
+	$("body").on("click","#moveSad", function(e){
+		e.preventDefault();
+		socket.emit("moveSad","yes")
+	})
+
+	$("body").on("click","#moveNo", function(e){
+		e.preventDefault();
+		socket.emit("moveNo","yes")
+	})
+
+	$("body").on("click","#moveAlert", function(e){
+		e.preventDefault();
+		socket.emit("moveAlert","yes")
+	})
+
+	$("body").on("click","#moveReset", function(e){
+		e.preventDefault();
+		socket.emit("moveReset","yes")
+	})
+
+	$("body").on("click","#ledFade", function(e){
+		e.preventDefault();
+		socket.emit("ledFade","yes")
+	})
+
+	$("body").on("click","#ledAlert", function(e){
+		e.preventDefault();
+		socket.emit("ledAlert","yes")
+	})
+
+	$("body").on("click","#ledError", function(e){
+		e.preventDefault();
+		socket.emit("ledError","yes")
+	})
+
+	$("body").on("click","#ledIdle", function(e){
+		e.preventDefault();
+		socket.emit("ledIdle","yes")
+	})
+
 })
