@@ -29,16 +29,6 @@ $(document).ready(function(){
 	  	return array;
 	}
 
-	function arrayBuffer(){
-		var arr = new Uint8Array([30,56,78,22,44,55]);
-		var buff = Buffer.from(arr)
-		console.log(arr.buffer);
-		console.log(buff);
-	}
-	
-
-
-
 
 	/////**** GIFS *****/////
 
@@ -903,6 +893,10 @@ $(document).ready(function(){
 		execSync('sudo shutdown -h now')
 	}
 
+	function reboot(){
+		execSync('sudo reboot -h now')
+	}
+
 	
 	// ANNYANG CONFIGURATION
 
@@ -1224,9 +1218,10 @@ $(document).ready(function(){
 				showDiv("pictureWrapper")
 				console.log("started cb")
 				setTimeout(function(){
-					showDiv("eyeWrapper")
+					findRandomLocalGif("compliment");
 				},4000);
 
+				sendPicture(latestImage);
 			}
 		})
 		// send picture to chrome extension
@@ -1353,6 +1348,11 @@ $(document).ready(function(){
 		}, 30000)
 	}
 
+	function stopMusic(){
+		var song = document.getElementById("song");
+		song.pause();
+	}
+
 	function getArtistImage(artist, searchLimit=10){
 		
 		spotifyApi.searchArtists(artist, {limit: searchLimit}, function(err, data){
@@ -1393,24 +1393,76 @@ $(document).ready(function(){
 	// })
 
 	// executed on socket message sent through server
+
+	/// FOR DEMO ////
+
 	socket.on("shutdown", function(msg){
 		shutdown();
+	})
+
+	socket.on("reboot", function(msg){
+		reboot();
 	})
 
 	socket.on("listen", function(msg){
 		activateListening();
 	})
 
-	socket.on("picture", function(msg){
+	socket.on("sayHi", function(msg){
+		findRandomLocalGif("hello");
+	})
+
+	socket.on("sayBye", function(msg){
+		findRandomLocalGif("bye");
+	})
+
+	socket.on("takePicture", function(msg){
 		getCameraFeed();
+	})
+
+	socket.on("playMusic", function(msg){
+		searchSpotify("beatles");
+	})
+
+	socket.on("activateMusic",function(msg){
+		learn();
+	})
+
+	socket.on("stopMusic", function(msg){
+		stopMusic();
+	})
+
+	var blockFacebook = false;
+	var blockTwitter = false;
+
+	socket.on("blockFacebook", function(msg){
+		blockFacebook = true;
+	})
+
+	socket.on("blockTwitter", function(msg){
+		blockTwitter = true;
 	})
 
 	socket.on("blocked", function(msg){
 
-		if(msg.indexOf("facebook")>-1){
+		if(msg.indexOf("facebook")>-1 && blockFacebook){
+			findRandomLocalGif("angry")
+		}
 
+		if(msg.indexOf("twitter")>-1 && blockTwitter){
+			findRandomLocalGif("annoyed")
 		}
 	})
+
+	socket.on("lightsOn", function(msg){
+		controlAllLights(true);
+	})
+
+	socket.on("lightsOff", function(msg){
+		controlAllLights(false);
+	})
+
+	//// END OF DEMO ////
 
 	socket.on("moveCurious", function(msg){
 		sendMovementSequence("curious")
@@ -1456,6 +1508,37 @@ $(document).ready(function(){
 		var myIp = ip.address();
 		socket.emit("peeqoIp", myIp)
 	})
+
+	// HUE LIGHTS
+	var hueUrl = config.hueIp+"/api/"+config.hueUser+"/lights/"
+
+	var bulbIds = ["2","3","4","5"]
+
+	function controlAllLights(state){
+		
+		for(var i in bulbIds){
+			controlLight(bulbIds[i], state)
+		}
+	}
+
+	function controlLight(id, state){
+		// state is either true(on) or false(off)
+
+		//var bulbNumbers = id
+
+		$.ajax({
+			type: "PUT",
+			url: hueUrl + id + "/state",
+			data: JSON.stringify({"on":state}),
+			success: function(msg){
+				console.log("ON")
+			},
+			error: function(err){
+				console.log("ERROR: " + err)
+			}
+		})
+	}
+	
 	
 
 	// TEST EVENT LISTENERS
