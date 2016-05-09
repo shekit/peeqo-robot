@@ -72,8 +72,40 @@ controlpanel_io.on('connection', function(socket){
 	})
 
 	socket.on('takePicture', function(msg){
-		peeqo_io.emit("camera","yes")
+		peeqo_io.emit("takePicture","yes")
 	})
+
+	socket.on("playMusic", function(msg){
+		peeqo_io.emit("playMusic", "yes")
+	})
+
+	socket.on("activateMusic", function(msg){
+		peeqo_io.emit("activateMusic","yes")
+	})
+
+	socket.on("stopMusic", function(msg){
+		peeqo_io.emit("stopMusic","yes")
+	})
+
+	socket.on("blockFacebook", function(msg){
+		peeqo_io.emit("blockFacebook","yes")
+	})
+
+	socket.on("blockTwitter", function(msg){
+		peeqo_io.emit("blockTwitter","yes")
+	})
+
+	socket.on("lightsOn", function(msg){
+		peeqo_io.emit("lightsOn","yes")
+	})
+
+	socket.on("lightsOff", function(msg){
+		peeqo_io.emit("lightsOff","yes")
+	})
+
+
+
+
 
 	socket.on("startBle", function(msg){
 		peeqo_io.emit("startBle","yes")
@@ -88,13 +120,7 @@ controlpanel_io.on('connection', function(socket){
 		console.log("got moving")
 	})
 
-	socket.on("playMusic", function(msg){
-		peeqo_io.emit("playMusic", "yes")
-	})
-
-	socket.on("activateMusic", function(msg){
-		peeqo_io.emit("activateMusic","yes")
-	})
+	
 
 	socket.on("idle", function(msg){
 		peeqo_io.emit("idle","yes")
@@ -143,6 +169,11 @@ controlpanel_io.on('connection', function(socket){
 	socket.on("ledIdle", function(msg){
 		peeqo_io.emit("ledIdle","yes")
 	})
+
+	socket.on('getIp', function(msg){
+		peeqo_io.emit("getIp","yes")
+	})
+
 })
 
 // socket connections from chrome extension
@@ -175,6 +206,7 @@ extension_io.on('connection', function(socket){
 		}
 	})
 
+
 })
 
 // socket connections from peeqo
@@ -198,6 +230,10 @@ peeqo_io.on('connection', function(socket){
 		latestImage = data;
 	})
 	//extension_io.emit('note', newnote)
+
+	socket.on('peeqoIp', function(msg){
+		controlpanel_io.emit("peeqoIp",msg)
+	})
 })
 
 
