@@ -31,6 +31,6 @@ function displayNotes(notes){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-	chrome.runtime.sendMessage({"method":"getNotes"})
+	//chrome.runtime.sendMessage({"method":"getNotes"})
 	chrome.runtime.sendMessage({"method":"getPic"})
 })
