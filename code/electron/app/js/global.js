@@ -414,7 +414,7 @@ $(document).ready(function(){
 
 	////**** i2c ******//////
 	
-	/*var i2c = require('i2c-bus')
+	var i2c = require('i2c-bus')
 	var i2c1 = null
 
 	i2c1 = i2c.open(1, function(err){
@@ -423,7 +423,7 @@ $(document).ready(function(){
 		} else {
 			console.log("I2C OPEN")
 		}
-	})*/
+	})
 
 
 	var ledMiniAddress = 0x04;
