@@ -17,6 +17,9 @@ int easing2 = 1000;
 int easing3 = 1500;
 int easing4 = 2000;
 int easing5 = 3000;
+int easing7 = 200;
+
+boolean bounceAnimation = false;
 
 
 Servo servo[6];
@@ -98,24 +101,46 @@ void receiveEvent(int howMany){
       switch(c){
          case 1:
             easeDuration = easing1;
+            if(bounceAnimation){
+              resetEasing();
+            } 
             break;
          case 2:
-            easeDuration = easing2; 
+            easeDuration = easing2;
+            if(bounceAnimation){
+              resetEasing();
+            } 
             break;
            
         case 3:
-            easeDuration = easing3; 
+            easeDuration = easing3;
+           if(bounceAnimation){
+              resetEasing();
+            } 
             break;
         case 4:
             easeDuration = easing4;
+            if(bounceAnimation){
+              resetEasing();
+            }
             break;
         case 5:
             easeDuration = easing5;
+            if(bounceAnimation){
+              resetEasing();
+            }
             break;
         case 6:
             easeDuration = easing2;
+            bounceAnimation = true;
             for(int i=0;i<numServos;i++){
               servoEaser[i].setEasingFunc(easeOutBounce);
+            }
+            break;
+        case 7:
+            easeDuration = easing7;
+            if(bounceAnimation){
+              resetEasing();
             }
             break;
         default:
@@ -140,6 +165,13 @@ void receiveEvent(int howMany){
    for(uint8_t i=0;i<sizeof(myAngles)/sizeof(uint8_t);i+=1){
       runServo(i, myAngles[i]); 
    }
+}
+
+void resetEasing(){
+  bounceAnimation = false;
+  for(int i=0;i<numServos;i++){
+     servoEaser[i].setEasingFunc(easeInOutCubic);
+  }
 }
 
 void runServo(uint8_t servoNum, uint8_t angle){

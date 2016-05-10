@@ -358,7 +358,7 @@ void setLightState(int val){
       case 2: // ERROR state
         setStatesToFalse();
         redBlink = true;
-        limitAnimation = true;  // will go on forever or till other command
+        limitAnimation = true;  
         break;
       case 3: //success case
         setStatesToFalse();
@@ -368,7 +368,7 @@ void setLightState(int val){
       case 4:  //alert case
         setStatesToFalse();
         blue = true;
-        limitAnimation = false;
+        limitAnimation = false; // will go on forever or till other command
         break;
       case 5: //fade red case
         setStatesToFalse();
@@ -384,6 +384,16 @@ void setLightState(int val){
         setStatesToFalse();
         fadeBlue = true;
         limitAnimation = false;
+        break;
+      case 8: // ERROR state
+        setStatesToFalse();
+        greenBlink = true;
+        limitAnimation = true;  
+        break;
+      case 9: // ERROR state
+        setStatesToFalse();
+        blueBlink = true;
+        limitAnimation = true;  
         break;
       default:
         break;
