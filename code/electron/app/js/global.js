@@ -1732,7 +1732,7 @@ $(document).ready(function(){
 	// HUE LIGHTS
 	var hueUrl = config.hueIp+"/api/"+config.hueUser+"/lights/"
 
-	var bulbIds = ["2","3","4","5"]
+	var bulbIds = ["2","3","4","5","6","7"]
 
 	function controlAllLights(state){
 		
