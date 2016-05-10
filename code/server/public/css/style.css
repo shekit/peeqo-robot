@@ -4,6 +4,7 @@
 
 .btn {
 	border-radius: 0;
+	font-size: 40px;
 }
 
 .btn:focus{
