@@ -127,6 +127,14 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("showExpression","yes")
 	})
 
+	socket.on("sleep", function(msg){
+		peeqo_io.emit("sleep","yes")
+	})
+
+	socket.on("wakeUp", function(msg){
+		peeqo_io.emit("wakeUp","yes")
+	})
+
 
 
 

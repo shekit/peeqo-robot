@@ -87,9 +87,20 @@ $(document).ready(function(){
 		socket.emit("blinkLed","yes");
 	})
 
+
+	$("body").on("click", "#sleep", function(e){
+		e.preventDefault();
+		socket.emit("sleep","yes");
+	})
+
 	$("body").on("click", "#resetAll", function(e){
 		e.preventDefault();
 		socket.emit("resetAll","yes");
+	})
+
+	$("body").on("click", "#wakeUp", function(e){
+		e.preventDefault();
+		socket.emit("wakeUp","yes");
 	})
 
 
