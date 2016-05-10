@@ -32,11 +32,17 @@ img {
 	background: white;
 }
 
-#testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper {
+#testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper, #sleepWrapper {
 	display: none;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
+}
+
+#sleepWrapper {
+	background: #000;
+	width: 800px;
+	height: 480px;
 }
 
 #gifWrapper {

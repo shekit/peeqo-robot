@@ -285,7 +285,7 @@ $(document).ready(function(){
 
 	var wrapper = $("#wrapper");
 
-	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "pictureWrapper", "testWrapper"]
+	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "pictureWrapper", "testWrapper", "sleepWrapper"]
 	
 	// show div and hide all others
 
@@ -761,6 +761,31 @@ $(document).ready(function(){
 			duration: [
 					servoMiniAccessCmd.easing7.duration,
 					servoMiniAccessCmd.easing7.duration
+				]
+		},
+
+		wakeup:{
+			desc:"",
+			angles:[
+					[96,96,96,96,96,96],		
+					[84,84,84,84,84,84],
+					[96,96,96,96,96,96],
+					[84,84,84,84,84,84],
+					[65,115,65,115,65,115],
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.bounceEasing.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.bounceEasing.duration
 				]
 		},
 
@@ -1620,6 +1645,19 @@ $(document).ready(function(){
 	socket.on("playMusic", function(msg){
 		console.log("music request")
 		searchSpotify("beatles");
+		if(canPlayMusic){
+			sendMovementSequence("musicSway");
+		}
+	})
+
+	socket.on("sleep", function(msg){
+		showDiv("sleepWrapper");
+	})
+
+	socket.on("wakeUp", function(msg){
+		showDiv("eyeWrapper");
+		fastBlink();
+		sendMovementSequence("wakeup");
 	})
 
 	socket.on("activateMusic",function(msg){
