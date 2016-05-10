@@ -8,6 +8,11 @@ video, #selfie {
 	tranform: rotateY(-180deg);
 }
 
+#selfie{
+	width: 800px;
+	height: 480px;
+}
+
 img {
 	display: block;
 	margin-left: auto;
@@ -45,14 +50,14 @@ img {
 }
 
 #gif {
-	/*width: 800px;
-	height: 480px;*/
-	/*position: absolute;
+	width: 800px;
+	height: auto;
+	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%, -50%);*/
-	object-position: 50% 50%;
-	object-fit:cover;
+	transform: translate(-50%, -50%);
+	/*object-position: 50% 50%;
+	object-fit:cover;*/
 }
 
 #wrapper {

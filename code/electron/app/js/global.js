@@ -1318,9 +1318,9 @@ $(document).ready(function(){
 		// take a gif picture
 
 		gifshot.createGIF({
-			'gifWidth':800,
-			'gifHeight':480,
-			'text':'hello',
+			'gifWidth':400,
+			'gifHeight':240,
+			'text':'Thesis! Woohoo!',
 			'numFrames': 10,
 			'keepCameraOn': false,
 			'completeCallback':function(){
@@ -1350,7 +1350,7 @@ $(document).ready(function(){
 				showDiv("pictureWrapper")
 				console.log("started cb")
 				setTimeout(function(){
-					findRandomLocalGif("compliment");
+					findRandomLocalGif("compliment",true);
 				},4000);
 
 				sendPicture(latestImage);
@@ -1377,7 +1377,14 @@ $(document).ready(function(){
 				video.get(0).play();
 
 				//start gifshot once camera is loaded
-				takePicture();
+				setTimeout(function(){
+					findRandomLocalGif("countdown")
+				},1000);
+
+				setTimeout(function(){
+					takePicture();
+				}, 4300)
+				
 			})			
 
 		}, function(err){
@@ -1543,16 +1550,16 @@ $(document).ready(function(){
 
 	socket.on("sayHi", function(msg){
 		sendMovementSequence("lookup");
-		findRandomLocalGif("hello");
+		findRandomLocalGif("hello",true);
 	})
 
 	socket.on("sayBye", function(msg){
-		findRandomLocalGif("bye");
+		findRandomLocalGif("bye",true);
 	})
 
 	socket.on("sayYes", function(msg){
 		sendMovementSequence("yes")
-		//findRandomLocalGif("yes")
+		findRandomLocalGif("yes",true)
 	})
 
 	socket.on("blinkLed", function(msg){
@@ -1564,6 +1571,7 @@ $(document).ready(function(){
 	})
 
 	socket.on("playMusic", function(msg){
+		console.log("music request")
 		searchSpotify("beatles");
 	})
 
@@ -1572,6 +1580,7 @@ $(document).ready(function(){
 	})
 
 	socket.on("stopMusic", function(msg){
+		console.log("stop it")
 		stopMusic();
 	})
 
@@ -1589,20 +1598,20 @@ $(document).ready(function(){
 	socket.on("blocked", function(msg){
 
 		if(msg.indexOf("facebook")>-1 && blockFacebook){
-			findRandomLocalGif("angry")
+			findRandomLocalGif("angry",true)
 			sendMovementSequence("angry")
 			sendLedAnimation("fadeRed")
 		}
 
 		if(msg.indexOf("twitter")>-1 && blockTwitter){
-			findRandomLocalGif("annoyed")
+			findRandomLocalGif("annoyed",true)
 			sendMovementSequence("angry")
 			sendLedAnimation("fadeRed")
 		}
 	})
 
 	socket.on("lightsOn", function(msg){
-		findRandomLocalGif("thumbs_up")
+		findRandomLocalGif("thumbs_up",true)
 		controlAllLights(true);
 	})
 
@@ -1612,7 +1621,7 @@ $(document).ready(function(){
 
 	socket.on("showDance", function(msg){
 		sendMovementSequence("dance");
-		findRandomLocalGif("dance")
+		findRandomLocalGif("dance",true)
 	})
 
 	socket.on("showExpression", function(msg){
@@ -1623,6 +1632,7 @@ $(document).ready(function(){
 	socket.on("resetAll", function(msg){
 		sendMovementSequence("reset")
 		sendLedAnimation("off")
+		showDiv("eyeWrapper");
 	})
 
 	//// END OF DEMO ////
