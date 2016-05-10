@@ -1316,6 +1316,7 @@ $(document).ready(function(){
 	function takePicture(){
 
 		// take a gif picture
+		console.log("take pic");
 
 		gifshot.createGIF({
 			'gifWidth':400,
@@ -1351,7 +1352,7 @@ $(document).ready(function(){
 				console.log("started cb")
 				setTimeout(function(){
 					findRandomLocalGif("compliment",true);
-				},4000);
+				},5000);
 
 				sendPicture(latestImage);
 			}
@@ -1377,13 +1378,9 @@ $(document).ready(function(){
 				video.get(0).play();
 
 				//start gifshot once camera is loaded
-				setTimeout(function(){
-					findRandomLocalGif("countdown")
-				},1000);
+				takePicture();
 
-				setTimeout(function(){
-					takePicture();
-				}, 4300)
+				
 				
 			})			
 
@@ -1567,7 +1564,10 @@ $(document).ready(function(){
 	})
 
 	socket.on("takePicture", function(msg){
-		getCameraFeed();
+		findRandomLocalGif("countdown",false)
+		setTimeout(function(){
+			getCameraFeed();
+		},4000)
 	})
 
 	socket.on("playMusic", function(msg){
