@@ -107,6 +107,26 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("lightsOff","yes")
 	})
 
+	socket.on("blinkLed", function(msg){
+		peeqo_io.emit("blinkLed", "yes")
+	})
+
+	socket.on("sayYes", function(msg){
+		peeqo_io.emit("sayYes", "yes")
+	})
+
+	socket.on("resetAll", function(msg){
+		peeqo_io.emit("resetAll","yes")
+	})
+
+	socket.on("showDance", function(msg){
+		peeqo_io.emit("showDance", "yes")
+	})
+
+	socket.on("showExpression", function(msg){
+		peeqo_io.emit("showExpression","yes")
+	})
+
 
 
 

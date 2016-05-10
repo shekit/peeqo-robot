@@ -27,6 +27,16 @@ $(document).ready(function(){
 		socket.emit("sayBye","yes")
 	})
 
+	$("body").on("click","#showDance", function(e){
+		e.preventDefault();
+		socket.emit("showDance","yes")
+	})
+
+	$("body").on("click","#showExpression", function(e){
+		e.preventDefault();
+		socket.emit("showExpression","yes")
+	})
+
 	$("body").on("click","#takePicture", function(e){
 		e.preventDefault();
 		socket.emit("takePicture","yes")
@@ -65,6 +75,21 @@ $(document).ready(function(){
 	$("body").on("click","#lightsOff", function(e){
 		e.preventDefault();
 		socket.emit("lightsOff","yes")
+	})
+
+	$("body").on("click", "#sayYes", function(e){
+		e.preventDefault();
+		socket.emit("sayYes","yes");
+	})
+
+	$("body").on("click", "#blinkLed", function(e){
+		e.preventDefault();
+		socket.emit("blinkLed","yes");
+	})
+
+	$("body").on("click", "#resetAll", function(e){
+		e.preventDefault();
+		socket.emit("resetAll","yes");
 	})
 
 
