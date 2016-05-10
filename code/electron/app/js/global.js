@@ -455,7 +455,16 @@ $(document).ready(function(){
 		idle: {
 			desc:"",
 			cmd: 0x07
+		},
+		greenBlink: {
+			desc:"",
+			cmd:0x08,
+		},
+		blueBlink:{
+			desc:"",
+			cmd:0x09
 		}
+
 	}
 
 	function sendLedAnimation(anim){
@@ -491,6 +500,10 @@ $(document).ready(function(){
 		bounceEasing:{
 			duration:1000,
 			cmd:0x06
+		},
+		easing7:{
+			duration:200,
+			cmd:0x07
 		}
 
 	}
@@ -511,7 +524,7 @@ $(document).ready(function(){
 		alert: {
 			desc:"",
 			angles:[
-					[50,130,50,130,50,130]
+					[65,115,65,115,65,115]
 				],
 			access_cmd:[
 					servoMiniAccessCmd.bounceEasing.cmd
@@ -523,7 +536,7 @@ $(document).ready(function(){
 		sad: {
 			desc:"",
 			angles:[
-					[109,81,81,90,81,109]
+					[97,87,87,90,87,97]
 				],
 			access_cmd:[
 					servoMiniAccessCmd.easing5.cmd
@@ -535,9 +548,9 @@ $(document).ready(function(){
 		happy: {
 			desc:"",
 			angles:[
-					[109,90,71,109,90,71],
-					[65,90,115,65,90,115],
-					[109,90,71,109,90,71]
+					[100,90,80,100,90,80],
+					[80,90,100,80,90,100],
+					[100,90,80,100,90,80]
 				],
 			access_cmd:[
 					servoMiniAccessCmd.easing2.cmd,
@@ -553,8 +566,8 @@ $(document).ready(function(){
 		curious: {
 			desc:"",
 			angles:[
-					[97,77,77,103,103,83],		// double to increase duration that is stops for
-					[97,77,77,103,103,83],
+					[94,82,82,98,98,86],		// double to increase duration that is stops for
+					[94,82,82,98,98,86],
 				],
 			access_cmd:[
 					servoMiniAccessCmd.easing1.cmd,
@@ -568,22 +581,141 @@ $(document).ready(function(){
 		no: {
 			desc:"",
 			angles:[
-					[96,96,96,96,96,96],		// double to increase duration that is stops for
+					[96,96,96,96,96,96],		
 					[84,84,84,84,84,84],
 					[96,96,96,96,96,96],
 					[84,84,84,84,84,84]
 				],
 			access_cmd:[
-					servoMiniAccessCmd.easing2.cmd,
-					servoMiniAccessCmd.easing2.cmd,
-					servoMiniAccessCmd.easing2.cmd,
-					servoMiniAccessCmd.easing2.cmd
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd
 				],
 			duration: [
-					servoMiniAccessCmd.easing2.duration,
-					servoMiniAccessCmd.easing2.duration,
-					servoMiniAccessCmd.easing2.duration,
-					servoMiniAccessCmd.easing2.duration
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration
+				]
+		},
+
+		yes: {
+			desc:"",
+			angles:[
+					[83,94,94,90,94,83],		
+					[97,87,87,90,87,97],
+					[83,94,94,90,94,83],
+					[97,87,87,90,87,97]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration
+				]
+		},
+		lookup: {
+			desc:"",
+			angles:[
+					[83,94,94,90,94,83]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,
+				],
+			duration: [
+					servoMiniAccessCmd.easing1.duration
+				]
+		},
+		musicSway: {
+			desc:"",
+			angles:[
+					[100,90,80,100,90,80],		
+					[80,90,100,80,90,100],
+					[100,90,80,100,90,80],	
+					[80,90,100,80,90,100],
+					[100,90,80,100,90,80],
+					[80,90,100,80,90,100],	
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing4.cmd,
+					servoMiniAccessCmd.easing4.cmd,
+					servoMiniAccessCmd.easing4.cmd,
+					servoMiniAccessCmd.easing4.cmd,
+					servoMiniAccessCmd.easing4.cmd,
+					servoMiniAccessCmd.easing4.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing4.duration,
+					servoMiniAccessCmd.easing4.duration,
+					servoMiniAccessCmd.easing4.duration,
+					servoMiniAccessCmd.easing4.duration,
+					servoMiniAccessCmd.easing4.duration,
+					servoMiniAccessCmd.easing4.duration
+				]
+		},
+
+		dance: {
+			desc:"",
+			angles:[
+					[100,90,80,100,90,80],		
+					[90,80,100,100,80,90],
+					[80,90,100,80,90,100],	
+					[90,100,80,80,100,90],
+					[100,90,80,100,90,80],		
+					[90,80,100,100,80,90],
+					[80,90,100,80,90,100],	
+					[90,100,80,80,100,90],
+					[80,90,100,80,90,100],
+					[100,90,80,100,90,80],
+
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.bounceEasing.cmd,
+					servoMiniAccessCmd.bounceEasing.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.bounceEasing.duration,
+					servoMiniAccessCmd.bounceEasing.duration,
+				]
+		},
+
+		angry:{
+			desc:"",
+			angles:[
+					[65,115,65,115,65,115],		
+					[115,65,115,65,115,65]
+
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing4.cmd,
+				],
+			duration: [
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing4.duration,
 				]
 		},
 
@@ -1405,15 +1537,26 @@ $(document).ready(function(){
 	})
 
 	socket.on("listen", function(msg){
-		activateListening();
+		sendMovementSequence("alert");
+		sendLedAnimation("alert");
 	})
 
 	socket.on("sayHi", function(msg){
+		sendMovementSequence("lookup");
 		findRandomLocalGif("hello");
 	})
 
 	socket.on("sayBye", function(msg){
 		findRandomLocalGif("bye");
+	})
+
+	socket.on("sayYes", function(msg){
+		sendMovementSequence("yes")
+		//findRandomLocalGif("yes")
+	})
+
+	socket.on("blinkLed", function(msg){
+		sendLedAnimation("error");
 	})
 
 	socket.on("takePicture", function(msg){
@@ -1447,19 +1590,39 @@ $(document).ready(function(){
 
 		if(msg.indexOf("facebook")>-1 && blockFacebook){
 			findRandomLocalGif("angry")
+			sendMovementSequence("angry")
+			sendLedAnimation("fadeRed")
 		}
 
 		if(msg.indexOf("twitter")>-1 && blockTwitter){
 			findRandomLocalGif("annoyed")
+			sendMovementSequence("angry")
+			sendLedAnimation("fadeRed")
 		}
 	})
 
 	socket.on("lightsOn", function(msg){
+		findRandomLocalGif("thumbs_up")
 		controlAllLights(true);
 	})
 
 	socket.on("lightsOff", function(msg){
 		controlAllLights(false);
+	})
+
+	socket.on("showDance", function(msg){
+		sendMovementSequence("dance");
+		findRandomLocalGif("dance")
+	})
+
+	socket.on("showExpression", function(msg){
+		//cycle through expressions
+		//showAllExpressions();
+	})
+
+	socket.on("resetAll", function(msg){
+		sendMovementSequence("reset")
+		sendLedAnimation("off")
 	})
 
 	//// END OF DEMO ////
