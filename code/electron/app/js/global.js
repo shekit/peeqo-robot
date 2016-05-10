@@ -719,6 +719,53 @@ $(document).ready(function(){
 				]
 		},
 
+		excited: {
+			desc:"",
+			angles:[
+					[65,115,65,115,65,115],
+					[115,65,115,65,115,65],
+					[65,115,65,115,65,115],
+					[115,65,115,65,115,65],
+					[65,115,65,115,65,115],
+					[115,65,115,65,115,65],
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration
+				]
+		},
+
+		
+		confused: {
+			desc:"",
+			angles:[
+					[94,82,82,98,98,86],		// double to increase duration that is stops for
+					[94,82,82,98,98,86],
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing7.cmd,
+					servoMiniAccessCmd.easing7.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing7.duration,
+					servoMiniAccessCmd.easing7.duration
+				]
+		},
+
+
+
 	}
 
 	function sendi2cByte(addr, cmd, byte){
@@ -797,7 +844,7 @@ $(document).ready(function(){
 		movementTimeouts.push(timer);
 	}
 
-	var expressions = ["happy","sad","excited","angry","confused","annoyed"]; // make sure names match movements obj keys
+	var expressions = ["happy","sad","excited","angry","confused"]; // make sure names match movements obj keys
 
 	var expressionTimeouts = [];
 
@@ -841,7 +888,7 @@ $(document).ready(function(){
 			//console.log("EXPRESSION: "+expression);
 			//console.log("TOTAL DUR: "+totalDuration)
 
-			//findRandomLocalGif(expression, false)
+			findRandomLocalGif(expression, false)
 			sendMovementSequence(expression);
 
 		}, totalDuration)
@@ -1626,7 +1673,7 @@ $(document).ready(function(){
 
 	socket.on("showExpression", function(msg){
 		//cycle through expressions
-		//showAllExpressions();
+		showAllExpressions();
 	})
 
 	socket.on("resetAll", function(msg){
