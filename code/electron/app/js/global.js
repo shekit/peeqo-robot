@@ -1702,6 +1702,10 @@ $(document).ready(function(){
 		learn();
 	})
 
+	socket.on("deactivateMusic", function(msg){
+		canPlayMusic = false;
+	})
+
 	socket.on("stopMusic", function(msg){
 		console.log("stop it")
 		stopMusic();
@@ -1711,11 +1715,19 @@ $(document).ready(function(){
 	var blockTwitter = false;
 
 	socket.on("blockFacebook", function(msg){
-		blockFacebook = !blockFacebook;
+		blockFacebook = true;
 	})
 
 	socket.on("blockTwitter", function(msg){
-		blockTwitter = !blockTwitter;
+		blockTwitter =  true;
+	})
+
+	socket.on("unblockFacebook", function(msg){
+		blockFacebook = false;
+	})
+
+	socket.on("unblockTwitter", function(msg){
+		blockTwitter =  false;
 	})
 
 	socket.on("blocked", function(msg){
