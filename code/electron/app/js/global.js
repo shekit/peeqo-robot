@@ -414,16 +414,16 @@ $(document).ready(function(){
 
 	////**** i2c ******//////
 	
-	var i2c = require('i2c-bus')
+	//var i2c = require('i2c-bus')
 	var i2c1 = null
 
-	i2c1 = i2c.open(1, function(err){
+	/*i2c1 = i2c.open(1, function(err){
 		if(err){
 			console.log("i2c error: "+err )
 		} else {
 			console.log("I2C OPEN")
 		}
-	})
+	})*/
 
 
 	var ledMiniAddress = 0x04;
@@ -823,7 +823,7 @@ $(document).ready(function(){
 		var angles = movements[name].angles;
 		var durations = movements[name].duration;
 
-		console.log(angles);
+		//console.log(angles);
 
 		// if by mistake sizes differ then set cmd seq to be equal to move seq and set easing to default
 		if(commands.length != angles.length){
@@ -848,6 +848,7 @@ $(document).ready(function(){
 			}
 
 			if(i==angles.length-1){
+				//console.log("call reset now: " , timerDuration+durations[i])
 				resetServos(timerDuration+durations[i])
 			}
 
@@ -923,9 +924,10 @@ $(document).ready(function(){
 	function resetServos(duration){
 		var timer = setTimeout(function(){
 			console.log("RESET SERVO");
-			console.log(duration);
-			sendMovementSequence("reset");
-		}, duration)
+			//console.log(duration);
+			sendi2cBuffer(servoMiniAddress, movements.reset.access_cmd[0] ,movements.reset.angles[0])
+			//sendMovementSequence("reset");
+		}, duration+5000)
 
 		movementTimeouts.push(timer);
 	}
