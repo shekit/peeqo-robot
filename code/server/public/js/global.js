@@ -52,6 +52,11 @@ $(document).ready(function(){
 		socket.emit("activateMusic","yes")
 	})
 
+	$("body").on("click","#deactivateMusic", function(e){
+		e.preventDefault();
+		socket.emit("deactivateMusic","yes")
+	})
+
 	$("body").on("click","#stopMusic", function(e){
 		e.preventDefault();
 		socket.emit("stopMusic","yes")
@@ -65,6 +70,16 @@ $(document).ready(function(){
 	$("body").on("click","#blockTwitter", function(e){
 		e.preventDefault();
 		socket.emit("blockTwitter","yes")
+	})
+
+	$("body").on("click","#unblockFacebook", function(e){
+		e.preventDefault();
+		socket.emit("unblockFacebook","yes")
+	})
+
+	$("body").on("click","#unblockTwitter", function(e){
+		e.preventDefault();
+		socket.emit("unblockTwitter","yes")
 	})
 
 	$("body").on("click","#lightsOn", function(e){
@@ -114,6 +129,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		socket.emit("stopIdle","yes")
 	})
+
+	
 
 
 })

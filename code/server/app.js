@@ -135,6 +135,18 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("wakeUp","yes")
 	})
 
+	socket.on("deactivateMusic", function(msg){
+		peeqo_io.emit("deactivateMusic", "yes")
+	})
+
+	socket.on("unblockFacebook", function(msg){
+		peeqo_io.emit("unblockFacebook", "yes")
+	})
+
+	socket.on("unblockTwitter", function(msg){
+		peeqo_io.emit("unblockTwitter", "yes")
+	})
+
 
 
 
