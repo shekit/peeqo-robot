@@ -606,9 +606,13 @@ $(document).ready(function(){
 					[83,94,94,90,94,83],		
 					[97,87,87,90,87,97],
 					[83,94,94,90,94,83],
+					[97,87,87,90,87,97],
+					[83,94,94,90,94,83],
 					[97,87,87,90,87,97]
 				],
 			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
 					servoMiniAccessCmd.easing1.cmd,
 					servoMiniAccessCmd.easing1.cmd,
 					servoMiniAccessCmd.easing1.cmd,
@@ -618,18 +622,26 @@ $(document).ready(function(){
 					servoMiniAccessCmd.easing1.duration,
 					servoMiniAccessCmd.easing1.duration,
 					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
 					servoMiniAccessCmd.easing1.duration
 				]
 		},
 		lookup: {
 			desc:"",
 			angles:[
+					[83,94,94,90,94,83],
+					[83,94,94,90,94,83],
 					[83,94,94,90,94,83]
 				],
 			access_cmd:[
 					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd
 				],
 			duration: [
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
 					servoMiniAccessCmd.easing1.duration
 				]
 		},
@@ -1677,11 +1689,11 @@ $(document).ready(function(){
 	var blockTwitter = false;
 
 	socket.on("blockFacebook", function(msg){
-		blockFacebook = true;
+		blockFacebook = !blockFacebook;
 	})
 
 	socket.on("blockTwitter", function(msg){
-		blockTwitter = true;
+		blockTwitter = !blockTwitter;
 	})
 
 	socket.on("blocked", function(msg){
@@ -1705,17 +1717,28 @@ $(document).ready(function(){
 	})
 
 	socket.on("lightsOff", function(msg){
+		findRandomLocalGif("confirmation",true)
 		controlAllLights(false);
 	})
 
 	socket.on("showDance", function(msg){
-		sendMovementSequence("dance");
 		findRandomLocalGif("dance",true)
+		sendMovementSequence("dance");	
 	})
 
 	socket.on("showExpression", function(msg){
 		//cycle through expressions
 		showAllExpressions();
+	})
+
+	socket.on("idle", function(msg){
+		findRandomLocalGif("no", true);
+		sendMovementSequence("no")
+	})
+
+	socket.on("stopIdle", function(msg){
+		findRandomLocalGif("love", true);
+		sendMovementSequence("lookup")
 	})
 
 	socket.on("resetAll", function(msg){
