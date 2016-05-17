@@ -1917,7 +1917,7 @@ $(document).ready(function(){
 		sendI2C(servoMiniAddress, servoMiniAccessCmd, 0x04);
 	})	
 
-	$("body").hammer().bind('pan', function(e){
+	$("#eyeWrapper").hammer().bind('pan', function(e){
 		//petting();
 		console.log("pan")
 		if(pettingPeeqo == false){
@@ -1926,7 +1926,7 @@ $(document).ready(function(){
 		}
 	})
 
-	$("body").hammer().bind('panend', function(e){
+	$("#eyeWrapper").hammer().bind('panend', function(e){
 		console.log("stopped panning")
 		stopPetting();
 	})
