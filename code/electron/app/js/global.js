@@ -563,6 +563,27 @@ $(document).ready(function(){
 					servoMiniAccessCmd.easing4.duration
 				]
 		},
+		bye: {
+			desc:"",
+			angles:[
+					[100,90,80,100,90,80],
+					[80,90,100,80,90,100],
+					[100,90,80,100,90,80],
+					[80,90,100,80,90,100]
+				],
+			access_cmd:[
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd,
+					servoMiniAccessCmd.easing1.cmd
+				],
+			duration: [
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration,
+					servoMiniAccessCmd.easing1.duration
+				]
+		},
 		curious: {
 			desc:"",
 			angles:[
@@ -1634,12 +1655,13 @@ $(document).ready(function(){
 	})
 
 	socket.on("sayHi", function(msg){
-		sendMovementSequence("lookup");
 		findRandomLocalGif("hello",true);
+		sendMovementSequence("lookup");	
 	})
 
 	socket.on("sayBye", function(msg){
 		findRandomLocalGif("bye",true);
+		sendMovementSequence("bye")
 	})
 
 	socket.on("sayYes", function(msg){
