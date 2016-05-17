@@ -927,7 +927,7 @@ $(document).ready(function(){
 			//console.log(duration);
 			sendi2cBuffer(servoMiniAddress, movements.reset.access_cmd[0] ,movements.reset.angles[0])
 			//sendMovementSequence("reset");
-		}, duration+5000)
+		}, duration+500)
 
 		movementTimeouts.push(timer);
 	}
@@ -1393,10 +1393,10 @@ $(document).ready(function(){
 		console.log("take pic");
 
 		gifshot.createGIF({
-			'gifWidth':400,
-			'gifHeight':240,
-			'text':'Thesis! Woohoo!',
-			'numFrames': 10,
+			'gifWidth':800,
+			'gifHeight':480,
+			//'text':'Thesis! Woohoo!',
+			'numFrames': 1,
 			'keepCameraOn': false,
 			'completeCallback':function(){
 				console.log("done");
@@ -1450,6 +1450,8 @@ $(document).ready(function(){
 
 			video.on('loadedmetadata', function(e){
 				video.get(0).play();
+
+				
 
 				//start gifshot once camera is loaded
 				takePicture();
