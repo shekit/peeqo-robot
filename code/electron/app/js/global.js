@@ -226,7 +226,7 @@ $(document).ready(function(){
 
 	var gifLoopTimer = null;
 
-	function setGifTimer(duration,loop=2){
+	function setGifTimer(duration,loop){
 		// display gif for exactly 2 loops by passing in its duration
 
 		var dur = parseInt(duration)
@@ -1314,7 +1314,9 @@ $(document).ready(function(){
 		// maybe say fine before doing that
 	}
 
-	function getWeather(city='New York'){
+	function getWeather(city){
+
+		var city = (typeof city !== 'undefined') ? city : 'New York';
 		//call weather api and set gif based on temperature returned
 		$.simpleWeather({
 			location: city,
@@ -1554,7 +1556,9 @@ $(document).ready(function(){
 	// use this to activate the skill
 	var canPlayMusic = false;
 
-	function searchSpotify(query, searchLimit=10){
+	function searchSpotify(query, searchLimit){
+
+		var searchLimit = (typeof searchLimit !== 'undefined') ? searchLimit : 10;
 
 		if(canPlayMusic){
 			spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
@@ -1598,7 +1602,11 @@ $(document).ready(function(){
 		song.pause();
 	}
 
-	function getArtistImage(artist, searchLimit=10){
+	function getArtistImage(artist, searchLimit){
+
+		var searchLimit = (typeof searchLimit !== 'undefined') ? searchLimit : 10;
+
+
 		
 		spotifyApi.searchArtists(artist, {limit: searchLimit}, function(err, data){
 			if(!err){
@@ -1627,7 +1635,7 @@ $(document).ready(function(){
 
 	/////********* SOCKET EVENTS  *******//////
 
-	var socket_url = "http://107.170.76.97:3000";
+	var socket_url = config.peeqoServer;
 
 	//var socket_url = "";
 

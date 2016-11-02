@@ -9,6 +9,8 @@ int N = 90; //neutral for calculations
 
 String [] valueString = new String[6];
 
+ArrayList<String []> recorded = new ArrayList<String []>();
+
 void calcServo(){
  // clean up X & Y
   float[] xy = XY.getArrayValue(); //get value
@@ -94,6 +96,10 @@ void calcServo(){
   str[5] =  str(calc[5]); 
   
   valueString = str;
+  
+  if(record){
+    recorded.add(str);  
+  }
   
   //check the difference between now and the previously stored time is greater than the wait interval
   if (millis() - time >= wait) {

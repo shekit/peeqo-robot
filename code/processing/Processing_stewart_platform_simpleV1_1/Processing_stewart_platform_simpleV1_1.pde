@@ -5,12 +5,14 @@ int myColor = color(0, 0, 0);  //color
 
 int sliderValue;
 
-int increment = 5;
+int increment = 1;
 
 Slider Yaw;
 Slider Z;
 Slider2D XY;
 Slider2D RollPitch;
+
+boolean record = false;
 
 //Button showValue;
 
@@ -30,10 +32,10 @@ void setup() {
   //String portName = Serial.list()[5];
 
   // get a specific serial port (use EITHER this OR the first-available code above)
-  //String portName = "/dev/tty.usbmodemFD121";
+  String portName = "/dev/cu.usbmodemFA131";
 
   // open the serial port
-  //port = new Serial(this, portName, 115200);
+  port = new Serial(this, portName, 115200);
 
   
   //sliders
@@ -42,6 +44,26 @@ void setup() {
   cp5.addButton("resetAll")
     .setValue(100)
     .setPosition(300,200)
+    .setSize(200,19);
+  
+  cp5.addButton("showValues")
+    .setValue(100)
+    .setPosition(300,100)
+    .setSize(200,19);
+    
+  cp5.addButton("record")
+    .setValue(100)
+    .setPosition(300,300)
+    .setSize(200,19);
+    
+  cp5.addButton("printRecorded")
+    .setValue(100)
+    .setPosition(300,400)
+    .setSize(200,19);
+  
+  cp5.addButton("showValues")
+    .setValue(100)
+    .setPosition(300,100)
     .setSize(200,19);
   
   cp5.addButton("showValues")
@@ -101,6 +123,14 @@ public void resetAll(int theValue){
     XY.setArrayValue(new float[] {n,n});
     Yaw.setValue(n);
     RollPitch.setArrayValue(new float[] {n,n});
+}
+
+public void record(int theValue){
+   record = !record; 
+}
+
+public void printRecorded(int theValue){
+   println(recorded); 
 }
 
 void draw() {

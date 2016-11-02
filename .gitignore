@@ -11,3 +11,4 @@ test/
 speech_to_text_trials/
 stewart_tests/
 wifi_scan/
+.DS_Store
