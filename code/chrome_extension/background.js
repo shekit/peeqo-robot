@@ -1,6 +1,6 @@
-var blocked_sites = ["www.facebook.com","facebook.com","twitter.com","www.twitter.com","youtube.com","www.youtube.com"]
+var blocked_sites = ["www.facebook.com","facebook.com","twitter.com","www.twitter.com","youtube.com","www.youtube.com","reddit.com","www.reddit.com"]
 
-var socket_url = "http://107.170.76.97:3000";
+var socket_url = "http://104.236.102.253:3000";
 
 //var socket_url = "";
 

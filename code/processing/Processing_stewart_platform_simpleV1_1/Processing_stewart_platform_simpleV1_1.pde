@@ -35,7 +35,7 @@ void setup() {
   String portName = "/dev/cu.usbmodemFA131";
 
   // open the serial port
-  port = new Serial(this, portName, 115200);
+  //port = new Serial(this, portName, 115200);
 
   
   //sliders
