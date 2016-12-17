@@ -218,6 +218,18 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("getIp","yes")
 	})
 
+	socket.on('refresh', function(msg){
+		peeqo_io.emit("refresh","yes")
+	})
+
+	socket.on("remote-gif", function(msg){
+		peeqo_io.emit("remote-gif",msg)
+	})
+
+	socket.on("servo-raw", function(msg){
+		peeqo_io.emit("servo-raw",msg)
+	})
+
 })
 
 // socket connections from chrome extension

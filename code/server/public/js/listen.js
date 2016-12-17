@@ -16,6 +16,12 @@ $(document).ready(function(){
 		socket.emit("resetAll","yes")
 	})
 
+	$("body").on("click","#refresh", function(event){
+		event.preventDefault();
+
+		socket.emit("refresh","yes")
+	})
+
 	$("body").on("submit","#remote", function(event){
 		event.preventDefault()
 
