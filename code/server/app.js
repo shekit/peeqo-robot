@@ -148,7 +148,9 @@ controlpanel_io.on('connection', function(socket){
 	})
 
 
-
+	socket.on("animate", function(msg){
+		peeqo_io.emit("animate", msg)
+	})
 
 
 	socket.on("startBle", function(msg){
