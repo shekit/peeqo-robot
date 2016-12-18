@@ -230,6 +230,10 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("servo-raw",msg)
 	})
 
+	socket.on("direct-gif", function(msg){
+		peeqo_io.emit("direct-gif",msg)
+	})
+
 })
 
 // socket connections from chrome extension

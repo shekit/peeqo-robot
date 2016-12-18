@@ -31,6 +31,15 @@ $(document).ready(function(){
 		socket.emit("remote-gif", val)
 	})
 
+	$("body").on("submit","#direct", function(event){
+		event.preventDefault()
+
+		var val = $("#gif-url").val()
+		val = val.trim()
+		console.log(val)
+		socket.emit("direct-gif", val)
+	})
+
 	$("body").on("submit","#servo", function(event){
 		event.preventDefault()
 
