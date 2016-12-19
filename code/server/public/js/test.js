@@ -22,7 +22,8 @@ $(document).ready(function(){
 			servo:$("#servo").val() || null,
 			led:$("#led").val() || null,
 			sound:$("#sound").val() || null,
-			sound_loop_forever: $("#sound-loop").is(":checked")
+			sound_loop_forever: $("#sound-loop").is(":checked"),
+			callback: null
 		}
 
 		console.log(obj)

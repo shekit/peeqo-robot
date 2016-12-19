@@ -54,6 +54,21 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("blocked")
 	})
 	*/
+	socket.on('tickle', function(move){
+		peeqo_io.emit("tickle",move)
+	})
+
+	socket.on('tickle-reset', function(msg){
+		peeqo_io.emit("tickle-reset","yes")
+	})
+
+	socket.on('purpose', function(msg){
+		peeqo_io.emit("purpose","yes")
+	})
+
+	socket.on('omg', function(msg){
+		peeqo_io.emit("omg","yes")
+	})
 
 	socket.on('shutdown', function(msg){
 		peeqo_io.emit("shutdown","yes")

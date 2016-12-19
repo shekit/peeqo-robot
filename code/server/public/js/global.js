@@ -12,6 +12,27 @@ $(document).ready(function(){
 
 	/// FINAL LIST ///
 
+	$("body").on("click","#tickle", function(e){
+		e.preventDefault();
+		var move = [83,94,94,90,94,83]
+		socket.emit("tickle",move)
+	})
+
+	$("body").on("click","#tickle-reset", function(e){
+		e.preventDefault();
+		socket.emit("tickle-reset","yes")
+	})
+
+	$("body").on("click","#purpose", function(e){
+		e.preventDefault();
+		socket.emit("purpose","yes")
+	})
+
+	$("body").on("click","#omg", function(e){
+		e.preventDefault();
+		socket.emit("omg","yes")
+	})
+
 	$("body").on("click","#listen", function(e){
 		e.preventDefault();
 		socket.emit("listen","yes")
