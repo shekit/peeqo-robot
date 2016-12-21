@@ -82,14 +82,6 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("cameraOff","yes")
 	})
 
-	socket.on('cameraOff', function(msg){
-		peeqo_io.emit("cameraOff","yes")
-	})
-
-	socket.on('actMusic', function(msg){
-		peeqo_io.emit("actMusic","yes")
-	})
-
 	socket.on('actMusic', function(msg){
 		peeqo_io.emit("actMusic","yes")
 	})
@@ -104,6 +96,10 @@ controlpanel_io.on('connection', function(socket){
 
 	socket.on('blockReddit', function(msg){
 		peeqo_io.emit("blockReddit","yes");
+	})
+
+	socket.on('didWell', function(msg){
+		peeqo_io.emit("didWell","yes");
 	})
 
 	socket.on('sayNo', function(msg){

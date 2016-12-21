@@ -80,6 +80,11 @@ $(document).ready(function(){
 		e.preventDefault();
 		socket.emit("blockReddit","yes")
 	})
+	
+	$("body").on("click","#didWell", function(e){
+		e.preventDefault();
+		socket.emit("didWell","yes")
+	})
 
 	$("body").on("click","#sayNo", function(e){
 		e.preventDefault();
