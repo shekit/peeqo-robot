@@ -10,6 +10,9 @@ $(document).ready(function(){
 		alert("Peeqo IP: " + msg);
 	} )
 
+
+
+
 	/// FINAL LIST ///
 
 	$("body").on("click","#tickle", function(e){
@@ -32,6 +35,77 @@ $(document).ready(function(){
 		e.preventDefault();
 		socket.emit("omg","yes")
 	})
+
+	$("body").on("click","#gifJif", function(e){
+		e.preventDefault();
+		socket.emit("gifjif","yes")
+	})
+
+	$("body").on("click","#cameraOn", function(e){
+		e.preventDefault();
+		socket.emit("cameraOn","yes")
+	})
+
+	$("body").on("click","#cameraOff", function(e){
+		e.preventDefault();
+		socket.emit("cameraOff","yes")
+	})
+
+	$("body").on("click","#onLights", function(e){
+		e.preventDefault();
+		socket.emit("onLights","yes")
+	})
+
+	$("body").on("click","#offLights", function(e){
+		e.preventDefault();
+		socket.emit("offLights","yes")
+	})
+
+	$("body").on("click","#actMusic", function(e){
+		e.preventDefault();
+		socket.emit("actMusic","yes")
+	})
+
+	$("body").on("click","#playBeatles", function(e){
+		e.preventDefault();
+		socket.emit("playBeatles","yes")
+	})
+
+	$("body").on("click","#playRock", function(e){
+		e.preventDefault();
+		socket.emit("playRock","yes")
+	})
+
+	$("body").on("click","#blockReddit", function(e){
+		e.preventDefault();
+		socket.emit("blockReddit","yes")
+	})
+
+	$("body").on("click","#sayNo", function(e){
+		e.preventDefault();
+		socket.emit("sayNo","yes")
+	})
+
+
+	$("body").on("click","#byebye", function(e){
+		e.preventDefault();
+		socket.emit("byebye","yes")
+	})
+
+	$("body").on("click","#sleepy", function(e){
+		e.preventDefault();
+		socket.emit("sleepy","yes")
+	})
+
+	$("body").on("click","#wakey", function(e){
+		e.preventDefault();
+		socket.emit("wakey","yes")
+	})
+
+
+
+
+
 
 	$("body").on("click","#listen", function(e){
 		e.preventDefault();

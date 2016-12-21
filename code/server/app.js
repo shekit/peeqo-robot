@@ -70,13 +70,67 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("omg","yes")
 	})
 
-	socket.on('shutdown', function(msg){
-		peeqo_io.emit("shutdown","yes")
+	socket.on('gifjif', function(msg){
+		peeqo_io.emit("gifjif","yes")
 	})
 
-	socket.on('reboot', function(msg){
-		peeqo_io.emit("reboot","yes");
+	socket.on('cameraOn', function(msg){
+		peeqo_io.emit("cameraOn","yes")
 	})
+
+	socket.on('cameraOff', function(msg){
+		peeqo_io.emit("cameraOff","yes")
+	})
+
+	socket.on('cameraOff', function(msg){
+		peeqo_io.emit("cameraOff","yes")
+	})
+
+	socket.on('actMusic', function(msg){
+		peeqo_io.emit("actMusic","yes")
+	})
+
+	socket.on('actMusic', function(msg){
+		peeqo_io.emit("actMusic","yes")
+	})
+
+	socket.on('playBeatles', function(msg){
+		peeqo_io.emit("playBeatles","yes");
+	})
+
+	socket.on('playRock', function(msg){
+		peeqo_io.emit("playRock","yes");
+	})
+
+	socket.on('blockReddit', function(msg){
+		peeqo_io.emit("blockReddit","yes");
+	})
+
+	socket.on('sayNo', function(msg){
+		peeqo_io.emit("sayNo","yes");
+	})
+
+	socket.on('byebye', function(msg){
+		peeqo_io.emit("byebye","yes");
+	})
+
+	socket.on('sleepy', function(msg){
+		peeqo_io.emit("sleepy","yes");
+	})
+
+	socket.on('wakey', function(msg){
+		peeqo_io.emit("wakey","yes");
+	})
+
+	socket.on('offLights', function(msg){
+		peeqo_io.emit("offLights","yes");
+	})
+
+	socket.on('onLights', function(msg){
+		peeqo_io.emit("onLights","yes");
+	})
+
+
 
 	socket.on("listen", function(msg){
 		peeqo_io.emit("listen","yes")
