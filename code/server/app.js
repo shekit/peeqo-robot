@@ -126,7 +126,13 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("onLights","yes");
 	})
 
+	socket.on("shutdown", function(msg){
+		peeqo_io.emit("shutdown","yes")
+	})
 
+	socket.on("reboot", function(msg){
+		peeqo_io.emit("reboot","yes")
+	})
 
 	socket.on("listen", function(msg){
 		peeqo_io.emit("listen","yes")
