@@ -36,6 +36,10 @@ app.get("/shutdown", function(req,res,next){
 	res.render("shutdown.jade")
 })
 
+app.get("/chd", function(req, res, next){
+	res.render("chd.jade")
+})
+
 app.get("/test", function(req, res, next){
 	res.render("test.jade")
 })
@@ -54,6 +58,44 @@ controlpanel_io.on('connection', function(socket){
 		peeqo_io.emit("blocked")
 	})
 	*/
+
+	// CHD 
+
+	socket.on('listen_chd', function(){
+		peeqo_io.emit("listen_chd","yes")
+	})
+
+	socket.on('hi_chd', function(){
+		peeqo_io.emit("hi_chd","yes")
+	})
+
+	socket.on('bye_chd', function(){
+		peeqo_io.emit("bye_chd","yes")
+	})
+
+	socket.on('yes_chd', function(){
+		peeqo_io.emit("yes_chd","yes")
+	})
+
+	socket.on('no_chd', function(){
+		peeqo_io.emit("no_chd","yes")
+	})
+
+	socket.on('happy_chd', function(){
+		peeqo_io.emit("happy_chd","yes")
+	})
+
+	socket.on('sad_chd', function(){
+		peeqo_io.emit("sad_chd","yes")
+	})
+
+	socket.on('reset_chd', function(){
+		peeqo_io.emit("reset_chd","yes")
+	})
+
+
+	// END CHD
+
 	socket.on('tickle', function(move){
 		peeqo_io.emit("tickle",move)
 	})

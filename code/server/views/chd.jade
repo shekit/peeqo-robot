@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div(class='container')
+    br
+    br
+    div(class="row")
+      div(class='col-xs-12')
+        a(href="#", id="listen_chd", class="btn btn-block btn-lg btn-primary") Listen
+    br
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="hi_chd", class="btn btn-block btn-lg btn-success") HI
+      div(class='col-xs-6')
+        a(href="#", id="bye_chd", class="btn btn-block btn-lg btn-danger") BYE
+    br
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="yes_chd", class="btn btn-block btn-lg btn-success") YES
+      div(class='col-xs-6')
+        a(href="#", id="no_chd", class="btn btn-block btn-lg btn-danger") NO
+    br
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="happy_chd", class="btn btn-block btn-lg btn-success") HAPPY
+      div(class='col-xs-6')
+        a(href="#", id="sad_chd", class="btn btn-block btn-lg btn-danger") SAD
+    br
+    br
+    div(class='row')
+      div(class='col-xs-12')
+        a(href="#", id="reset_chd", class="btn btn-block btn-lg btn-primary") RESET
+
+block javascript
+  script(src='/js/chd.js')
