@@ -10,6 +10,6 @@ $(document).ready(function(){
 		var id = $(this).attr('id')
 		console.log(id)
 
-		socket.emit("listen",id)
+		socket.emit(id,"yes")
 	})
 })
