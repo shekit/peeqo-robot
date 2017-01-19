@@ -197,18 +197,21 @@ function stringToBytes(string){
 
 
     function onFoundPeeqo(device){
-        if(device.advertising.kCBAdvDataLocalName.match(/peeqo/i) && typeof(device) == 'object'){
-            ble.stopScan(function(){
-                console.log("Stopped scan, peeqo found")
-            }, function(){
-                console.log("couldnt stop scan")
-            })
 
-            clearSearchPeeqoTimer();
+        if(device.advertising.kCBAdvDataLocalName != undefined){
+            if(device.advertising.kCBAdvDataLocalName.match(/peeqo/i) && typeof(device) == 'object'){
+                ble.stopScan(function(){
+                    console.log("Stopped scan, peeqo found")
+                }, function(){
+                    console.log("couldnt stop scan")
+                })
 
-            render_found_peeqo(device);
-        } else {
-            console.log("a device i dont care about")
+                clearSearchPeeqoTimer();
+
+                render_found_peeqo(device);
+            } else {
+                console.log("a device i dont care about")
+            }
         }
     }
 

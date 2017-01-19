@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.peeqo.cordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloCordova</name>
+    <name>Peeqo</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
@@ -22,6 +22,14 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+    </platform>
+    <platform name="android">
+        <icon src="www/img/ldpi.png" density='ldpi'/>
+        <icon src="www/img/mdpi.png" density='mdpi'/>
+        <icon src="www/img/hdpi.png" density='hdpi'/>
+        <icon src="www/img/xhdpi.png" density='xhdpi'/>
+        <icon src="www/img/xxhdpi.png" density='xxhdpi'/>
+        <icon src="www/img/xxxhdpi.png" density='xxxhdpi'/>
     </platform>
     <engine name="ios" spec="~4.1.1" />
     <engine name="browser" spec="~4.1.0" />
