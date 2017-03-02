@@ -6,6 +6,10 @@ body, div {
 video, #selfie {
 	-webkit-transform: rotateY(-180deg);
 	tranform: rotateY(-180deg);
+	width: 120%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #selfie{

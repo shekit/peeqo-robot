@@ -1,0 +1,30 @@
+module.exports = {
+	easing500:{
+		duration:500,
+		cmd:0x01
+	},
+	easing1000:{
+		duration:1000,
+		cmd:0x02
+	},
+	easing1500:{
+		duration:1500,
+		cmd:0x03
+	},
+	easing2000:{
+		duration:2000,
+		cmd:0x04
+	},
+	easing3000:{
+		duration:3000,
+		cmd:0x05
+	},
+	easingBounce:{
+		duration:1000,
+		cmd:0x06
+	},
+	easing200:{
+		duration:200,
+		cmd:0x07
+	}
+}

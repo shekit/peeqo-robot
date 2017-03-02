@@ -1,7 +1,7 @@
 'use strict';
 
 const electron = require('electron');
-
+const spawn = require('child_process').spawn
 const app = electron.app;
 
 const BrowserWindow = electron.BrowserWindow;
@@ -20,6 +20,7 @@ app.on('ready', function(){
 		mainWindow.webContents.openDevTools();
 	} else {
 		// for full screen on pi
+		mainWindow.webContents.openDevTools();
 		mainWindow.setMenu(null);
 		mainWindow.setFullScreen(true);
 		mainWindow.maximize();
@@ -27,6 +28,31 @@ app.on('ready', function(){
 
 })
 
+var listenProcess = spawn('node', ['./listen.js'], {detached: false})
+
+listenProcess.stderr.on('data', function (data) {
+  var message = data.toString()
+  console.log("ERROR", message.substring(4))
+})
+
+listenProcess.stdout.on('data', function (data) {
+	var message = data.toString()
+	if (message.startsWith('!h:')) {
+	    mainWindow.webContents.send('hotword', true)
+	  } else if (message.startsWith('!p:')) {
+	    mainWindow.webContents.send('partial-results', message.substring(4))
+	  } else if (message.startsWith('!f:')) {
+	    mainWindow.webContents.send('final-results', message.substring(4))
+	  } else {
+	    console.error(message.substring(3))
+	  }
+})
+
+app.on('will-quit', function () {
+  listenProcess.kill()
+})
+
 app.on('window-all-closed', function(){
 	app.quit();
 })
+

@@ -1,2 +1,8 @@
 /node_modules
 /app/config/config.js
+/app/config/*.json
+.DS_Store
+npm-debug.log
+/app/images/downloaded/
+/app/images/local/old
+/app/images/local
