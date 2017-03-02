@@ -1,0 +1,10 @@
+body {
+	min-width: 350px;
+	overflow: hidden;
+	min-height: 400px;
+}
+
+img {
+	width: 800px;
+	height: 480px;
+}

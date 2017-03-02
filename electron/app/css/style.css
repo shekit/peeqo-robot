@@ -1,0 +1,90 @@
+body, div {
+	padding: 0;
+	margin: 0;
+}
+
+video, #selfie {
+	-webkit-transform: rotateY(-180deg);
+	tranform: rotateY(-180deg);
+}
+
+#selfie{
+	width: 800px;
+	height: 480px;
+}
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#wrapper{
+	width: 800px;
+	height: 480px;
+	margin:0 !important;
+	padding:0;
+}
+
+#eyes {
+	width: 100%;
+	height: 100%;
+	background: white;
+}
+
+#testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper, #sleepWrapper {
+	display: none;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+#sleepWrapper {
+	background: #000;
+	width: 800px;
+	height: 480px;
+}
+
+#gifWrapper {
+	background: #000;
+}
+
+#gif_container {
+	position: relative;
+	height: 800px;
+	width: 480px;
+}
+
+#gif {
+	width: 800px;
+	height: auto;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	/*object-position: 50% 50%;
+	object-fit:cover;*/
+}
+
+#wrapper {
+	position: relative;
+	height: 800px;
+	width: 480px;
+	overflow: hidden;
+}
+
+#glasses{
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 10;
+}
+
+.wrapper {
+	position: absolute;
+	top:0;
+	left: 0;
+	height: 480px;
+	width: 800px;
+}
+

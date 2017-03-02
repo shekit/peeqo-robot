@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  div(class='container-fixed')
+    div(class="row")
+      div(class='col-xs-1 col-sm-3')
+      div(class='col-xs-10 col-sm-6')
+        form(id="animate")
+          select(class='form-control' id="gif-type")
+            option remote
+            option local
+          br
+          input(type="text" id="gif-category" placeholder="GIF category" class="form-control input-lg")
+          br
+          p For Local: abuse, angry, annoyed, bye, cant, compliment, confirmation, confused, countdown, dance, error, excited, goodnight, happy, hello, high_five, learning, love, motivation, no, no_internet, petting, picture, sad, sleepy, sorry, thanks, thumbs_up, yes
+          br
+          input(type="text" id="gif-url" placeholder="Direct Gif Link" class="form-control input-lg")
+          br
+          label Loop Gif?&nbsp;&nbsp;
+          input(type="checkbox" id='gif-loop')
+          br 
+          br
+          input(type="text" id="servo" placeholder="Servo animation" class="form-control input-lg")
+          br
+          p For Servo: reset, alert, sad, happy, dance, yes, no, lookup, musicSway, curious, bye, angry, excited, confused, wakeup
+          br
+          input(type="text" id='led' placeholder="LED animation" class="form-control input-lg")
+          br
+          p For LED: error, success, alert, fadeRed, off, idle, greenBlink, blueBlink
+          br
+          input(type="text" id="sound" placeholder="Sound name" class="form-control input-lg")
+          br
+          p For Sound: alert, angry, cheer, curious, happy, hi, laugh, love, sad, sleep, think
+          br
+          label Loop Sound?&nbsp;&nbsp;
+          input(type='checkbox' id='sound-loop')
+          br
+          br
+          br
+          input(type="submit" value="SEND" class="btn btn-block btn-danger")
+          br
+          br
+      div(class='col-xs-1 col-sm-3')
+
+    div(class="row")
+      div(class='col-xs-12')
+        a(href="#", id="getIp", class="btn btn-block btn-lg btn-success") Get Ip
+
+block javascript
+  script(src='/js/test.js')

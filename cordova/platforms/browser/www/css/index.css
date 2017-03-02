@@ -1,0 +1,124 @@
+html {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #aaa;
+}
+
+#wrapper {
+    margin-top: 40px;
+}
+
+.loading {
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    position: absolute;
+    display: none;
+}
+
+/* scanning animation */
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
+/* end scanning animation */
+
+.text-center {
+    text-align: center;
+}
+
+.center_image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    font-weight: 300;
+    color: #333;
+    font-size: 40px;
+}
+
+.setup{
+    margin-top: 10%;
+}
+
+/* CUSTOM BUTTONS */
+
+.btn_bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-right: 20px;
+}
+
+.btn_custom_orange {
+    background-color: #F06222;
+    border: 1px solid #F06222;
+}
+
+.btn_custom_orange:active {
+    background-color: #DD4B12;
+    border: 1px solid #DD4B12;
+}
+
+.btn_custom_connect {
+    background-color: #62BF7D;
+    border: 1px solid #62BF7D;
+}
+
+.btn_custom_connect:active {
+    background-color: #22AB80;
+    border: 1px solid #22AB80;
+}

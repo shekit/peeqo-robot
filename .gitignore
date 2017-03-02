@@ -1,15 +1,1 @@
-voice_test/
-electron_test/
-processing_sketch/
-peeqo_server/
-electron_i2c_test/
-bleno_test/
-arduino1/
-peeqo_electron/
-assets/
-test/
-speech_to_text_trials/
-stewart_tests/
-wifi_scan/
 .DS_Store
-documentation/

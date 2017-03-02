@@ -1,0 +1,12 @@
+.row {
+	margin-top: 10px;
+}
+
+.btn {
+	border-radius: 0;
+	font-size: 40px;
+}
+
+.btn:focus{
+	outline: none;
+}
