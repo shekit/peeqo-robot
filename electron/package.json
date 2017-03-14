@@ -10,21 +10,19 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron-prebuilt": "^1.4.12",
-    "electron-rebuild": "^1.4.0"
+    "electron-rebuild": "^1.5.7"
   },
   "dependencies": {
     "app-module-path": "^2.1.0",
     "bleno": "^0.4.1",
     "giphy-api": "^1.2.3",
-    "grpc": "^1.0.1",
     "i2c-bus": "^1.0.3",
     "ip": "^1.1.4",
     "natural": "^0.4.0",
+    "pi-utils": "^0.1.2",
     "shortid": "^2.2.6",
     "snapsvg": "^0.4.0",
-    "sonus": "^0.1.2",
-    "spotify-web-api-js": "^0.21.1",
-    "wifi-control": "^2.0.0"
+    "sonus": "^0.1.7",
+    "spotify-web-api-js": "^0.21.1"
   }
 }
