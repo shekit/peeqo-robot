@@ -4,22 +4,16 @@ $(document).ready(function(){
 
 	var socket = io(socket_url + '/server_power')
 
-	$("body").on("click","#shutdown", function(event){
+	$("body").on("click",".btn", function(event){
 		event.preventDefault();
 
-		socket.emit("shutdown","yes")
+		var id = $(this).attr('id')
+
+		socket.emit(id,"yes")
 	})
 
-	$("body").on("click","#reboot", function(event){
-		event.preventDefault();
-
-		socket.emit("reboot","yes")
-	})
-
-	$("body").on("click","#refresh", function(event){
-		event.preventDefault();
-
-		socket.emit("refresh","yes")
+	socket.on('ip', function(data){
+		alert("Peeqo IP: " + msg);
 	})
 
 })

@@ -1,1 +1,1 @@
-window.socketURL = ""
+window.socketURL = "" // enter the ip of your server here

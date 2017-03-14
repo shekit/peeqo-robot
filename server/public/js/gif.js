@@ -2,24 +2,12 @@ $(document).ready(function(){
 
 	var socket_url = window.socketURL
 
-	var socket = io(socket_url + '/controlpanel')
+	var socket = io(socket_url + '/server_webcontrol')
 
-	$("body").on("click","#listen", function(event){
+	$("body").on("click","#reset", function(event){
 		event.preventDefault();
 
-		socket.emit("listen","yes")
-	})
-
-	$("body").on("click","#resetAll", function(event){
-		event.preventDefault();
-
-		socket.emit("resetAll","yes")
-	})
-
-	$("body").on("click","#refresh", function(event){
-		event.preventDefault();
-
-		socket.emit("refresh","yes")
+		socket.emit("reset","yes")
 	})
 
 	$("body").on("submit","#remote", function(event){

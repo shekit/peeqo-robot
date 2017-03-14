@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div(class='container')
+    div(class="row")
+      div(class='col-xs-12')
+        a(href="#", id="listen", class="btn btn-block btn-lg btn-primary") Listen
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="sleep", class="btn btn-block btn-lg btn-success") SLEEP
+      div(class='col-xs-6')
+        a(href="#", id="wake", class="btn btn-block btn-lg btn-danger") WAKE UP
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="hi", class="btn btn-block btn-lg btn-success") HI
+      div(class='col-xs-6')
+        a(href="#", id="bye", class="btn btn-block btn-lg btn-danger") BYE
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="yes", class="btn btn-block btn-lg btn-success") YES
+      div(class='col-xs-6')
+        a(href="#", id="no", class="btn btn-block btn-lg btn-danger") NO
+    br
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="happy", class="btn btn-block btn-lg btn-success") HAPPY
+      div(class='col-xs-6')
+        a(href="#", id="sad", class="btn btn-block btn-lg btn-danger") SAD
+    br
+    div(class='row')
+      div(class='col-xs-12')
+        a(href="#", id="reset", class="btn btn-block btn-lg btn-primary") RESET
+
+block javascript
+  script(src='/js/demo.js')

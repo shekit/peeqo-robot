@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  div(class='container-fixed')
+    div(class="row")
+      div(class='col-xs-6')
+        a(href="#", id="activateMusic", class="btn btn-block btn-lg btn-success") Activate Music
+      div(class='col-xs-6')
+        a(href="#", id="deactivateMusic", class="btn btn-block btn-lg btn-primary") Deactivate Music
+    div(class="row")
+      div(class='col-xs-6')
+        a(href="#", id="playMusic", class="btn btn-block btn-lg btn-success") Play Music
+      div(class='col-xs-6')
+        a(href="#", id="stopMusic", class="btn btn-block btn-lg btn-primary") Stop Music
+    div(class="row")
+      div(class='col-xs-6')
+        a(href="#", id="blockReddit", class="btn btn-block btn-lg btn-success") Block Reddit
+      div(class='col-xs-6')
+        a(href="#", id="unblockReddit", class="btn btn-block btn-lg btn-primary") Block Reddit
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="blockFacebook", class="btn btn-block btn-lg btn-success") Block Facebook
+      div(class='col-xs-6')
+        a(href="#", id="blockTwitter", class="btn btn-block btn-lg btn-primary") Block Twitter
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="unblockFacebook", class="btn btn-block btn-lg btn-success") Unblock Facebook
+      div(class='col-xs-6')
+        a(href="#", id="unblockTwitter", class="btn btn-block btn-lg btn-primary") Unblock Twitter
+    div(class='row')
+      div(class='col-xs-6')
+        a(href="#", id="lightsOn", class="btn btn-block btn-lg btn-success") Lights On
+      div(class='col-xs-6')
+        a(href="#", id="lightsOff", class="btn btn-block btn-lg btn-primary") Lights Off
+    div(class="row")
+      div(class='col-xs-6')
+        a(href="#", id="cameraOn", class="btn btn-block btn-lg btn-success") Camera On
+      div(class='col-xs-6')
+        a(href="#", id="cameraOff", class="btn btn-block btn-lg btn-primary") Camera Off
+    div(class="row")
+      div(class='col-xs-6')
+        a(href="#", id="takePicture", class="btn btn-block btn-lg btn-success") Take Picture
+      div(class='col-xs-6')
+        a(href="#", id="blinkLed", class="btn btn-block btn-lg btn-success") Blink Led
+    div(class="row")
+      div(class='col-xs-6')
+        a(href="#", id="lightsOn", class="btn btn-block btn-lg btn-success") Lights ON
+      div(class='col-xs-6')
+        a(href="#", id="lightsOff", class="btn btn-block btn-lg btn-primary") Lights OFF
+    
+
+block javascript
+  script(src='/js/test.js')
