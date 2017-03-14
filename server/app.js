@@ -46,7 +46,36 @@ app.get("/test", function(req, res, next){
 
 var io = require('socket.io')(http);
 
-// socket connections from control panel
+
+// POWER SOCKET CONNECTIONS 
+
+var server_power = io.of('/server_power')
+var peeqo_power = io.of('/peeqo_power')
+
+peeqo_power.on('connection', function(socket){
+	console.log('peeqo power connected')
+})
+
+server_power.on('connection', function(socket){
+	console.log('server power connected')
+
+	socket.on('shutdown', function(data){
+		peeqo_power.emit('shutdown')
+	})
+
+	socket.on('reboot', function(data){
+		peeqo_power.emit('reboot')
+	})
+
+	socket.on('refresh', function(data){
+		peeqo_power.emit('refresh')
+	})
+})
+
+// END OF POWER SOCKET CONNECTIONS
+
+
+
 
 var controlpanel_io = io.of('/controlpanel')
 
@@ -166,14 +195,6 @@ controlpanel_io.on('connection', function(socket){
 
 	socket.on('onLights', function(msg){
 		peeqo_io.emit("onLights","yes");
-	})
-
-	socket.on("shutdown", function(msg){
-		peeqo_io.emit("shutdown","yes")
-	})
-
-	socket.on("reboot", function(msg){
-		peeqo_io.emit("reboot","yes")
 	})
 
 	socket.on("listen", function(msg){
@@ -331,10 +352,6 @@ controlpanel_io.on('connection', function(socket){
 
 	socket.on('getIp', function(msg){
 		peeqo_io.emit("getIp","yes")
-	})
-
-	socket.on('refresh', function(msg){
-		peeqo_io.emit("refresh","yes")
 	})
 
 	socket.on("remote-gif", function(msg){
