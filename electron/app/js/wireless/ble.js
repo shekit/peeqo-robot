@@ -1,6 +1,5 @@
 const bleno = require('bleno');
-const wifi = require('js/wifi-scan')
-const config = require('config/config.js')
+const wifi = require('js/wireless/wifi')
 
 module.exports = function(){
 
@@ -8,11 +7,6 @@ module.exports = function(){
 	var ble_name = 'peeqo';
 
 	var serviceUuid = ['12ab'];
-
-	var sandbox = {
-		ssid: config.wifi.ssid,
-		password: config.wifi.pass
-	}
 
 	var newWifi = {
 		ssid: "",
@@ -53,7 +47,15 @@ module.exports = function(){
 								console.log("Wifi Password: "+this.value.toString("utf-8"))
 								newWifi.password = this.value.toString("utf-8")
 
-								wifi.connect(newWifi);
+								console.log("SSID:", newWifi.ssid)
+								console.log("PASS:", newWifi.password)
+
+								piutils.wifi.connect(newWifi.ssid, newWifi.password)
+									.then(result => {
+										if(result){
+											console.log("Connected")
+										}
+									})
 
 								callback(this.RESULT_SUCCESS);
 							}

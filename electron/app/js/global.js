@@ -12,9 +12,9 @@ $(document).ready(function(){
 	
 	const onlineStatus = require('js/check-online-status')()
 	
-	////**** WIFI SCANNING ****////
+	const ble = require('js/ble')()
 
-	
+	const controlsockets = require('js/control-socket')() // shutdown, reboot, refresh
 	
 	const socket = require('js/socket')()
 

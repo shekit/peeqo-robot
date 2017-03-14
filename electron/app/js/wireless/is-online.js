@@ -38,8 +38,6 @@ module.exports = function(){
 		}
 
 		event.emit("animate", obj)
-		// stop sending ble signal as wifi has been configured
-		//stopBleAdvertising();
 	})
 
 	Offline.on('checking', function(err){
