@@ -50,12 +50,7 @@ module.exports = function(){
 								console.log("SSID:", newWifi.ssid)
 								console.log("PASS:", newWifi.password)
 
-								piutils.wifi.connect(newWifi.ssid, newWifi.password)
-									.then(result => {
-										if(result){
-											console.log("Connected")
-										}
-									})
+								wifi.connect(newWifi.ssid, newWifi.password)
 
 								callback(this.RESULT_SUCCESS);
 							}

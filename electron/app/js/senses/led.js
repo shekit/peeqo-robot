@@ -1,6 +1,6 @@
 // control LED ring on Peeqo
-const ledCommands = require('js/data/led-cmds')
-const i2c = require('js/i2c-cmds')()
+const ledCommands = require('js/commands/led-cmds')
+const i2c = require('js/commands/i2c-cmds')()
 
 module.exports = function(){
 

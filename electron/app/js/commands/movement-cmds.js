@@ -1,5 +1,5 @@
 // require servo commands
-const servoCmd = require('js/data/servo-cmds')
+const servoCmd = require('js/commands/servo-cmds')
 
 module.exports = {
 	reset: {

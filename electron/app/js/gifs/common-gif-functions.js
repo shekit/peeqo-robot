@@ -3,7 +3,7 @@
 const fs = require('fs')
 const spawn = require('child_process').spawn
 const path = require('path')
-const event = require('js/events')
+const event = require('js/events/events')
 
 module.exports = function(){
 

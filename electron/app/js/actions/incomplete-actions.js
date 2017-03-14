@@ -1,5 +1,5 @@
-const localGif = require('js/local-gif')()
-const gifAction = require('js/common-gif-functions')()
+const localGif = require('js/gifs/local-gif')()
+const gifAction = require('js/gifs/common-gif-functions')()
 const moment = require('moment')
 const config = require('config/config.js')
 

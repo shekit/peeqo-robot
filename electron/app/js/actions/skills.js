@@ -1,4 +1,4 @@
-const event = require('js/events')
+const event = require('js/events/events')
 var skillset = {}
 
 module.exports = function() {

@@ -1,7 +1,7 @@
 // control servos on Peeqo
-const movements = require('js/data/movement-cmds')
-const servoCmd = require('js/data/servo-cmds')
-const i2c = require('js/i2c-cmds')()
+const movements = require('js/commands/movement-cmds')
+const servoCmd = require('js/commands/servo-cmds')
+const i2c = require('js/commands/i2c-cmds')()
 
 module.exports = function() {
 

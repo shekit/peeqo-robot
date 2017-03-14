@@ -1,7 +1,7 @@
 // Module has functions to power on and off the pi
 // Remember to properly power off peeqo everytime
 // instead of just cutting power
-const event = require('js/events')
+const event = require('js/events/events')
 const execSync = require('child_process').execSync
 
 module.exports = function(){

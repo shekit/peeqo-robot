@@ -1,7 +1,7 @@
 const path = require('path')
-const gifLibrary = require('images/local_gifs.js')
-const gifAction = require('js/common-gif-functions')()
-const event = require('js/events')
+const gifLibrary = require('js/data/local_gifs.js')
+const gifAction = require('js/gifs/common-gif-functions')()
+const event = require('js/events/events')
 
 module.exports = function() {
 

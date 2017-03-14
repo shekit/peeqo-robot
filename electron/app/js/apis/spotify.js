@@ -1,8 +1,8 @@
 const Spotify = require('spotify-web-api-js')
 const spotifyApi = new Spotify()
-const event = require('js/events')
+const event = require('js/events/events')
 
-var skills = require('js/skills')()
+var skills = require('js/actions/skills')()
 
 
 module.exports = function(){

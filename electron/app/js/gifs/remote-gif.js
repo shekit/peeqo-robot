@@ -6,7 +6,7 @@ const shortid = require('shortid')
 const config = require('config/config.js')
 
 const giphy = require('giphy-api')(config.giphy.key);
-const event = require('js/events')
+const event = require('js/events/events')
 
 module.exports = function(){
 

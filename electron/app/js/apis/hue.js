@@ -1,7 +1,7 @@
 // module to control hue lights
 
 const config = require('config/config.js')
-const event = require('js/events')
+const event = require('js/events/events')
 	
 module.exports = function(){
 	var hueUrl = config.hue.ip+"/api/"+config.hue.user+"/lights/"
