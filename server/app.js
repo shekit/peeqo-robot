@@ -11,7 +11,7 @@ var app = express();
 var http = require('http').Server(app);
 
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -25,23 +25,23 @@ app.use(cors());
 // app.use('/', routes)
 
 app.get("/", function(req, res, next){
-	res.render("index.jade")
+	res.render("index")
 })
 
 app.get("/listen", function(req,res,next){
-	res.render("listen.jade")
+	res.render("listen")
 })
 
 app.get("/shutdown", function(req,res,next){
-	res.render("shutdown.jade")
+	res.render("shutdown")
 })
 
 app.get("/chd", function(req, res, next){
-	res.render("chd.jade")
+	res.render("chd")
 })
 
 app.get("/test", function(req, res, next){
-	res.render("test.jade")
+	res.render("test")
 })
 
 var io = require('socket.io')(http);
@@ -59,7 +59,7 @@ controlpanel_io.on('connection', function(socket){
 	})
 	*/
 
-	// CHD 
+	// CHD
 
 	socket.on('listen_chd', function(){
 		peeqo_io.emit("listen_chd","yes")
@@ -279,7 +279,7 @@ controlpanel_io.on('connection', function(socket){
 		console.log("got moving")
 	})
 
-	
+
 
 	socket.on("idle", function(msg){
 		peeqo_io.emit("idle","yes")
@@ -372,7 +372,7 @@ extension_io.on('connection', function(socket){
 		} else {
 			socket.emit('notes', notes[10])
 		}
-		
+
 	})
 
 	socket.on('img', function(msg){
