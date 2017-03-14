@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-// var routes = require('./routes/index')
-
 var app = express();
 var http = require('http').Server(app);
 
@@ -21,8 +19,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(cors());
-
-// app.use('/', routes)
 
 app.get("/", function(req, res, next){
 	res.render("index.jade")
@@ -94,7 +90,7 @@ server_power.on('connection', function(socket){
 // DEMO SOCKETS
 
 var server_demo = io.of('/server_demo')
-var peeqo_demo = io.if('/peeqo_demo')
+var peeqo_demo = io.of('/peeqo_demo')
 
 peeqo_demo.on('connection', function(socket){
 	console.log('peeqo demo connected')
