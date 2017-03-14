@@ -21,27 +21,27 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(cors());
 
 app.get("/", function(req, res, next){
-	res.render("index.jade")
+	res.render("index.pug")
 })
 
 app.get("/gif", function(req,res,next){
-	res.render("gif.jade")
+	res.render("gif.pug")
 })
 
 app.get("/shutdown", function(req,res,next){
-	res.render("shutdown.jade")
+	res.render("shutdown.pug")
 })
 
 app.get("/demo", function(req, res, next){
-	res.render("demo.jade")
+	res.render("demo.pug")
 })
 
 app.get("/animate", function(req, res, next){
-	res.render("animate.jade")
+	res.render("animate.pug")
 })
 
 app.get("/test", function(req, res, next){
-	res.render("test.jade")
+	res.render("test.pug")
 })
 
 var io = require('socket.io')(http);
