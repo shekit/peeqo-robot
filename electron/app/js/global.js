@@ -14,10 +14,7 @@ $(document).ready(function(){
 	
 	////**** WIFI SCANNING ****////
 
-	//const wifi = require('js/wifi-scan.js')();
-
-	//const mic = require('js/listen')()
-	//const hotword = require('js/hotword')()
+	
 	
 	const socket = require('js/socket')()
 
@@ -26,8 +23,6 @@ $(document).ready(function(){
 
 	event.emit("show-div","eyeWrapper")
 	event.emit("start-blinking")
-
-	//mic.start(hotword.detector)
 
 	$("body").on("click", function(e){
 		

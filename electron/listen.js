@@ -18,7 +18,6 @@ const speech = require('@google-cloud/speech')({
 const hotwords = [{ file: path.join(__dirname, 'app/config/', config.speech.model), hotword: config.speech.keyword, sensitivity:  config.speech.sensitivity || '0.5'}]
 const language = config.language
 
-
 const recordProgram = (os.arch() == 'arm') ? "arecord" : "rec"
 
 const sonus = Sonus.init({ hotwords, language, recordProgram}, speech)

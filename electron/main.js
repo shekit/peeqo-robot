@@ -21,9 +21,9 @@ app.on('ready', function(){
 	} else {
 		// for full screen on pi
 		mainWindow.webContents.openDevTools();
-		mainWindow.setMenu(null);
-		mainWindow.setFullScreen(true);
-		mainWindow.maximize();
+		//mainWindow.setMenu(null);
+		//mainWindow.setFullScreen(true);
+		//mainWindow.maximize();
 	}
 
 })
