@@ -1,6 +1,6 @@
-const ip = require('ip');
 const config = require('config/config.js')
-const event = require('js/events')
+const event = require('js/events/events')
+const wifi = require('js/wireless/wifi')
 var socket = io(config.peeqo.server + '/peeqo_power')
 
 module.exports = function(){
@@ -16,5 +16,14 @@ module.exports = function(){
 	socket.on("refresh", function(msg){
 		event.emit("refresh")
 	})
+
+	socket.on("reset", function(msg){
+		event.emit("reset")
+	})
+
+	socket.on("ip", function(msg){
+		var ip = wifi.getIp()
+		socket.emit("ip", ip)
+	}
 	
 }
