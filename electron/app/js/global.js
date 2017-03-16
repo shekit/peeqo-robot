@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 	require('app-module-path').addPath(__dirname);
+	const os = require('os')
 	const path = require('path')
 	const ipcRenderer = require('electron').ipcRenderer
 	const natural = require('natural')
@@ -12,7 +13,11 @@ $(document).ready(function(){
 	
 	// WIFI CONFIG & ONLINE TEST
 	const onlineStatus = require('js/wireless/is-online')()
-	const ble = require('js/wireless/ble')()
+
+	if(os.arch == 'arm'){
+		const ble = require('js/wireless/ble')()
+	}
+	
 
 	// SOCKETS
 	const power_sockets = require('js/sockets/power')() // shutdown, reboot, refresh
@@ -33,9 +38,9 @@ $(document).ready(function(){
 
 
 	// RESET EVERYTHING ON BOOP
-	$("body").on("click", function(event){
+	$("body").on("click", function(evt){
 		
-		event.preventDefault()
+		evt.preventDefault()
 
 		var boop = path.join(__dirname, './images', 'local', 'r_boop', 'boop.gif')
 
@@ -94,7 +99,9 @@ $(document).ready(function(){
 	function tokenizeAndSend(string){
 		var words = tokenizer.tokenize(string)
 
-		intent.parse(words)
+		if(words.length){
+			intent.parse(words)
+		}
 	}
 
 })

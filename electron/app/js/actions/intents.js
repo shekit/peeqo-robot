@@ -5,73 +5,73 @@ module.exports = function(){
 
 	intents.parse = function(cmd){
 
-		if(words.includes("camera") && words.includes("on")){
+		if(cmd.includes("camera") && cmd.includes("on")){
 			console.log("TURN ON CAMERA")
 			event.emit('do',null,'cameraOn')
 		}
-		else if(words.includes("camera") && words.includes("off")){
+		else if(cmd.includes("camera") && cmd.includes("off")){
 			event.emit('do',null,'cameraOff')
 		}
-		else if(words.includes("activate") && words.includes("spotify")){
+		else if(cmd.includes("activate") && cmd.includes("spotify")){
 			event.emit('do',null,'addSkill')
 		}
-		else if(words.includes("play") && words.includes("music")){
+		else if(cmd.includes("play") && cmd.includes("music")){
 			event.emit('do',null,'playBeatles')
 		}
-		else if(words.includes("play") && words.includes("beatles")){
+		else if(cmd.includes("play") && cmd.includes("beatles")){
 			event.emit('do',null,'playBeatles')
 		}
-		else if(words.includes("play") && words.includes("metallica")){
+		else if(cmd.includes("play") && cmd.includes("metallica")){
 			event.emit('do',null,'playRock')
 		}
-		else if(words.includes("you") && words.includes("well")){
+		else if(cmd.includes("you") && cmd.includes("well")){
 			event.emit('do',null,'didWell')
 		}
-		else if(words.includes("you") && words.includes("awesome")){
+		else if(cmd.includes("you") && cmd.includes("awesome")){
 			event.emit('do',null,'didWell')
 		}
-		else if(words.includes("lights") && words.includes("off")){
+		else if(cmd.includes("lights") && cmd.includes("off")){
 			event.emit('do',null,'lightsOff')
 		}
-		else if(words.includes("lights") && words.includes("on")){
+		else if(cmd.includes("lights") && cmd.includes("on")){
 			event.emit('do',null,'lightsOn')
 		}
-		else if(words.includes("please") && words.includes("goodbye")){
+		else if(cmd.includes("please") && cmd.includes("goodbye")){
 			console.log("GOODBYE")
 			event.emit('do',null,'sayBye')
 		}
-		else if(words.includes("please") && words.includes("bye")){
+		else if(cmd.includes("please") && cmd.includes("bye")){
 			console.log("GOODBYE")
 			event.emit('do',null,'sayBye')
 		}
-		else if(words.includes("hi")){
+		else if(cmd.includes("hi")){
 			event.emit('do',null,'greetPublic')
 		}
-		else if(words.includes("go") && words.includes("reddit")){
+		else if(cmd.includes("go") && cmd.includes("reddit")){
 			event.emit('do',null,'blockReddit')
 		}
-		else if(words.includes("block") && words.includes("reddit")){
+		else if(cmd.includes("block") && cmd.includes("reddit")){
 			event.emit('do',null,'blockReddit')
 		}
-		else if(words.includes("pronounced") && words.includes("gif")){
+		else if(cmd.includes("pronounced") && cmd.includes("gif")){
 			event.emit('do',null,'gifJif')
 		}
-		else if(words.includes("gif") && words.includes("jif")){
+		else if(cmd.includes("gif") && cmd.includes("jif")){
 			event.emit('do',null,'gifJif')
 		}
-		else if(words.includes("say") && words.includes("gif")){
+		else if(cmd.includes("say") && cmd.includes("gif")){
 			event.emit('do',null,'gifJif')
 		}
-		else if(words.includes("go") && words.includes("sleep")){
+		else if(cmd.includes("go") && cmd.includes("sleep")){
 			event.emit('do',null,'sleep')
 		}
-		else if(words.includes("wake")){
+		else if(cmd.includes("wake")){
 			event.emit('do',null,'wakeUp')
 		} 
 		else {
 			event.emit('do',null,'unknown')
 		}
-		
+
 	}
 
 	return intents
