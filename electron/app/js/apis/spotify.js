@@ -1,6 +1,7 @@
 const Spotify = require('spotify-web-api-js')
 const spotifyApi = new Spotify()
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
 
 var skills = require('js/actions/skills')()
 
@@ -35,7 +36,8 @@ module.exports = function(){
 		} else {
 			var obj = {
 				gif_type:"local",  //local/remote
-				gif_category:"r_dunno",
+				gif_category: common.setQueryByType("r_dunno","i don't know how"),
+				format: common.setFormat(),
 				gif_url: null,
 				gif_loop_forever: false,
 				servo:null,
@@ -81,6 +83,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:null,  //local/remote
 			gif_category:null,
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: true,
 			servo: dance,

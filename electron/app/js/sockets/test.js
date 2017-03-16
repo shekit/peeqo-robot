@@ -1,6 +1,9 @@
 const config = require('config/config.js')
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
+
 var socket = io(config.peeqo.server + '/peeqo_test')
+
 
 module.exports = function(){
 
@@ -16,6 +19,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:"local",  //local/remote
 			gif_category:"countdown",
+			format: "gif",
 			gif_url: null,
 			gif_loop_forever: true,
 			servo:null,
@@ -48,8 +52,9 @@ module.exports = function(){
 
 	socket.on("lightsOn", function(msg){
 		var obj = {
-			gif_type:"local",  //local/remote
-			gif_category:"thumbs_up",
+			gif_type:gifType,  //local/remote
+			gif_category:common.setQueryByType("thumbs_up","thumbs up"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"lookup",
@@ -67,8 +72,9 @@ module.exports = function(){
 	socket.on("lightsOff", function(msg){
 
 		var obj = {
-			gif_type:"local",  //local/remote
-			gif_category:"thumbs_up",
+			gif_type:gifType,  //local/remote
+			gif_category:common.setQueryByType("thumbs_up","yes ok"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"lookup",

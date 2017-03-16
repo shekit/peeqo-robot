@@ -1,4 +1,5 @@
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
 
 module.exports = function(){
 
@@ -81,7 +82,8 @@ module.exports = function(){
 
 				var state = {
 					gif_type:"local",  //local/remote
-					gif_category:"compliment",
+					gif_category:common.setQueryByType("compliment","you look great"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"lookup",

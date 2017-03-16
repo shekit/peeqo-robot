@@ -3,19 +3,19 @@
 // Load in smart mirror config
 const path = require('path')
 const os = require('os')
-const config = require(path.join(__dirname,"app/config/config.js"))
-if(!config || !config.speech || !config.speech.keyFilename || !config.speech.model || !config.language){
-  throw "Configuration Error! See: https://docs.smart-mirror.io/docs/configure_the_mirror.html#speech";
+const config = require(path.join(process.env.PWD,"app","config","config.js"))
+if(!config || !config.speech || !config.speech.keyFilename || !config.speech.model || !config.speech.language){
+  throw "Configuration Error! Setup your config file";
 }
 
 // Configure Sonus
 const Sonus = require('sonus')
 const speech = require('@google-cloud/speech')({
   projectId: config.speech.projectId,
-  keyFilename: path.join(__dirname, 'app/config/', config.speech.keyFilename)
+  keyFilename: path.join(process.env.PWD, 'app','config/', config.speech.keyFilename)
 })
 
-const hotwords = [{ file: path.join(__dirname, 'app/config/', config.speech.model), hotword: config.speech.keyword, sensitivity:  config.speech.sensitivity || '0.5'}]
+const hotwords = [{ file: path.join(process.env.PWD, 'app','config', config.speech.model), hotword: config.speech.keyword, sensitivity:  config.speech.sensitivity || '0.5'}]
 const language = config.speech.language
 
 const recordProgram = (os.arch() == 'arm') ? "arecord" : "rec"

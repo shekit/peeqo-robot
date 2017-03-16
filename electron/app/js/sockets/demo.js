@@ -2,6 +2,7 @@ const config = require('config/config.js')
 const event = require('js/events/events')
 var socket = io(config.peeqo.server + '/peeqo_demo')
 
+
 module.exports = function(){
 
 	socket.on("sleep", function(msg){
@@ -9,6 +10,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:null,  //local/remote
 			gif_category:null,
+			format: null,
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"sleep",
@@ -28,7 +30,8 @@ module.exports = function(){
 		event.emit("stop-sound")
 		var obj = {
 			gif_type:"local",  //local/remote
-			gif_category:"hello",
+			gif_category:common.setQueryByType("hello", "hi"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"wakeup",
@@ -47,6 +50,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:null,  //local/remote/null
 			gif_category:null,
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"alert",
@@ -61,7 +65,8 @@ module.exports = function(){
 	socket.on("hi", function(msg){
 		var obj = {
 			gif_type:"local",  //local/remote
-			gif_category:"hello",
+			gif_category:common.setQueryByType("hello", "hello"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"lookup",
@@ -77,7 +82,8 @@ module.exports = function(){
 	socket.on("bye", function(msg){
 		var obj = {
 			gif_type:"local",  //local/remote
-			gif_category:"bye",
+			gif_category:common.setQueryByType("bye", "bye bye"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"lookup",
@@ -92,7 +98,8 @@ module.exports = function(){
 	socket.on("yes", function(msg){
 		var obj = {
 			gif_type:"local",  //local/remote
-			gif_category:"yes",
+			gif_category:common.setQueryByType("yes", "yes"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"yes",
@@ -107,7 +114,8 @@ module.exports = function(){
 	socket.on('sad', function(msg){
 		var obj = {
 			gif_type:"local",  //local/remote
-			gif_category:"r_sad",
+			gif_category:common.setQueryByType("r_sad", "sad"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"sad",

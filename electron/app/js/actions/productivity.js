@@ -1,4 +1,5 @@
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
 
 module.exports = function(){
 
@@ -26,8 +27,9 @@ module.exports = function(){
 
 	productivity.isBlocked = function(){
 		var obj = {
-			gif_type:"local",  //local/remote
-			gif_category:"r_angry",
+			gif_type:gifType,  //local/remote
+			gif_category: common.setQueryByType("r_angry","angry"),
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"angry",
@@ -37,8 +39,9 @@ module.exports = function(){
 			callback: function(){
 				event.emit("led","off")
 				var anim = {
-					gif_type:"local",  //local/remote
-					gif_category:"r_warning",
+					gif_type: gifType,  //local/remote
+					gif_category: common.setQueryByType("r_warning","i'm warning you"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"lookup",

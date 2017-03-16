@@ -1,11 +1,14 @@
 $(document).ready(function(){
 
 	require('app-module-path').addPath(__dirname);
-	const os = require('os')
 	const path = require('path')
 	const ipcRenderer = require('electron').ipcRenderer
 	const natural = require('natural')
 	const tokenizer = new natural.WordTokenizer()
+
+	// turn console logs off by uncommenting this line
+
+	//console.log = function(){}
 
 	// GLOBALS
 	global.isSleeping = false
@@ -16,7 +19,7 @@ $(document).ready(function(){
 	// WIFI CONFIG & ONLINE TEST
 	const onlineStatus = require('js/wireless/is-online')()
 
-	if(os.arch == 'arm'){
+	if(process.platform != 'darwin'){
 		const ble = require('js/wireless/ble')()
 	}
 	
@@ -47,7 +50,7 @@ $(document).ready(function(){
 
 		var obj = {
 					gif_type: gifType,  //local/remote
-					gif_category: common.setQueryByType("r_learning","superman"), //local search || online search
+					gif_category: common.setQueryByType("r_learning","excited"), //local search || online search
 					format: common.setFormat(), // if local then only search for gifs
 					gif_url: null,
 					gif_loop_forever: false,

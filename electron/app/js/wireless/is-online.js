@@ -1,4 +1,5 @@
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
 
 module.exports = function(){
 
@@ -12,6 +13,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:"local",  //local/remote
 			gif_category:"no_internet",
+			format: "gif",
 			gif_url: null,
 			gif_loop_forever: true,
 			servo:"sad",
@@ -28,7 +30,8 @@ module.exports = function(){
 	Offline.on('up', function(){
 		var obj = {
 			gif_type:"local",  //local/remote
-			gif_category:"excited",
+			gif_category:common.setQueryByType("excited","yay"),
+			format:common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:"excited",

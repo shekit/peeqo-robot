@@ -1,6 +1,9 @@
 const config = require('config/config.js')
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
+
 var socket = io(config.peeqo.server + '/peeqo_webcontrol')
+
 
 module.exports = function(){
 
@@ -8,6 +11,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:"remote",  //local/remote
 			gif_category:msg,
+			format: common.setFormat(),
 			gif_url: null,
 			gif_loop_forever: false,
 			servo:null,
@@ -23,6 +27,7 @@ module.exports = function(){
 		var obj = {
 			gif_type:"remote",  //local/remote
 			gif_category: null,
+			format: common.setFormat(),
 			gif_url: msg,
 			gif_loop_forever: false,
 			servo:null,

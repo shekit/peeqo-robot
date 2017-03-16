@@ -1,8 +1,7 @@
 const config = require('config/config.js')
 const event = require('js/events/events')
-const os = require('os')
 
-if(os.arch() == 'arm'){
+if(process.platform != 'darwin'){
 	const wifi = require('js/wireless/wifi')
 }
 

@@ -12,6 +12,7 @@ module.exports = function() {
 			var obj = {
 					gif_type: gifType,  //local/remote
 					gif_category: common.setQueryByType("r_learning","learning"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:null,
@@ -52,7 +53,8 @@ module.exports = function() {
 			case 'blockReddit':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_abouttime",
+					gif_category:common.setQueryByType("r_abouttime","it's about time"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"abouttime",
@@ -65,7 +67,8 @@ module.exports = function() {
 
 						var anim = {
 							gif_type:"local",  //local/remote
-							gif_category:"r_watching",
+							gif_category:common.setQueryByType("r_watching","i'm watching you"),
+							format: common.setFormat(),
 							gif_url: null,
 							gif_loop_forever: false,
 							servo:"lookup",
@@ -86,7 +89,8 @@ module.exports = function() {
 			case 'didWell':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_clapping",
+					gif_category:common.setQueryByType("r_clapping","applause"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"lookup",
@@ -97,7 +101,8 @@ module.exports = function() {
 						event.emit("led","off")
 						var anim = {
 							gif_type:"local",  //local/remote
-							gif_category:"r_youtoo",
+							gif_category:common.setQueryByType("r_youtoo", "you too"),
+							format: common.setFormat(),
 							gif_url: null,
 							gif_loop_forever: false,
 							servo:"lookup",
@@ -127,7 +132,8 @@ module.exports = function() {
 
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category: folder,
+					gif_category: common.setQueryByType(folder,"gif or jif"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"lookup",
@@ -144,7 +150,8 @@ module.exports = function() {
 			case 'greetPrivate':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_hello",
+					gif_category:common.setQueryByType("r_hello","hi"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"curious",
@@ -160,7 +167,8 @@ module.exports = function() {
 			case 'greetPublic':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_hello",
+					gif_category:common.setQueryByType("r_hello","hello"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"curious",
@@ -178,7 +186,8 @@ module.exports = function() {
 			case 'sayBye':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_bye",
+					gif_category:common.setQueryByType("r_bye","bye bye"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"curious",
@@ -196,7 +205,8 @@ module.exports = function() {
 			case 'lightsOff':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_gotit",
+					gif_category:common.setQueryByType("r_gotit","roger that"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"nod",
@@ -216,7 +226,8 @@ module.exports = function() {
 			case 'lightsOn':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_gotit",
+					gif_category:common.setQueryByType("r_gotit","you got it"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"nod",
@@ -242,6 +253,7 @@ module.exports = function() {
 				var obj = {
 					gif_type:null,  //local/remote
 					gif_category:null,
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"sleep",
@@ -263,7 +275,8 @@ module.exports = function() {
 			case 'wakeUp':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_wakeup",
+					gif_category:common.setQueryByType("r_wakeup","waking up"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"wakeup",
@@ -276,7 +289,8 @@ module.exports = function() {
 
 						var anim = {
 							gif_type:"local",  //local/remote
-							gif_category:"r_what",
+							gif_category:common.setQueryByType("r_what","what is your problem"),
+							format: common.setFormat(),
 							gif_url: null,
 							gif_loop_forever: false,
 							servo:"lookup",
@@ -297,7 +311,8 @@ module.exports = function() {
 			case 'cameraOn':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_smile",
+					gif_category:common.setQueryByType("r_smile","big smile"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:null,
@@ -325,7 +340,8 @@ module.exports = function() {
 			case 'unknown':
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_canthear",
+					gif_category:common.setQueryByType("r_canthear","i don't know"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:"no",
@@ -343,7 +359,8 @@ module.exports = function() {
 			default:
 				var obj = {
 					gif_type:"local",  //local/remote
-					gif_category:"r_canthear",
+					gif_category:common.setQueryByType("r_canthear","i can't hear you"),
+					format: common.setFormat(),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:null,

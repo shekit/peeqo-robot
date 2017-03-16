@@ -94,7 +94,7 @@ module.exports = function(){
 		var uniqueName = shortid.generate();
 
 		if(obj.gif_url == null){
-			giphy.search(obj.gif_category, function(err, res){
+			giphy.translate(obj.gif_category, function(err, res){
 
 				if(err || !res){
 					//show sad local gif
@@ -102,12 +102,13 @@ module.exports = function(){
 					//event.emit("find-local-gif","problem")
 					return
 				}
-
-				var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
 				
-				var randomGifObj = randomGif.images
 
-				console.log(randomGifObj)
+				//var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
+				
+				var randomGifObj =  res.data.images  // randomGif.images
+
+				console.log("RANDOM",randomGifObj)
 
 				if(obj.format == 'video'){
 
