@@ -130,7 +130,7 @@ module.exports = function(){
 
 	common.findDuration = function(obj){
 
-		var pythonScriptPath = path.join(process.env.PWD, 'gifduration', 'gifduration.py')
+		var pythonScriptPath = path.join(process.env.PWD,'app', 'gifduration', 'gifduration.py')
 		
 		var imgpath = null
 
@@ -139,7 +139,7 @@ module.exports = function(){
 		} else {
 			imgpath = obj.path
 		}
-		
+
 		var python = spawn('python', [pythonScriptPath, imgpath])
 
 		var gifLength = ''
@@ -149,7 +149,6 @@ module.exports = function(){
 		})
 
 		python.stdout.on('close', function(){
-
 			if(!gifLength){
 				gifLength = 2000
 			}

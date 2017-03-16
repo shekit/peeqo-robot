@@ -18,7 +18,7 @@ module.exports = function(){
 		if(original_gif_size <= config.giphy.max_gif_size){
 			obj.path = obj.path.original.url
 		} else {
-			obj.path = obj.path.fixed_width_small.url //findSmallerGif(obj,false);
+			obj.path = obj.path.fixed_width.url //findSmallerGif(obj,false);
 		}
 
 		download(obj)
@@ -52,7 +52,7 @@ module.exports = function(){
 	}
 
 	function findVideoDuration(obj){
-
+		
 		var video = document.getElementById("dummyVideo")
 		duration = video.duration*1000
 		video.src = ''
