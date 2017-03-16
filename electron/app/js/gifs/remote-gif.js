@@ -90,9 +90,12 @@ module.exports = function(){
 		}
 
 		var gifPath = path.join(dirpath, uuid+".gif")
-		obj.path = gifPath
+		obj.path = {
+			remote: obj.path,
+			local: gifPath 
+		}
 
-		request(obj.path).pipe(fs.createWriteStream(gifPath)).on('close', function(){
+		request(obj.path.remote).pipe(fs.createWriteStream(gifPath)).on('close', function(){
 			event.emit("find-gif-duration",obj)
 		})
 	}
@@ -113,8 +116,6 @@ module.exports = function(){
 				//var randomGif = res.data[Math.floor(Math.random()*(res.data.length))]; use if doing giphy.search
 				
 				var randomGifObj =  res.data.images  // randomGif.images
-
-				console.log("RANDOM",randomGifObj)
 
 				obj.path = randomGifObj
 

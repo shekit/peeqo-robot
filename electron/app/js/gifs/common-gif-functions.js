@@ -63,7 +63,6 @@ module.exports = function(){
 
 	common.setTimer = function(obj){
 		// display gif for exactly 2 loops by passing in its duration
-		console.log("DURATION: ", obj.duration)
 		var dur = parseInt(obj.duration)
 		var loop = 0
 
@@ -82,8 +81,6 @@ module.exports = function(){
 		} else {
 			loop = 1
 		}
-
-		console.log("LOOP:", loop)
 
 		if(isNaN(dur)){
 			event.emit("gif-timer-ended",obj)
@@ -134,8 +131,16 @@ module.exports = function(){
 	common.findDuration = function(obj){
 
 		var pythonScriptPath = path.join(process.env.PWD, 'gifduration', 'gifduration.py')
+		
+		var imgpath = null
 
-		var python = spawn('python', [pythonScriptPath, obj.path])
+		if(obj.type == 'remote'){
+			imgpath = obj.path.local
+		} else {
+			imgpath = obj.path
+		}
+		
+		var python = spawn('python', [pythonScriptPath, imgpath])
 
 		var gifLength = ''
 
@@ -154,7 +159,8 @@ module.exports = function(){
 			common.clearTimer()
 
 			if(obj.type == 'remote'){
-				deleteDownloadedGif(obj.path)
+				deleteDownloadedGif(obj.path.local)
+				obj.path = obj.path.remote
 			} 
 
 			event.emit("set-timer", obj)

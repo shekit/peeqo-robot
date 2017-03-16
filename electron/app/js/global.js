@@ -14,7 +14,7 @@ $(document).ready(function(){
 	global.isSleeping = false
 	global.ledOn = false
 	global.gifType = 'remote' // whether to search 'local' or 'remote'
-	global.mediaFormat = 'video'  // use the mp4 or gif version from gif - 'video', 'gif'
+	global.mediaFormat = 'gif'  // use the mp4 or gif version from gif - 'video', 'gif'
 	
 	// WIFI CONFIG & ONLINE TEST
 	const onlineStatus = require('js/wireless/is-online')()

@@ -9,7 +9,6 @@ module.exports = function() {
 
 		var filePath = path.join(process.env.PWD,'app','images', 'local', obj.query.folder, obj.query.files)
 
-		// add 
 		obj.path = filePath
 
 		if(obj.loop){
