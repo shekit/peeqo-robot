@@ -1,5 +1,6 @@
 const piutils = require('pi-utils')
 const event = require('js/events/events')
+const response = require('js/data/responses')
 
 module.exports = function(){
 
@@ -24,16 +25,22 @@ module.exports = function(){
 		piutils.wifi.connect(ssid, pass)
 			.then(result => {
 				if(result){
-					console.log("Connected")
+					console.log("Connected to wifi")
 					var obj = {
-						gif_type:null,  //local/remote
-						gif_category:null,
-						gif_url: null,
-						gif_loop_forever: true,
-						servo:null,
-						led:"success",
-						sound:null,
-						sound_loop_forever: false
+						type: gifType,  // local/remote/direct - on system, giphy, direct gif link
+						query: common.setQuery(response.other.back), 
+						format: common.setFormat(),
+						path:null,
+						duration: null,
+						loop: false,
+						servo: response.other.back.servo,
+						led:response.other.back.led,
+						sound: response.other.back.sound,
+						loopSound: false,
+						callback: function(){
+							console.log("LEDDD OFFF")
+							event.emit("led","off")
+						}
 					}
 
 					event.emit("animate", obj)

@@ -1,75 +1,132 @@
 module.exports = {
 	reaction:{
+		happy:{
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif','3.gif']
+			},
+			remote:["happy","delighted","i'm so happy","satisfied"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
+		},
 		sad:{
 			local:{
-				folder: '',
-				files: []
+				folder: 'sad',
+				files: ['1.gif','2.gif']
 			},
-			remote:[],
-			servo: "",
-		},
-		happy:{
-			local:[],
-			remote:[],
-			servo: "",
+			remote:["crying","sad","feeling sad"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 		excited:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif']
+			},
+			remote:["excited","yay","this is awesome"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 		angry:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'angry',
+				files: ['1.gif']
+			},
+			remote:["angry","are you serious","i am so mad"],
+			servo: null,
+			led: "error",
+			sound: null
 		},
-		smile:{
-			local:[],
-			remote:[],
-			servo: "",
+		laugh:{
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif']
+			},
+			remote:["excited","yay","this is awesome"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 		confused:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'confused',
+				files: ['1.gif','2.gif']
+			},
+			remote:["confused","what do I have to do","i don't understand"],
+			servo: null,
+			led: "error",
+			sound: null
 		},
 		no:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'no',
+				files: ['1.gif']
+			},
+			remote:["no","nope","never","absolutely not"],
+			servo: null,
+			led: "error",
+			sound: null
 		},
 		yes:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'yes',
+				files: ['1.gif','2.gif', '3.gif']
+			},
+			remote:["yes","you got it","ok boss"],
+			servo: null,
+			led: "success",
+			sound: null
 		},
 		wink:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif']
+			},
+			remote:["excited","yay","this is awesome"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 		eyeroll:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif']
+			},
+			remote:["excited","yay","this is awesome"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 		facepalm:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif']
+			},
+			remote:["excited","yay","this is awesome"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 		shrug:{
-			local:[],
-			remote:[],
-			servo: "",
+			local:{
+				folder: 'excited',
+				files: ['1.gif','2.gif']
+			},
+			remote:["excited","yay","this is awesome"],
+			servo: null,
+			led: "greenBlink",
+			sound: null
 		},
 	},
 
 	greeting: {
 		hello:{
 			local:{
-				folder: 'r_hello',
-				files: ["hello.gif","hi.gif","hi2.gif","hi3.gif"],
+				folder: 'hello',
+				files: ["1.gif","2.gif","3.gif","4.gif"],
 			},
 			remote:["hello","hi","howdy","whatsup","sup"],
 			servo: null,
@@ -77,14 +134,24 @@ module.exports = {
 			sound:null
 		},
 		bye: {
-			local:["bye2.gif","bye3.gif"],
-			remote:["goodbye","ciao","see you","bye bye"],
-			servo: ""
+			local:{
+				folder: 'bye',
+				files: ["1.gif","2.gif"],
+			},
+			remote:["bye","see you","goodbye","ciao","so long"],
+			servo: null,
+			led: "greenBlink",
+			sound:null
 		},
-		goodmorning: {
-			local:[],
-			remote:[],
-			servo: "",
+		goodnight: {
+			local:{
+				folder: 'goodnight',
+				files: ["1.gif"],
+			},
+			remote:["good night", "goodnight", "sweet dreams", "sleep tight"],
+			servo: null,
+			led: "greenBlink",
+			sound:null
 		}
 	},
 
@@ -95,16 +162,60 @@ module.exports = {
 			servo: ""
 		},
 
-		misc:{
-			local: [],
-			remote: [],
-			servo: ""
-		},
-
 		music:{
 			local: [],
 			remote: [],
 			servo: ""
+		}
+	},
+
+	other: {
+		alert:{
+
+		},
+
+		boop: {
+			local:{
+				folder: 'boop',
+				files: ['1.gif']
+			},
+			remote:["boop","boop nose"],
+			servo: null,
+			led: null,
+			sound: null
+		},
+
+		offline:{
+			local:{
+				folder: 'offline',
+				files: ['1.gif']
+			},
+			remote:[],
+			servo: null,
+			led: "error",
+			sound: null
+		},
+
+		back: {
+			local:{
+				folder: 'back',
+				files: ['1.gif']
+			},
+			remote:["i'm back"],
+			servo: "alert",
+			led: "success",
+			sound: null
+		},
+
+		camera: {
+			local:{
+				folder: 'camera',
+				files: ["1.gif"],
+			},
+			remote:["camera","say cheese","smile for the camera"],
+			servo: null,
+			led: "greenBlink",
+			sound:null
 		}
 	}
 }

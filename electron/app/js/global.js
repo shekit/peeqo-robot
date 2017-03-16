@@ -14,7 +14,7 @@ $(document).ready(function(){
 	global.isSleeping = false
 	global.ledOn = false
 	global.gifType = 'remote' // whether to search 'local' or 'remote'
-	global.mediaFormat = 'gif'  // use the mp4 or gif version from gif - 'video', 'gif'
+	global.mediaFormat = 'video'  // use the mp4 or gif version from gif - 'video', 'gif'
 	
 	// WIFI CONFIG & ONLINE TEST
 	const onlineStatus = require('js/wireless/is-online')()
@@ -35,12 +35,11 @@ $(document).ready(function(){
 	const event = require('js/events/events')
 	const listener = require('js/events/listeners')()
 	const intent = require('js/actions/intents')()
-	const common = require('js/gifs/common-gif-functions')()
+	
 
 	// RESPONSES
 	const response = require('js/data/responses')
-	console.log(response)
-
+	const answer = require('js/actions/response')()
 
 	// START EYES
 	event.emit("show-div","eyeWrapper")
@@ -52,23 +51,11 @@ $(document).ready(function(){
 		
 		e.preventDefault()
 
-		var obj = {
-					type: gifType,  // local/remote/direct - on system, giphy, direct gif link
-					query: common.setQuery(response.greeting.hello), 
-					format: common.setFormat(),
-					path:null,
-					duration: null,
-					loop: false,
-					servo: response.greeting.hello.servo,
-					led:response.greeting.hello.led,
-					sound: response.greeting.hello.sound,
-					loopSound: false,
-					callback: function(){
-						console.log("LEDDD OFFF")
-						event.emit("led","off")
-					}
-				}
-		event.emit("animate", obj)
+		var cb = function(){
+			console.log("LEDDD OFFF")
+			event.emit("led","off")
+		}
+		answer.answer(response.greeting.hello, cb)
 
 		//event.emit('do',null,'addSkill')
 
