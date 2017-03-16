@@ -19,5 +19,6 @@ module.exports = {
 	"r_gifjif":["gifjif.gif"],
 	"r_what":["what.gif"],
 	"r_canthear":["no3.gif"],
-	"r_nerd":["nerd.gif"]
+	"r_nerd":["nerd.gif"],
+	"no_internet":["no_internet1.gif"]
 }

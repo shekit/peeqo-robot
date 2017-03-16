@@ -40,11 +40,11 @@ module.exports = function(){
 	//**** GIFS ****//
 
 	event.on("animate", function(obj){
-		if(obj.gif_type == 'local'){
+		if(obj.type == 'local'){
 
 			localGif.find(obj)
 
-		} else if(obj.gif_type == 'remote'){
+		} else if(obj.type == 'remote'){
 
 			remoteGif.find(obj)
 
@@ -57,7 +57,7 @@ module.exports = function(){
 				event.emit("led",obj.led)
 			}
 			if(obj.sound != null){
-				event.emit("play-sound",obj.sound, obj.sound_loop_forever)
+				event.emit("play-sound",obj.sound, obj.loopSound)
 			}
 			if(obj.callback != null){
 				obj.callback()
@@ -65,32 +65,32 @@ module.exports = function(){
 		}
 	})
 
-	event.on("set-timer", function(duration, url, obj){
+	event.on("set-timer", function(obj){
 		console.log("MP4- SET TIMER")
-		gifAction.setTimer(duration, url, obj)
+		gifAction.setTimer(obj)
 	})
 
-	event.on("find-gif-duration", function(path, obj, remote_url){
+	event.on("find-gif-duration", function(obj){
 		console.log("GIF - FIND DURATION")
-		gifAction.findDuration(path, obj, remote_url)
+		gifAction.findDuration(obj)
 	})
 
-	event.on("gif-timer-started", function(path, obj){
+	event.on("gif-timer-started", function(obj){
 		console.log("GIF - TIMER STARTED")
 		eyes.transitionToGif(function(){
-			gifAction.play(path,obj)
+			gifAction.play(obj)
 		})
 	})
 
-	event.on("play-gif", function(path, obj){
-		console.log("GIF - PLAY" ,path, obj)
+	event.on("play-gif", function(obj){
+		console.log("GIF - PLAY" ,obj)
 		if(obj.format=='gif'){
 			gifAction.showDiv("gifWrapper")
-			gifAction.showGif(path)
+			gifAction.showGif(obj.path)
 		} else if(obj.format=='video') {
 			console.log("SHOW VIDEO")
 			gifAction.showDiv("videoWrapper")
-			gifAction.showVideo(path)
+			gifAction.showVideo(obj.path)
 		}
 		
 	})

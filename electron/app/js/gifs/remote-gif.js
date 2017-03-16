@@ -12,48 +12,54 @@ module.exports = function(){
 
 	var remote = {}
 
-	function checkSize(obj){
-		var original_gif_size = parseInt(obj.original.size);
+	function checkGifSize(obj){
+		var original_gif_size = parseInt(obj.path.original.size);
 
 		if(original_gif_size <= config.giphy.max_gif_size){
-			return obj.original.url
+			obj.path = obj.path.original.url
 		} else {
-			return findSmallerGif(obj,false);
+			obj.path = obj.path.fixed_width_small.url //findSmallerGif(obj,false);
 		}
+
+		download(obj)
 	}
 
-	function checkVideoSize(gif, obj){
+	function checkVideoSize(obj){
 
-		var original_video_size = parseInt(gif.original.mp4_size)
+		var original_video_size = parseInt(obj.path.original.mp4_size)
 
 		if(original_video_size <= config.giphy.max_mp4_size){
-			setVideo(obj, gif.original.mp4)
+			obj.path = obj.path.original.mp4
 		} else {
-			setVideo(obj, gif.fixed_width.mp4)
+			obj.path = obj.path.fixed_width.mp4
 		}
+
+		setVideo(obj)
 	}
 
-	function setVideo(obj, url){
+	function setVideo(obj){
 		var video = document.getElementById("dummyVideo")
-		video.src = url
+		video.src = obj.path
 
 
 		var interval = setInterval(function(){
 			if(video.readyState > 0){
 				clearInterval(interval)
-				findVideoDuration(obj,url)
+				findVideoDuration(obj)
 			}
 		},10)
 
 	}
 
-	function findVideoDuration(obj, url){
+	function findVideoDuration(obj){
 
 		var video = document.getElementById("dummyVideo")
 		duration = video.duration*1000
 		video.src = ''
 
-		event.emit("set-timer", duration, url, obj)
+		obj.duration = duration
+
+		event.emit("set-timer", obj)
 	}
 
 	function findSmallerGif(obj, smallest){
@@ -75,25 +81,28 @@ module.exports = function(){
 		}	
 	}
 
-	function download(url,name,remote_url,obj){
+	function download(url,remote_url,obj){
 		var dirpath = path.join(process.env.PWD, "app","images", "downloaded")
+		var uuid = shortid.generate();
 
 		if(!fs.existsSync(dirpath)){
 			fs.mkdirSync(dirpath)
 		}
 
-		var gifPath = path.join(dirpath, name+".gif")
-		request(url).pipe(fs.createWriteStream(gifPath)).on('close', function(){
-			event.emit("find-gif-duration",gifPath, obj ,remote_url)
+		var gifPath = path.join(dirpath, uuid+".gif")
+		obj.path = gifPath
+
+		request(obj.path).pipe(fs.createWriteStream(gifPath)).on('close', function(){
+			event.emit("find-gif-duration",obj)
 		})
 	}
 
 
 	remote.find = function(obj){
 
-		var uniqueName = shortid.generate();
+		
 
-		if(obj.gif_url == null){
+		if(obj.type == 'remote'){
 			giphy.translate(obj.gif_category, function(err, res){
 
 				if(err || !res){
@@ -110,12 +119,16 @@ module.exports = function(){
 
 				console.log("RANDOM",randomGifObj)
 
+				obj.path = randomGifObj
+
 				if(obj.format == 'video'){
 
-					var video = checkVideoSize(randomGifObj, obj)
+					
+					var video = checkVideoSize(obj)
 
 				} else if(obj.format == 'gif'){
-					var url = checkSize(randomGifObj)
+
+					var url = checkGifSize(obj)
 				
 					// download fixed width small or fixed width height depending on size
 					var smallUrl = findSmallerGif(randomGifObj,true)
@@ -126,7 +139,7 @@ module.exports = function(){
 				
 			})
 		} else {
-			download(obj.gif_url, uniqueName, obj.gif_url, obj)
+			download(obj.path, uniqueName, obj.gif_url, obj)
 		}
 	}
 

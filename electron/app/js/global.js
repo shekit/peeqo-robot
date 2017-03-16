@@ -37,6 +37,9 @@ $(document).ready(function(){
 	const intent = require('js/actions/intents')()
 	const common = require('js/gifs/common-gif-functions')()
 
+	// RESPONSES
+	const response = require('js/data/responses') 
+
 
 	// START EYES
 	event.emit("show-div","eyeWrapper")
@@ -49,15 +52,16 @@ $(document).ready(function(){
 		e.preventDefault()
 
 		var obj = {
-					gif_type: gifType,  //local/remote
-					gif_category: common.setQueryByType("r_learning","excited"), //local search || online search
-					format: common.setFormat(), // if local then only search for gifs
-					gif_url: null,
-					gif_loop_forever: false,
-					servo:null,
-					led:"greenBlink",
-					sound:null,
-					sound_loop_forever: false,
+					type: gifType,  // local/remote/direct - on system, giphy, direct gif link
+					query: common.setQuery(response.greeting.hello), 
+					format: common.setFormat(),
+					path:null,
+					duration: null,
+					loop: false,
+					servo: response.greeting.hello.servo,
+					led:response.greeting.hello.led,
+					sound: response.greeting.hello.sound,
+					loopSound: false,
 					callback: function(){
 						console.log("LEDDD OFFF")
 						event.emit("led","off")

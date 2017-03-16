@@ -23,16 +23,32 @@ module.exports = function(){
 		})
 	}
 
-	common.setQueryByType = function(textForLocal, textForRemote){
-		return (gifType=='local') ? textForLocal : textForRemote
+	common.setQuery = function(query){
+
+		var data = null
+
+		if(gifType=='local'){
+
+			data = {
+				folder: query.local.folder,
+				files: common.shuffleAndPickRandom(query.local.files)
+			}
+
+		} else if(gifType == 'remote') {
+
+			data = common.shuffleAndPickRandom(query.remote)
+
+		}
+
+		return data
 	}
 
 	common.setFormat = function(){
 		return (gifType == 'local') ? 'gif' : mediaFormat
 	}
 
-	common.play = function(gifpath, obj){
-		event.emit("play-gif", gifpath, obj)
+	common.play = function(obj){
+		event.emit("play-gif", obj)
 
 		if(obj.servo != null){
 			event.emit("servo",obj.servo)
@@ -41,18 +57,18 @@ module.exports = function(){
 			event.emit("led",obj.led)
 		}
 		if(obj.sound != null){
-			event.emit("play-sound",obj.sound, obj.sound_loop_forever)
+			event.emit("play-sound",obj.sound, obj.loopSound)
 		}
 	}
 
-	common.setTimer = function(duration, path, obj){
+	common.setTimer = function(obj){
 		// display gif for exactly 2 loops by passing in its duration
-		console.log("DURATION: ", duration)
-		var dur = parseInt(duration)
+		console.log("DURATION: ", obj.duration)
+		var dur = parseInt(obj.duration)
 		var loop = 0
 
 		console.log("SET TIMER");
-		event.emit("gif-timer-started",path,obj)
+		event.emit("gif-timer-started",obj)
 
 		// check here to decide how many times to loop based on length of gif
 		if(dur<=300){
@@ -92,7 +108,10 @@ module.exports = function(){
 		video.attr({'src':path})
 	}
 
-	common.shuffle = function(array) {
+	common.shuffleAndPickRandom = function(array) {
+		if(!array){
+			return null
+		}
 	  	var m = array.length, t, i;
  
 	  		// While there remain elements to shuffle…
@@ -107,14 +126,16 @@ module.exports = function(){
 	    	array[i] = t;
 	  	}
 
-	  	return array;
+	  	var randomNumber = Math.floor(Math.random()*array.length)
+
+	  	return array[randomNumber];
 	}
 
-	common.findDuration = function(gifpath, obj, remote_url){
-		console.log(gifpath,remote_url)
+	common.findDuration = function(obj){
+
 		var pythonScriptPath = path.join(process.env.PWD, 'gifduration', 'gifduration.py')
 
-		var python = spawn('python', [pythonScriptPath, gifpath])
+		var python = spawn('python', [pythonScriptPath, obj.path])
 
 		var gifLength = ''
 
@@ -127,15 +148,16 @@ module.exports = function(){
 			if(!gifLength){
 				gifLength = 2000
 			}
+
+			obj.duration = gifLength
+
 			common.clearTimer()
 
-			if(obj.gif_type == 'remote'){
-				deleteDownloadedGif(gifpath)
-				event.emit("set-timer", gifLength, remote_url, obj)
-			} else {
-				event.emit("set-timer", gifLength, gifpath, obj)
-			}
+			if(obj.type == 'remote'){
+				deleteDownloadedGif(obj.path)
+			} 
 
+			event.emit("set-timer", obj)
 
 		})
 	}

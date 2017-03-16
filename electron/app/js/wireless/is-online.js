@@ -16,7 +16,7 @@ module.exports = function(){
 			format: "gif",
 			gif_url: null,
 			gif_loop_forever: true,
-			servo:"sad",
+			servo:null,
 			led:"error",
 			sound:null,
 			sound_loop_forever: false

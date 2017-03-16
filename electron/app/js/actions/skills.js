@@ -52,7 +52,7 @@ module.exports = function() {
 
 			case 'blockReddit':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_abouttime","it's about time"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -66,7 +66,7 @@ module.exports = function() {
 						event.emit("block-site","reddit",true)
 
 						var anim = {
-							gif_type:"local",  //local/remote
+							gif_type:gifType,  //local/remote
 							gif_category:common.setQueryByType("r_watching","i'm watching you"),
 							format: common.setFormat(),
 							gif_url: null,
@@ -88,7 +88,7 @@ module.exports = function() {
 
 			case 'didWell':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_clapping","applause"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -100,7 +100,7 @@ module.exports = function() {
 					callback: function(){
 						event.emit("led","off")
 						var anim = {
-							gif_type:"local",  //local/remote
+							gif_type:gifType,  //local/remote
 							gif_category:common.setQueryByType("r_youtoo", "you too"),
 							format: common.setFormat(),
 							gif_url: null,
@@ -131,7 +131,7 @@ module.exports = function() {
 				skills.gifCount+=1
 
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category: common.setQueryByType(folder,"gif or jif"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -149,7 +149,7 @@ module.exports = function() {
 
 			case 'greetPrivate':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_hello","hi"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -166,7 +166,7 @@ module.exports = function() {
 
 			case 'greetPublic':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_hello","hello"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -185,7 +185,7 @@ module.exports = function() {
 
 			case 'sayBye':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_bye","bye bye"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -204,7 +204,7 @@ module.exports = function() {
 
 			case 'lightsOff':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_gotit","roger that"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -225,7 +225,7 @@ module.exports = function() {
 
 			case 'lightsOn':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_gotit","you got it"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -274,7 +274,7 @@ module.exports = function() {
 
 			case 'wakeUp':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_wakeup","waking up"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -310,7 +310,7 @@ module.exports = function() {
 
 			case 'cameraOn':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_smile","big smile"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -339,7 +339,7 @@ module.exports = function() {
 
 			case 'unknown':
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_canthear","i don't know"),
 					format: common.setFormat(),
 					gif_url: null,
@@ -358,7 +358,7 @@ module.exports = function() {
 
 			default:
 				var obj = {
-					gif_type:"local",  //local/remote
+					gif_type:gifType,  //local/remote
 					gif_category:common.setQueryByType("r_canthear","i can't hear you"),
 					format: common.setFormat(),
 					gif_url: null,
