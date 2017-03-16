@@ -81,7 +81,7 @@ module.exports = function(){
 		}	
 	}
 
-	function download(url,remote_url,obj){
+	function download(obj){
 		var dirpath = path.join(process.env.PWD, "app","images", "downloaded")
 		var uuid = shortid.generate();
 
@@ -100,10 +100,8 @@ module.exports = function(){
 
 	remote.find = function(obj){
 
-		
-
 		if(obj.type == 'remote'){
-			giphy.translate(obj.gif_category, function(err, res){
+			giphy.translate(obj.query, function(err, res){
 
 				if(err || !res){
 					//show sad local gif
@@ -122,24 +120,17 @@ module.exports = function(){
 				obj.path = randomGifObj
 
 				if(obj.format == 'video'){
-
 					
 					var video = checkVideoSize(obj)
 
 				} else if(obj.format == 'gif'){
 
 					var url = checkGifSize(obj)
-				
-					// download fixed width small or fixed width height depending on size
-					var smallUrl = findSmallerGif(randomGifObj,true)
-
-					download(smallUrl,uniqueName,url, obj)
 				}
-
 				
 			})
 		} else {
-			download(obj.path, uniqueName, obj.gif_url, obj)
+			download(obj)
 		}
 	}
 
