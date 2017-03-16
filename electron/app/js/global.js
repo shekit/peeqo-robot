@@ -52,10 +52,10 @@ $(document).ready(function(){
 		e.preventDefault()
 
 		var cb = function(){
-			console.log("LEDDD OFFF")
 			event.emit("led","off")
 		}
-		answer.answer(response.greeting.hello, cb)
+
+		answer.answer({msg:response.greeting.hello, cb:cb})
 
 		//event.emit('do',null,'addSkill')
 
@@ -85,19 +85,7 @@ $(document).ready(function(){
 		if(isSleeping){
 			event.emit("led", "fadeRed")
 		} else {
-			var obj = {
-				gif_type:null,  //local/remote/null
-				gif_category:null,
-				gif_url: null,
-				gif_loop_forever: false,
-				servo:"alert",
-				led:"alert",
-				sound:"alert",
-				sound_loop_forever: false,
-				callback: null
-			}
-
-			event.emit("animate", obj)
+			answer.answer({msg:response.other.alert})
 		}
 	})
 

@@ -25,6 +25,10 @@ module.exports = function(){
 
 	common.setQuery = function(query){
 
+		if(query == null){
+			return null
+		}
+
 		var data = null
 
 		if(gifType=='local'){

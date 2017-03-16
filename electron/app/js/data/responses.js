@@ -171,7 +171,14 @@ module.exports = {
 
 	other: {
 		alert:{
-
+			local:{
+				folder: null,
+				files: []
+			},
+			remote: null,
+			servo: "alert",
+			led: "alert",
+			sound: "alert"
 		},
 
 		boop: {
