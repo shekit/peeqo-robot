@@ -67,7 +67,7 @@ module.exports = function(){
 
 	event.on("set-timer", function(duration, url, obj){
 		console.log("MP4- SET TIMER")
-		gifAction.setTimer(obj, url, duration)
+		gifAction.setTimer(duration, url, obj)
 	})
 
 	event.on("find-gif-duration", function(path, obj, remote_url){
@@ -82,12 +82,13 @@ module.exports = function(){
 		})
 	})
 
-	event.on("play-gif", function(path){
-		console.log("GIF - PLAY")
-		if(format=='gif'){
+	event.on("play-gif", function(path, obj){
+		console.log("GIF - PLAY" ,path, obj)
+		if(obj.format=='gif'){
 			gifAction.showDiv("gifWrapper")
 			gifAction.showGif(path)
-		} else if(format=='video') {
+		} else if(obj.format=='video') {
+			console.log("SHOW VIDEO")
 			gifAction.showDiv("videoWrapper")
 			gifAction.showVideo(path)
 		}
@@ -98,6 +99,9 @@ module.exports = function(){
 		console.log("GIF - TIMER ENDED")
 		gifAction.clearTimer()
 		gifAction.showDiv("eyeWrapper")
+		if(obj.format == 'video'){
+			document.getElementById("video").src = ''
+		}
 		eyes.transitionFromGif(obj);
 	})
 

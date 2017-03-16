@@ -16,7 +16,7 @@ const speech = require('@google-cloud/speech')({
 })
 
 const hotwords = [{ file: path.join(__dirname, 'app/config/', config.speech.model), hotword: config.speech.keyword, sensitivity:  config.speech.sensitivity || '0.5'}]
-const language = config.language
+const language = config.speech.language
 
 const recordProgram = (os.arch() == 'arm') ? "arecord" : "rec"
 

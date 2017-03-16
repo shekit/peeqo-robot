@@ -22,32 +22,38 @@ module.exports = function(){
 		}
 	}
 
-	function checkVideoSize(obj){
+	function checkVideoSize(gif, obj){
 
-		var original_video_size = parseInt(obj.original.mp4_size)
+		var original_video_size = parseInt(gif.original.mp4_size)
 
 		if(original_video_size <= config.giphy.max_mp4_size){
-			findVideoDuration(obj, obj.original.mp4)
+			setVideo(obj, gif.original.mp4)
 		} else {
-			findVideoDuration(obj, obj.fixed_width.mp4)
+			setVideo(obj, gif.fixed_width.mp4)
 		}
+	}
+
+	function setVideo(obj, url){
+		var video = document.getElementById("dummyVideo")
+		video.src = url
+
+
+		var interval = setInterval(function(){
+			if(video.readyState > 0){
+				clearInterval(interval)
+				findVideoDuration(obj,url)
+			}
+		},10)
+
 	}
 
 	function findVideoDuration(obj, url){
 
 		var video = document.getElementById("dummyVideo")
-		video.src = url
-		var duration = null
+		duration = video.duration*1000
+		video.src = ''
 
-		if(video.readyState > 0){
-			duration = video.duration
-		}
-
-		if(duration){
-			video.src = ""
-			event.emit("set-timer", duration, url, obj)
-		}
-
+		event.emit("set-timer", duration, url, obj)
 	}
 
 	function findSmallerGif(obj, smallest){
@@ -82,14 +88,6 @@ module.exports = function(){
 		})
 	}
 
-	remote.findMp4 = function(obj){
-
-
-		giphy.translate(obj.gif_category, function(err, res){
-
-			var random
-		})
-	}
 
 	remote.find = function(obj){
 
@@ -111,9 +109,9 @@ module.exports = function(){
 
 				console.log(randomGifObj)
 
-				if(obj.format == 'mp4'){
+				if(obj.format == 'video'){
 
-					var video = checkVideoSize(randomGifObj)
+					var video = checkVideoSize(randomGifObj, obj)
 
 				} else if(obj.format == 'gif'){
 					var url = checkSize(randomGifObj)

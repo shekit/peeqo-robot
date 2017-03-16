@@ -11,6 +11,7 @@ $(document).ready(function(){
 	global.isSleeping = false
 	global.ledOn = false
 	global.gifType = 'remote' // whether to search 'local' or 'remote'
+	global.mediaFormat = 'video'  // use the mp4 or gif version from gif - 'video', 'gif'
 	
 	// WIFI CONFIG & ONLINE TEST
 	const onlineStatus = require('js/wireless/is-online')()
@@ -31,6 +32,7 @@ $(document).ready(function(){
 	const event = require('js/events/events')
 	const listener = require('js/events/listeners')()
 	const intent = require('js/actions/intents')()
+	const common = require('js/gifs/common-gif-functions')()
 
 
 	// START EYES
@@ -39,13 +41,30 @@ $(document).ready(function(){
 
 
 	// RESET EVERYTHING ON BOOP
-	$("body").on("click", function(evt){
+	$("body").on("click", function(e){
 		
-		evt.preventDefault()
+		e.preventDefault()
+
+		var obj = {
+					gif_type: gifType,  //local/remote
+					gif_category: common.setQueryByType("r_learning","superman"), //local search || online search
+					format: common.setFormat(), // if local then only search for gifs
+					gif_url: null,
+					gif_loop_forever: false,
+					servo:null,
+					led:"greenBlink",
+					sound:null,
+					sound_loop_forever: false,
+					callback: function(){
+						console.log("LEDDD OFFF")
+						event.emit("led","off")
+					}
+				}
+		event.emit("animate", obj)
 
 		//event.emit('do',null,'addSkill')
 
-		event.emit("show-div","videoWrapper")
+		//event.emit("show-div","videoWrapper")
 
 		// var boop = path.join(process.env.PWD,'app', images', 'local', 'r_boop', 'boop.gif')
 

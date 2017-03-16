@@ -24,7 +24,7 @@ img {
 }
 
 .wrapper {
-	display:none;
+	display: none;
 	position: absolute;
 	top:0;
 	left: 0;
@@ -46,7 +46,7 @@ img {
 #video, #gif{
 	width: 800px;
 	height: 480px;
-	object-fit: contain;
+	object-fit: cover;
 }
 
 /*#gif {

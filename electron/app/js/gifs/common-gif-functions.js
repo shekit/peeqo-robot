@@ -27,8 +27,12 @@ module.exports = function(){
 		return (gifType=='local') ? textForLocal : textForRemote
 	}
 
+	common.setFormat = function(){
+		return (gifType == 'local') ? 'gif' : mediaFormat
+	}
+
 	common.play = function(gifpath, obj){
-		event.emit("play-gif", gifpath)
+		event.emit("play-gif", gifpath, obj)
 
 		if(obj.servo != null){
 			event.emit("servo",obj.servo)
@@ -47,6 +51,7 @@ module.exports = function(){
 		var dur = parseInt(duration)
 		var loop = 0
 
+		console.log("SET TIMER");
 		event.emit("gif-timer-started",path,obj)
 
 		// check here to decide how many times to loop based on length of gif
@@ -62,10 +67,13 @@ module.exports = function(){
 			loop = 1
 		}
 
+		console.log("LOOP:", loop)
+
 		if(isNaN(dur)){
 			event.emit("gif-timer-ended",obj)
 		} else {
 			common.gifLoopTimer = setTimeout(function(){
+				console.log("END TIMER")
 				event.emit("gif-timer-ended",obj)
 			}, dur*loop)
 		}		
@@ -81,7 +89,7 @@ module.exports = function(){
 	}
 
 	common.showVideo = function(path){
-		mp4.attr({'src':path})
+		video.attr({'src':path})
 	}
 
 	common.shuffle = function(array) {
