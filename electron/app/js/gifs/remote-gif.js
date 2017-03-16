@@ -110,8 +110,7 @@ module.exports = function(){
 					return
 				}
 				
-
-				//var randomGif = res.data[Math.floor(Math.random()*(res.data.length))];
+				//var randomGif = res.data[Math.floor(Math.random()*(res.data.length))]; use if doing giphy.search
 				
 				var randomGifObj =  res.data.images  // randomGif.images
 

@@ -38,7 +38,8 @@ $(document).ready(function(){
 	const common = require('js/gifs/common-gif-functions')()
 
 	// RESPONSES
-	const response = require('js/data/responses') 
+	const response = require('js/data/responses')
+	console.log(response)
 
 
 	// START EYES

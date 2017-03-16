@@ -4,7 +4,7 @@ module.exports = {
 			local:{
 				folder: '',
 				files: []
-			}
+			},
 			remote:[],
 			servo: "",
 		},
@@ -63,9 +63,6 @@ module.exports = {
 			remote:[],
 			servo: "",
 		},
-
-
-
 	},
 
 	greeting: {
@@ -73,7 +70,7 @@ module.exports = {
 			local:{
 				folder: 'r_hello',
 				files: ["hello.gif","hi.gif","hi2.gif","hi3.gif"],
-			}
+			},
 			remote:["hello","hi","howdy","whatsup","sup"],
 			servo: null,
 			led: "greenBlink",
@@ -94,18 +91,20 @@ module.exports = {
 	information: {
 		weather:{
 			local:[],
-			remote: []
+			remote: [],
+			servo: ""
 		},
 
 		misc:{
-
-		}
+			local: [],
+			remote: [],
+			servo: ""
+		},
 
 		music:{
 			local: [],
 			remote: [],
 			servo: ""
 		}
-
 	}
 }
