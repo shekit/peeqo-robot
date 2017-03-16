@@ -4,7 +4,7 @@ module.exports = function(){
 
 	var latestImage = null
 	var selfie = $("#selfie")
-	var video = $("video")
+	var video = $("#camera")
 	var track = null;
 
 	var camera = {}

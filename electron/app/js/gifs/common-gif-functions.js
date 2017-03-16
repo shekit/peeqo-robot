@@ -12,7 +12,8 @@ module.exports = function(){
 	common.gifLoopTimer = null;
 
 	var gif= $("#gif")
-	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "pictureWrapper", "sleepWrapper"]
+	var video = $("#video")
+	var majorDivs = ["eyeWrapper", "cameraWrapper", "gifWrapper", "pictureWrapper", "sleepWrapper", "videoWrapper"]
 
 	function deleteDownloadedGif(path){
 		fs.unlink(path, function(err){
@@ -20,6 +21,10 @@ module.exports = function(){
 				console.log(err)
 			}
 		})
+	}
+
+	common.setQueryByType = function(textForLocal, textForRemote){
+		return (gifType=='local') ? textForLocal : textForRemote
 	}
 
 	common.play = function(gifpath, obj){
@@ -58,11 +63,9 @@ module.exports = function(){
 		}
 
 		if(isNaN(dur)){
-			common.showDiv("eyeWrapper")
 			event.emit("gif-timer-ended",obj)
 		} else {
 			common.gifLoopTimer = setTimeout(function(){
-				common.showDiv("eyeWrapper")
 				event.emit("gif-timer-ended",obj)
 			}, dur*loop)
 		}		
@@ -75,6 +78,10 @@ module.exports = function(){
 
 	common.showGif = function(path){
 		gif.attr({'src':path});
+	}
+
+	common.showVideo = function(path){
+		mp4.attr({'src':path})
 	}
 
 	common.shuffle = function(array) {
@@ -97,7 +104,7 @@ module.exports = function(){
 
 	common.findDuration = function(gifpath, obj, remote_url){
 		console.log(gifpath,remote_url)
-		var pythonScriptPath = path.join(__dirname, '../gifduration/gifduration.py')
+		var pythonScriptPath = path.join(process.env.PWD, 'gifduration', 'gifduration.py')
 
 		var python = spawn('python', [pythonScriptPath, gifpath])
 
@@ -116,10 +123,11 @@ module.exports = function(){
 
 			if(obj.gif_type == 'remote'){
 				deleteDownloadedGif(gifpath)
-				common.setTimer(gifLength, remote_url, obj)
+				event.emit("set-timer", gifLength, remote_url, obj)
 			} else {
-				common.setTimer(gifLength, gifpath, obj)
+				event.emit("set-timer", gifLength, gifpath, obj)
 			}
+
 
 		})
 	}

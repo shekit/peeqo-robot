@@ -15,7 +15,7 @@ module.exports = function() {
 
 		var randomGif = gifCategory[randomGifNumber]
 
-		var gifPath = path.join(__dirname, '../images', 'local', obj.gif_category, randomGif)
+		var gifPath = path.join(process.env.PWD,'app','images', 'local', obj.gif_category, randomGif)
 
 		if(obj.gif_loop_forever){
 			event.emit("gif-timer-started", gifPath, obj)

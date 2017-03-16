@@ -1,4 +1,5 @@
 const event = require('js/events/events')
+const common = require('js/gifs/common-gif-functions')()
 var skillset = {}
 
 module.exports = function() {
@@ -9,8 +10,8 @@ module.exports = function() {
 		if(!(skill in skillset) || skillset[skill] == false){
 				
 			var obj = {
-					gif_type:"local",  //local/remote
-					gif_category:"r_learning",
+					gif_type: gifType,  //local/remote
+					gif_category: common.setQueryByType("r_learning","learning"),
 					gif_url: null,
 					gif_loop_forever: false,
 					servo:null,

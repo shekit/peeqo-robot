@@ -1,9 +1,9 @@
-body, div {
+html, body, div {
 	padding: 0;
 	margin: 0;
 }
 
-video, #selfie {
+#camera, #selfie {
 	-webkit-transform: rotateY(-180deg);
 	tranform: rotateY(-180deg);
 	width: 120%;
@@ -23,11 +23,14 @@ img {
 	margin-right: auto;
 }
 
-#wrapper{
-	width: 800px;
+.wrapper {
+	display:none;
+	position: absolute;
+	top:0;
+	left: 0;
 	height: 480px;
-	margin:0 !important;
-	padding:0;
+	width: 800px;
+	overflow: none;
 }
 
 #eyes {
@@ -36,46 +39,23 @@ img {
 	background: white;
 }
 
-#testWrapper, #gifWrapper, #eyeWrapper, #pictureWrapper, #cameraWrapper, #sleepWrapper {
-	display: none;
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
+#gifWrapper, #videoWrapper, #sleepWrapper {
+	background: #000;
 }
 
-#sleepWrapper {
-	background: #000;
+#video, #gif{
 	width: 800px;
 	height: 480px;
+	object-fit: contain;
 }
 
-#gifWrapper {
-	background: #000;
-}
-
-#gif_container {
-	position: relative;
-	height: 800px;
-	width: 480px;
-}
-
-#gif {
+/*#gif {
 	width: 800px;
-	height: auto;
-	position: absolute;
+	height: 480px;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	/*object-position: 50% 50%;
-	object-fit:cover;*/
-}
-
-#wrapper {
-	position: relative;
-	height: 800px;
-	width: 480px;
-	overflow: hidden;
-}
+}*/
 
 #glasses{
 	position: absolute;
@@ -84,11 +64,5 @@ img {
 	z-index: 10;
 }
 
-.wrapper {
-	position: absolute;
-	top:0;
-	left: 0;
-	height: 480px;
-	width: 800px;
-}
+
 

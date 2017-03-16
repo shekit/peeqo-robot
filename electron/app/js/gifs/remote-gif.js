@@ -22,6 +22,34 @@ module.exports = function(){
 		}
 	}
 
+	function checkVideoSize(obj){
+
+		var original_video_size = parseInt(obj.original.mp4_size)
+
+		if(original_video_size <= config.giphy.max_mp4_size){
+			findVideoDuration(obj, obj.original.mp4)
+		} else {
+			findVideoDuration(obj, obj.fixed_width.mp4)
+		}
+	}
+
+	function findVideoDuration(obj, url){
+
+		var video = document.getElementById("dummyVideo")
+		video.src = url
+		var duration = null
+
+		if(video.readyState > 0){
+			duration = video.duration
+		}
+
+		if(duration){
+			video.src = ""
+			event.emit("set-timer", duration, url, obj)
+		}
+
+	}
+
 	function findSmallerGif(obj, smallest){
 		// find higher quality gif if original is too large
 		// and use it to be displayed
@@ -42,7 +70,7 @@ module.exports = function(){
 	}
 
 	function download(url,name,remote_url,obj){
-		var dirpath = path.join(__dirname, "../images", "downloaded")
+		var dirpath = path.join(process.env.PWD, "app","images", "downloaded")
 
 		if(!fs.existsSync(dirpath)){
 			fs.mkdirSync(dirpath)
@@ -51,6 +79,15 @@ module.exports = function(){
 		var gifPath = path.join(dirpath, name+".gif")
 		request(url).pipe(fs.createWriteStream(gifPath)).on('close', function(){
 			event.emit("find-gif-duration",gifPath, obj ,remote_url)
+		})
+	}
+
+	remote.findMp4 = function(obj){
+
+
+		giphy.translate(obj.gif_category, function(err, res){
+
+			var random
 		})
 	}
 
@@ -74,13 +111,20 @@ module.exports = function(){
 
 				console.log(randomGifObj)
 
-				var url = checkSize(randomGifObj)
+				if(obj.format == 'mp4'){
+
+					var video = checkVideoSize(randomGifObj)
+
+				} else if(obj.format == 'gif'){
+					var url = checkSize(randomGifObj)
 				
+					// download fixed width small or fixed width height depending on size
+					var smallUrl = findSmallerGif(randomGifObj,true)
 
-				// download fixed width small or fixed width height depending on size
-				var smallUrl = findSmallerGif(randomGifObj,true)
+					download(smallUrl,uniqueName,url, obj)
+				}
 
-				download(smallUrl,uniqueName,url, obj)
+				
 			})
 		} else {
 			download(obj.gif_url, uniqueName, obj.gif_url, obj)

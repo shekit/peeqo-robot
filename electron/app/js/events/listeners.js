@@ -65,6 +65,11 @@ module.exports = function(){
 		}
 	})
 
+	event.on("set-timer", function(duration, url, obj){
+		console.log("MP4- SET TIMER")
+		gifAction.setTimer(obj, url, duration)
+	})
+
 	event.on("find-gif-duration", function(path, obj, remote_url){
 		console.log("GIF - FIND DURATION")
 		gifAction.findDuration(path, obj, remote_url)
@@ -79,8 +84,14 @@ module.exports = function(){
 
 	event.on("play-gif", function(path){
 		console.log("GIF - PLAY")
-		gifAction.showDiv("gifWrapper")
-		gifAction.showGif(path)
+		if(format=='gif'){
+			gifAction.showDiv("gifWrapper")
+			gifAction.showGif(path)
+		} else if(format=='video') {
+			gifAction.showDiv("videoWrapper")
+			gifAction.showVideo(path)
+		}
+		
 	})
 
 	event.on("gif-timer-ended", function(obj){

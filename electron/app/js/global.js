@@ -10,6 +10,7 @@ $(document).ready(function(){
 	// GLOBALS
 	global.isSleeping = false
 	global.ledOn = false
+	global.gifType = 'remote' // whether to search 'local' or 'remote'
 	
 	// WIFI CONFIG & ONLINE TEST
 	const onlineStatus = require('js/wireless/is-online')()
@@ -42,13 +43,17 @@ $(document).ready(function(){
 		
 		evt.preventDefault()
 
-		var boop = path.join(__dirname, './images', 'local', 'r_boop', 'boop.gif')
+		//event.emit('do',null,'addSkill')
 
-		event.emit("play-gif",boop)
+		event.emit("show-div","videoWrapper")
 
-		setTimeout(function(){
-			event.emit("reset")
-		},2000)
+		// var boop = path.join(process.env.PWD,'app', images', 'local', 'r_boop', 'boop.gif')
+
+		// event.emit("play-gif",boop)
+
+		// setTimeout(function(){
+		// 	event.emit("reset")
+		// },2000)
 	})
 
 
