@@ -150,7 +150,9 @@ module.exports = function(){
 
 	event.on("reset", function(){
 		event.emit("servo","reset")
+		event.emit("stop-music")
 		event.emit("led","off")
+		event.emit("camera-off")
 		event.emit("show-div","eyeWrapper")
 		event.emit("gif-timer-ended")
 	})

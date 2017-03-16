@@ -355,39 +355,6 @@ module.exports = function() {
 				event.emit("animate", obj)
 				break
 
-			/*case 'playMusic':
-				if(obj.parameters.artist){
-					event.emit("play-music", obj.parameters.artist)
-				} else {
-				 //	event.emit("")
-				}
-				break;
-
-			case 'greetPrivate':
-				//event.emit("find-local-gif","hi",true)
-				break
-
-			case 'greetPublic':
-				//event.emit("find-local-gif",obj.parameters.greeting,true)
-				break;
-
-			case 'blockSite':
-				//event.emit("block-site", obj.parameters.sites, true)
-				break;
-
-			case 'takePicture':
-				//event.emit("find-local-gif","countdown", false)
-				setTimeout(function(){
-					event.emit("take-picture", socket)
-				},4000)
-				break;
-
-			case 'addSkill':
-				event.emit("learn","spotify")
-				break;
-
-			case 'default':
-				break;*/
 		}	
 	}
 
