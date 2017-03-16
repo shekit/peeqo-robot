@@ -149,8 +149,11 @@ module.exports = function(){
 	})
 
 	event.on("reset", function(){
+		console.log("Ebent reset")
 		event.emit("servo","reset")
-		event.emit("stop-music")
+		console.log("servo reset")
+		event.emit(" ")
+		console.log("music stop")
 		event.emit("led","off")
 		event.emit("camera-off")
 		event.emit("show-div","eyeWrapper")

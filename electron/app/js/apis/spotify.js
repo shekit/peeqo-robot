@@ -54,7 +54,6 @@ module.exports = function(){
 		spotify.song.pause()
 		spotify.song.currentTime = 0
 		clearTimeout(spotify.stopTimer)
-		event.emit("reset")
 	}
 
 	function getArtistImage(artist, song_url, genre, searchLimit){
