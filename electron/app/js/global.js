@@ -23,7 +23,6 @@ $(document).ready(function(){
 		const ble = require('js/wireless/ble')()
 	}
 	
-
 	// SOCKETS
 	const power_sockets = require('js/sockets/power')() // shutdown, reboot, refresh
 	const demo_sockets = require('js/sockets/demo')()
