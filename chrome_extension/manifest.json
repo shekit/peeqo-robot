@@ -14,7 +14,7 @@
 	},
 
 	"background":{
-		"scripts":["socket.io.js", "background.js"]
+		"scripts":["socket.io.js", "socket-url.js", "background.js"]
 	},
 
 	"permissions":[

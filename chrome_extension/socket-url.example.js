@@ -1,0 +1,1 @@
+var socketUrl = '' // enter node server ip here and rename without the example in file name

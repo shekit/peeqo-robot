@@ -1,7 +1,6 @@
 var blocked_sites = ["www.facebook.com","facebook.com","twitter.com","www.twitter.com","youtube.com","www.youtube.com","reddit.com","www.reddit.com"]
 
-var socket_url = ""; // enter your node server ip here
-
+var socket_url = socketUrl; // enter your node server ip here
 
 
 var socket = io(socket_url + '/extension');
