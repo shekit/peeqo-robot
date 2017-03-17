@@ -19,8 +19,8 @@ module.exports = function(){
 	spotify.search = function(query,searchLimit){
 		var searchLimit = (typeof searchLimit !== 'undefined') ? searchLimit : 10;
 
-		
-		
+
+
 		if(skills.hasSkill("spotify")){
 			spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
 				if(!err){
@@ -33,7 +33,7 @@ module.exports = function(){
 					var albumCover = song.album.images[0].url;
 					var albumName = song.album.name
 
-					getArtistImage(artistName ,url ,genre)
+					getArtistImage(artistName ,url)
 				} else {
 					console.log("ERROR: " + err)
 				}
@@ -54,7 +54,7 @@ module.exports = function(){
 		clearTimeout(spotify.stopTimer)
 	}
 
-	function getArtistImage(artist, song_url, genre, searchLimit){
+	function getArtistImage(artist, song_url, searchLimit){
 
 		var searchLimit = (typeof searchLimit !== 'undefined') ? searchLimit : 10;
 
@@ -71,7 +71,7 @@ module.exports = function(){
 
 	function showArtistImage(path){
 		
-		answer.answer({servo: 'musicSway'})
+		answer.answer({servo: 'musicSway', type:'none'})
 
 		event.emit("play-gif", path)
 		
