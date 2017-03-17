@@ -27,7 +27,7 @@ $(document).ready(function(){
 	// SOCKETS
 	const power_sockets = require('js/sockets/power')() // shutdown, reboot, refresh
 	const demo_sockets = require('js/sockets/demo')()
-	const extension_sockets = require('js/sockets/demo')()
+	const extension_sockets = require('js/sockets/extension')()
 	const test_sockets = require('js/sockets/test')()
 	const webcontrol_sockets = require('js/sockets/webcontrol')()
 
