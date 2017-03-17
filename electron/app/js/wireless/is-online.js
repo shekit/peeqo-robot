@@ -19,11 +19,12 @@ module.exports = function(){
 		//startBleAdvertising();
 	})
 
-	// Offline.on('up', function(){
+	Offline.on('up', function(){
 
-	// 	answer.answer({msg:response.reaction.excited})
+		console.log("NET is BACK")
+		//answer.answer({msg:response.reaction.excited})
 
-	// })
+	})
 
 	Offline.on('checking', function(err){
 		if(err){
