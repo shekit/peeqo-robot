@@ -176,7 +176,7 @@ server_test.on('connection', function(socket){
 
 	// music
 	socket.on("activateMusic", function(msg){
-		peeqo_io.emit("activateMusic","yes")
+		peeqo_test.emit("activateMusic","yes")
 	})
 
 	socket.on("playMusic", function(msg){
@@ -184,11 +184,11 @@ server_test.on('connection', function(socket){
 	})
 
 	socket.on("deactivateMusic", function(msg){
-		peeqo_io.emit("deactivateMusic", "yes")
+		peeqo_test.emit("deactivateMusic", "yes")
 	})
 
 	socket.on("stopMusic", function(msg){
-		peeqo_io.emit("stopMusic","yes")
+		peeqo_test.emit("stopMusic","yes")
 	})
 
 	// camera
@@ -240,7 +240,7 @@ server_test.on('connection', function(socket){
 
 	// leds
 	socket.on("blinkLed", function(msg){
-		peeqo_io.emit("blinkLed", "yes")
+		peeqo_test.emit("blinkLed", "yes")
 	})
 
 })
