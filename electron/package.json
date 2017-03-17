@@ -15,15 +15,13 @@
   "dependencies": {
     "app-module-path": "^2.1.0",
     "bleno": "^0.4.1",
-    "giphy": "0.0.4",
     "giphy-api": "^1.2.3",
-    "i2c-bus": "^1.0.3",
-    "ip": "^1.1.4",
+    "i2c-bus": "^1.2.1",
     "natural": "^0.4.0",
     "pi-utils": "^0.1.2",
     "shortid": "^2.2.6",
     "snapsvg": "^0.4.0",
     "sonus": "^0.1.7",
-    "spotify-web-api-js": "^0.21.1"
+    "spotify-web-api-js": "^0.21.2"
   }
 }

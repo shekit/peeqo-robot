@@ -3,7 +3,7 @@
 // Load in smart mirror config
 const path = require('path')
 const os = require('os')
-const config = require(path.join(process.env.PWD,"app","config","config.js"))
+const config = require(path.join(process.env.PWD,"app","config","config"))
 if(!config || !config.speech || !config.speech.keyFilename || !config.speech.model || !config.speech.language){
   throw "Configuration Error! Setup your config file";
 }

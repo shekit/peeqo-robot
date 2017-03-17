@@ -1,5 +1,5 @@
 const bleno = require('bleno');
-const wifi = require('js/wireless/wifi')
+const wifi = require('js/wireless/wifi')()
 const event = require('js/events/events')
 
 module.exports = function(){
