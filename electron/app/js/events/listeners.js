@@ -40,7 +40,7 @@ module.exports = function(){
 	//**** GIFS ****//
 
 	event.on("animate", function(obj){
-		console.log("OBJ", obj)
+		console.log("ANIMATE")
 		if(obj.type == 'local'){
 
 			localGif.find(obj)

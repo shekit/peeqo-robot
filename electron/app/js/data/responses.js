@@ -55,7 +55,7 @@ module.exports = {
 				folder: 'confused',
 				files: ['1.gif','2.gif']
 			},
-			remote:["confused","what do I have to do","i don't understand"],
+			remote:["confused","shrug", "what do I have to do","i don't understand"],
 			servo: null,
 			led: "error",
 			sound: null
@@ -95,7 +95,7 @@ module.exports = {
 				folder: 'excited',
 				files: ['1.gif','2.gif']
 			},
-			remote:["excited","yay","this is awesome"],
+			remote:["excited","yay","this is awesome","judging you", "side eye"],
 			servo: null,
 			led: "greenBlink",
 			sound: null
@@ -105,7 +105,7 @@ module.exports = {
 				folder: 'excited',
 				files: ['1.gif','2.gif']
 			},
-			remote:["excited","yay","this is awesome"],
+			remote:["facepalm","judging you", "omg"],
 			servo: "lookup",
 			led: null,
 			sound: null
@@ -149,7 +149,7 @@ module.exports = {
 				folder: 'hello',
 				files: ["1.gif","2.gif","3.gif","4.gif"],
 			},
-			remote:["hello","hi","howdy","whatsup","sup"],
+			remote:["hello","hi","howdy","whatsup","sup","yo"],
 			servo: "curious",
 			led: "greenBlink",
 			sound:null
@@ -179,7 +179,7 @@ module.exports = {
 				folder: 'what',
 				files: ["1.gif"],
 			},
-			remote:["what", "what is your problem"],
+			remote:["what", "what is your problem", "side eye"],
 			servo: null,
 			led: "greenBlink",
 			sound:null
