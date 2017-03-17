@@ -7,11 +7,11 @@ var socket = io(config.peeqo.server + '/peeqo_test')
 module.exports = function(){
 
 	socket.on('cameraOn', function(msg){
-		event.emit('do',null,'cameraOn')
+		event.emit('do','cameraOn')
 	})
 
 	socket.on('cameraOff', function(msg){
-		event.emit('do',null,'cameraOff')
+		event.emit('do','cameraOff')
 	})
 
 	socket.on("takePicture", function(msg){
@@ -35,7 +35,7 @@ module.exports = function(){
 	})
 
 	socket.on('activateMusic', function(msg){
-		event.emit('do',null,'addSkill')
+		event.emit('do','addSkill')
 	})
 
 	socket.on("deactivateMusic", function(msg){
@@ -43,25 +43,25 @@ module.exports = function(){
 	})
 
 	socket.on("playMusic", function(msg){
-		event.emit("play-music", "beatles")
+		event.emit('do',"playMusic")
 	})
 
 	socket.on("stopMusic", function(msg){
-		event.emit("stop-music")
+		event.emit('do',"stopMusic")
 	})
 
 	socket.on("lightsOn", function(msg){
 
-		event.do('lightsOn')
+		event.emit('do','lightsOn')
 	})
 
 	socket.on("lightsOff", function(msg){
 
-		event.do('lightsOff')
+		event.emit('do','lightsOff')
 	})
 
 	socket.on('blockReddit', function(msg){
-		event.emit('do',null,'blockReddit')
+		event.emit('do','blockReddit')
 	})
 
 	socket.on("blockFacebook", function(msg){

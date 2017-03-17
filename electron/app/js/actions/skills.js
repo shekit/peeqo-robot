@@ -118,8 +118,12 @@ module.exports = function() {
 				break
 
 
-			case 'playBeatles':
-				event.emit("play-music","beatles","sway")
+			case 'playMusic':
+				event.emit("play-music","beatles")
+				break
+
+			case 'stopMusic':
+				event.emit("stop-music")
 				break
 
 			case 'sleep':
@@ -129,10 +133,6 @@ module.exports = function() {
 				}
 				answer.answer({cb:cb, servo:'sleep'})
 
-				break
-
-			case 'playRock':
-				event.emit("play-music","metallica","rock")
 				break
 
 			case 'wakeUp':

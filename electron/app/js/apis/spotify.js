@@ -16,9 +16,11 @@ module.exports = function(){
 	spotify.song = document.getElementById("song")
 	spotify.stopTimer = null
 
-	spotify.search = function(query,genre,searchLimit){
+	spotify.search = function(query,searchLimit){
 		var searchLimit = (typeof searchLimit !== 'undefined') ? searchLimit : 10;
 
+		
+		
 		if(skills.hasSkill("spotify")){
 			spotifyApi.searchTracks(query, {limit:searchLimit}, function(err,data){
 				if(!err){
@@ -59,7 +61,7 @@ module.exports = function(){
 		spotifyApi.searchArtists(artist, {limit: searchLimit}, function(err, data){
 			if(!err){
 				var img_url = data.artists.items[0].images[0].url;
-				showArtistImage(img_url,genre)
+				showArtistImage(img_url)
 			} else {
 				console.log("ERROR: " + err);
 			}
@@ -67,17 +69,11 @@ module.exports = function(){
 		})
 	}
 
-	function showArtistImage(path,genre){
-		var dance = 'musicSway'
-
-		if(genre == 'rock'){
-			dance = 'headBang'
-		}
+	function showArtistImage(path){
 		
-		answer.answer({servo:dance})
+		answer.answer({servo: 'musicSway'})
 
-		// event.emit("animate",obj)
-		event.emit('gif-timer-started',path,obj)
+		event.emit("play-gif", path)
 		
 	}
 

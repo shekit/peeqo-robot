@@ -92,6 +92,10 @@ module.exports = function(){
 			console.log("SHOW VIDEO")
 			gifAction.showDiv("videoWrapper")
 			gifAction.showVideo(obj.path)
+		} else {
+			// for music images
+			gifAction.showDiv("gifWrapper")
+			gifAction.showGif(obj)
 		}
 		
 	})
@@ -178,8 +182,8 @@ module.exports = function(){
 	//**** END PI POWER ****//
 
 	//**** SPOTIFY ****//
-	event.on("play-music", function(song, genre){
-		spotify.search(song,genre);
+	event.on("play-music", function(song){
+		spotify.search(song);
 	})
 
 	event.on("stop-music", function(){
