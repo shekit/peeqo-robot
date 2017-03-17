@@ -21,6 +21,16 @@ module.exports = function(){
 
 	})
 
+	socket.on("local", function(msg){
+		mediaType = 'local'
+		console.log("TYPE",mediaType)
+	})
+
+	socket.on("remote", function(msg){	
+		mediaType = 'remote'
+		console.log("TYPE",mediaType)
+	})
+
 	socket.on("hi", function(msg){
 
 		event.emit('do','greetPublic')

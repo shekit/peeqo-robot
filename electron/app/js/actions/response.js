@@ -4,7 +4,7 @@ const common = require('js/gifs/common-gif-functions')()
 module.exports = function(){
 	var response = {}
 
-	response.answer = function({msg=null, cb=null, gifloop=false, soundloop=false, type='remote', servo=null, query=null, format=null, path=null} = {}){
+	response.answer = function({msg=null, cb=null, gifloop=false, soundloop=false, type=null, servo=null, query=null, format=null, path=null} = {}){
 
 		var move = null
 

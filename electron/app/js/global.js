@@ -51,18 +51,14 @@ $(document).ready(function(){
 		
 		e.preventDefault()
 
-		event.emit("do","greetPublic")
+		var boop = path.join(process.env.PWD,'app', 'images', 'local', 'boop', '1.gif')
 
+		event.emit("play-gif",boop)
 
-		//event.emit("show-div","videoWrapper")
+		setTimeout(function(){
+			event.emit("reset")
+		},2000)
 
-		// var boop = path.join(process.env.PWD,'app', images', 'local', 'r_boop', 'boop.gif')
-
-		// event.emit("play-gif",boop)
-
-		// setTimeout(function(){
-		// 	event.emit("reset")
-		// },2000)
 	})
 
 

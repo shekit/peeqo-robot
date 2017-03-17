@@ -110,6 +110,14 @@ server_demo.on('connection', function(socket){
 		peeqo_demo.emit("listen","yes")
 	})
 
+	socket.on('local', function(){
+		peeqo_demo.emit("local","yes")
+	})
+
+	socket.on('remote', function(){
+		peeqo_demo.emit("remote","yes")
+	})
+
 	socket.on('hi', function(){
 		peeqo_demo.emit("hi","yes")
 	})

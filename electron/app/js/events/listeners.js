@@ -96,7 +96,7 @@ module.exports = function(){
 			gifAction.showDiv("videoWrapper")
 			gifAction.showVideo(obj.path)
 		} else {
-			// for music images
+			// for direct images
 			gifAction.showDiv("gifWrapper")
 			gifAction.showGif(obj)
 		}
