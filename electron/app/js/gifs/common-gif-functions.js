@@ -134,7 +134,7 @@ module.exports = function(){
 
 	common.findDuration = function(obj){
 
-		var pythonScriptPath = path.join(process.env.PWD,'app', 'gifduration', 'gifduration.py')
+		var pythonScriptPath = path.join(process.cwd(),'app', 'gifduration', 'gifduration.py')
 		
 		var imgpath = null
 

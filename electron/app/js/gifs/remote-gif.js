@@ -82,7 +82,7 @@ module.exports = function(){
 	}
 
 	function download(obj){
-		var dirpath = path.join(process.env.PWD, "app","images", "downloaded")
+		var dirpath = path.join(process.cwd(), "app","images", "downloaded")
 		var uuid = shortid.generate();
 
 		if(!fs.existsSync(dirpath)){

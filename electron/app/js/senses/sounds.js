@@ -9,7 +9,7 @@ module.exports = function(){
 	sound.play = function(name,should_loop){
 		sound.audio.currentTime = 0
 		sound.audio.loop = should_loop
-		sound.audio.src = path.join(process.env.PWD, "app","sounds", name + ".wav")
+		sound.audio.src = path.join(process.cwd(), "app","sounds", name + ".wav")
 		sound.audio.play()
 	}
 

@@ -51,7 +51,7 @@ $(document).ready(function(){
 		
 		e.preventDefault()
 
-		var boop = path.join(process.env.PWD,'app', 'images', 'local', 'boop', '1.gif')
+		var boop = path.join(process.cwd(),'app', 'images', 'local', 'boop', '1.gif')
 
 		event.emit("play-gif",boop)
 

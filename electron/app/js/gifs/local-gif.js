@@ -7,7 +7,7 @@ module.exports = function() {
 	
 	local.find = function(obj){
 
-		var filePath = path.join(process.env.PWD,'app','images', 'local', obj.query.folder, obj.query.files)
+		var filePath = path.join(process.cwd(),'app','images', 'local', obj.query.folder, obj.query.files)
 
 		obj.path = filePath
 
