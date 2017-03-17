@@ -1,6 +1,6 @@
 const config = require('config/config.js')
 const event = require('js/events/events')
-const common = require('js/gifs/common-gif-functions')()
+const answer = require('js/actions/response')()
 
 var socket = io(config.peeqo.server + '/peeqo_webcontrol')
 
@@ -8,35 +8,17 @@ var socket = io(config.peeqo.server + '/peeqo_webcontrol')
 module.exports = function(){
 
 	socket.on("remote-gif", function(msg){
-		var obj = {
-			gif_type:"remote",  //local/remote
-			gif_category:msg,
-			format: common.setFormat(),
-			gif_url: null,
-			gif_loop_forever: false,
-			servo:null,
-			led:"success",
-			sound:null,
-			sound_loop_forever: false
-		}
+		// search for a gif with this msg
+		answer.answer({type:'remote', query:msg})
 
-		event.emit("animate", obj)
 	})
 
 	socket.on("direct-gif", function(msg){
-		var obj = {
-			gif_type:"remote",  //local/remote
-			gif_category: null,
-			format: common.setFormat(),
-			gif_url: msg,
-			gif_loop_forever: false,
-			servo:null,
-			led:null,
-			sound:null,
-			sound_loop_forever: false
-		}
 
-		event.emit("animate", obj)
+		// give direct url to a gif found online
+
+		answer.answer({type:'none', path:msg, format:'gif'})
+
 	})
 
 	socket.on("servo-raw", function(msg){

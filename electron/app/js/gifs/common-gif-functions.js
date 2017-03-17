@@ -138,9 +138,9 @@ module.exports = function(){
 		
 		var imgpath = null
 
-		if(obj.type == 'remote'){
+		if(obj.type == 'remote' || obj.type == 'none'){
 			imgpath = obj.path.local
-		} else {
+		} else if(obj.type == 'local'){
 			imgpath = obj.path
 		}
 
@@ -161,7 +161,7 @@ module.exports = function(){
 
 			common.clearTimer()
 
-			if(obj.type == 'remote'){
+			if(obj.type == 'remote' || obj.type == 'none'){
 				deleteDownloadedGif(obj.path.local)
 				obj.path = obj.path.remote
 			} 

@@ -63,6 +63,9 @@ module.exports = function(){
 			if(obj.callback != null){
 				obj.callback()
 			}	
+			if(obj.path){
+				remoteGif.find(obj)
+			}
 		}
 	})
 

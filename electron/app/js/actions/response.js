@@ -4,7 +4,7 @@ const common = require('js/gifs/common-gif-functions')()
 module.exports = function(){
 	var response = {}
 
-	response.answer = function({msg=null, cb=null, gifloop=false, soundloop=false, type='remote', servo=null} = {}){
+	response.answer = function({msg=null, cb=null, gifloop=false, soundloop=false, type='remote', servo=null, query=null, format=null, path=null} = {}){
 
 		var move = null
 
@@ -16,9 +16,9 @@ module.exports = function(){
 
 		var obj = {
 					type: (type)?type:mediaType,  // local/remote/direct - on system, giphy, direct gif link
-					query: common.setQuery(msg), 
-					format: common.setFormat(),
-					path:null,
+					query: query || common.setQuery(msg), 
+					format: format || common.setFormat(),
+					path: path || null,
 					duration: null,
 					loop: gifloop,
 					servo: move,
