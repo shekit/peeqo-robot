@@ -1,5 +1,6 @@
 const bleno = require('bleno');
 const wifi = require('js/wireless/wifi')
+const event = require('js/events/events')
 
 module.exports = function(){
 
@@ -34,6 +35,7 @@ module.exports = function(){
 								console.log(data[0])
 								console.log('Wifi SSID: '+this.value.toString("utf-8"));
 								newWifi.ssid = this.value.toString("utf-8")
+								event.emit("led","greenBlink")
 								callback(this.RESULT_SUCCESS);
 							}
 						}),
@@ -46,7 +48,7 @@ module.exports = function(){
 								this.value = data
 								console.log("Wifi Password: "+this.value.toString("utf-8"))
 								newWifi.password = this.value.toString("utf-8")
-
+								event.emit("led","greenBlink")
 								console.log("SSID:", newWifi.ssid)
 								console.log("PASS:", newWifi.password)
 
@@ -82,19 +84,26 @@ module.exports = function(){
 		bleAdvertising = false;
 	})
 
-	var ble = {}
-
-	ble.startBleAdvertising = function(){
-		if(bleAdvertising == false){
+	bleno.on('stateChange', function(state){
+		if(state === 'poweredOn'){
+			console.log("POWERED ON")
 			bleno.startAdvertising(ble_name, serviceUuid)
-		}
-	}
+		} 
+	})
 
-	ble.stopBleAdvertising = function(){
-		if(bleAdvertising == true){
-			bleno.stopAdvertising();
-		}
-	}
+	// var ble = {}
 
-	return ble
+	// ble.startBleAdvertising = function(){
+	// 	if(bleAdvertising == false){
+	// 		bleno.startAdvertising(ble_name, serviceUuid)
+	// 	}
+	// }
+
+	// ble.stopBleAdvertising = function(){
+	// 	if(bleAdvertising == true){
+	// 		bleno.stopAdvertising();
+	// 	}
+	// }
+
+	// return ble
 }

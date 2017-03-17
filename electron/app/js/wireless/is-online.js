@@ -19,11 +19,11 @@ module.exports = function(){
 		//startBleAdvertising();
 	})
 
-	Offline.on('up', function(){
+	// Offline.on('up', function(){
 
-		answer.answer({msg:response.reaction.excited})
+	// 	answer.answer({msg:response.reaction.excited})
 
-	})
+	// })
 
 	Offline.on('checking', function(err){
 		if(err){
