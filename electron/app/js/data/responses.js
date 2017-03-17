@@ -105,7 +105,7 @@ module.exports = {
 				folder: 'excited',
 				files: ['1.gif','2.gif']
 			},
-			remote:["facepalm","judging you", "omg"],
+			remote:["facepalm","judging you", "omg", "eyeroll"],
 			servo: "lookup",
 			led: null,
 			sound: null
@@ -116,16 +116,6 @@ module.exports = {
 				files: ['1.gif']
 			},
 			remote:["learning","knowledge","downloading"],
-			servo: null,
-			led: "greenBlink",
-			sound: null
-		},
-		shrug:{
-			local:{
-				folder: 'excited',
-				files: ['1.gif','2.gif']
-			},
-			remote:["excited","yay","this is awesome"],
 			servo: null,
 			led: "greenBlink",
 			sound: null

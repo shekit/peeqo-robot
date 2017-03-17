@@ -42,7 +42,8 @@ module.exports = function() {
 
 			case 'listen':
 
-				answer.answer({msg:response.greeting.alert})
+				answer.answer({msg:response.greeting.alert, type:"none"})
+				break
 
 			case 'blockReddit':
 
@@ -131,7 +132,7 @@ module.exports = function() {
 				var cb = function(){
 					event.emit("close-eyes")
 				}
-				answer.answer({cb:cb, servo:'sleep'})
+				answer.answer({cb:cb, servo:'sleep',type:'none'})
 
 				break
 

@@ -13,7 +13,7 @@ module.exports = function(){
 
 	Offline.on('down', function(){
 
-		answer.answer({msg:response.other.offline, gifloop:true, forceLocal:true})
+		answer.answer({msg:response.other.offline, gifloop:true, type:'local'})
 
 		// send out ble signal so new wifi can be configured
 		//startBleAdvertising();

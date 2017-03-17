@@ -51,10 +51,10 @@ module.exports = function(){
 			event.emit('do','wakeUp')
 		} 
 		else if(cmd.includes("remote")){
-			gifType = 'remote'
+			mediaType = 'remote'
 		} 
 		else if(cmd.includes("local")){
-			gifType = 'local'
+			mediaType = 'local'
 		}
 		else {
 			event.emit('do','random')

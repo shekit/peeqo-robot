@@ -7,46 +7,46 @@ var socket = io(config.peeqo.server + '/peeqo_demo')
 module.exports = function(){
 
 	socket.on("sleep", function(msg){
-		event.do('sleep')
+		event.emit('do','sleep')
 	})
 
 	socket.on("wake", function(msg){
 
-		event.do('wakeUp')
+		event.emit('do','wakeUp')
 	})
 
 	socket.on("listen", function(msg){
 
-		event.do('listen')
+		event.emit('do','listen')
 
 	})
 
 	socket.on("hi", function(msg){
 
-		event.do('greetPublic')
+		event.emit('do','greetPublic')
 
 	})
 
 	socket.on("bye", function(msg){
 		
-		event.do('sayBye')
+		event.emit('do','sayBye')
 	})
 
 	socket.on("yes", function(msg){
 		
-		event.do('sayYes')
+		event.emit('do','sayYes')
 	})
 
 	socket.on('no', function(msg){
-		event.do('sayNo')
+		event.emit('do','sayNo')
 	})
 
 	socket.on('happy', function(msg){
-		event.do('beHappy')
+		event.emit('do','beHappy')
 	})
 
 	socket.on('sad', function(msg){
-		event.do('beSad')
+		event.emit('do','beSad')
 	})
 
 	socket.on("reset", function(msg){

@@ -31,14 +31,14 @@ module.exports = function(){
 
 		var data = null
 
-		if(gifType=='local'){
+		if(mediaType=='local'){
 
 			data = {
 				folder: query.local.folder,
 				files: common.shuffleAndPickRandom(query.local.files)
 			}
 
-		} else if(gifType == 'remote') {
+		} else if(mediaType == 'remote') {
 
 			data = common.shuffleAndPickRandom(query.remote)
 
@@ -48,7 +48,7 @@ module.exports = function(){
 	}
 
 	common.setFormat = function(){
-		return (gifType == 'local') ? 'gif' : mediaFormat
+		return (mediaType == 'local') ? 'gif' : mediaFormat
 	}
 
 	common.play = function(obj){

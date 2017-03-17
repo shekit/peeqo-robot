@@ -4,7 +4,7 @@ const common = require('js/gifs/common-gif-functions')()
 module.exports = function(){
 	var response = {}
 
-	response.answer = function({msg=null, cb=null, gifloop=false, soundloop=false, forceLocal=false, servo=null} = {}){
+	response.answer = function({msg=null, cb=null, gifloop=false, soundloop=false, type='remote', servo=null} = {}){
 
 		var move = null
 
@@ -15,7 +15,7 @@ module.exports = function(){
 		}
 
 		var obj = {
-					type: (forceLocal == true) ? 'local':gifType,  // local/remote/direct - on system, giphy, direct gif link
+					type: (type)?type:mediaType,  // local/remote/direct - on system, giphy, direct gif link
 					query: common.setQuery(msg), 
 					format: common.setFormat(),
 					path:null,

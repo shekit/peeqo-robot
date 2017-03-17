@@ -13,7 +13,7 @@ $(document).ready(function(){
 	// GLOBALS
 	global.isSleeping = false
 	global.ledOn = false
-	global.gifType = 'remote' // whether to search 'local' or 'remote'
+	global.mediaType = 'remote' // whether to search 'local' or 'remote'
 	global.mediaFormat = 'video'  // use the mp4 or gif version from gif - 'video', 'gif'
 	
 	// WIFI CONFIG & ONLINE TEST
@@ -51,13 +51,8 @@ $(document).ready(function(){
 		
 		e.preventDefault()
 
-		var cb = function(){
-			event.emit("led","off")
-		}
+		event.emit("do","greetPublic")
 
-		answer.answer({msg:response.greeting.hello, cb:cb})
-
-		//event.emit('do',null,'addSkill')
 
 		//event.emit("show-div","videoWrapper")
 
@@ -85,7 +80,7 @@ $(document).ready(function(){
 		if(isSleeping){
 			event.emit("led", "fadeRed")
 		} else {
-			answer.answer({msg:response.greeting.alert})
+			event.emit("do", "listen")
 		}
 	})
 

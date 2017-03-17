@@ -42,11 +42,11 @@ module.exports = function(){
 	event.on("animate", function(obj){
 		console.log("ANIMATE")
 		if(obj.type == 'local'){
-
+			console.log("local")
 			localGif.find(obj)
 
 		} else if(obj.type == 'remote'){
-
+			console.log("remote")
 			remoteGif.find(obj)
 
 		} else {
@@ -104,7 +104,7 @@ module.exports = function(){
 		console.log("GIF - TIMER ENDED")
 		gifAction.clearTimer()
 		gifAction.showDiv("eyeWrapper")
-		if(obj.format == 'video'){
+		if(obj && obj.format == 'video'){
 			document.getElementById("video").src = ''
 		}
 		eyes.transitionFromGif(obj);
@@ -177,7 +177,7 @@ module.exports = function(){
 		event.emit("led","off")
 		event.emit("camera-off")
 		event.emit("show-div","eyeWrapper")
-		event.emit("gif-timer-ended")
+		event.emit("gif-timer-ended",null)
 	})
 	//**** END PI POWER ****//
 
