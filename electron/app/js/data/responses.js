@@ -26,7 +26,27 @@ module.exports = {
 				files: ['1.gif','2.gif']
 			},
 			remote:["excited","yay","this is awesome"],
-			servo: null,
+			servo: "excited",
+			led: "greenBlink",
+			sound: null
+		},
+		abouttime:{
+			local:{
+				folder: 'abouttime',
+				files: ['1.gif']
+			},
+			remote:["it's about time","finally","thank god"],
+			servo: "abouttime",
+			led: null,
+			sound: null
+		},
+		watching: {
+			local:{
+				folder: 'watching',
+				files: ['1.gif']
+			},
+			remote:["i'm watching you","keeping an eye on you","don't mess with me"],
+			servo: "lookup",
 			led: "greenBlink",
 			sound: null
 		},
