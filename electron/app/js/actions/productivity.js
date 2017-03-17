@@ -33,7 +33,7 @@ module.exports = function(){
 			setTimeout(function(){
 				event.emit("led","off")
 				answer.answer({msg: response.reaction.facepalm})
-			},1200)
+			},500)
 
 		}
 

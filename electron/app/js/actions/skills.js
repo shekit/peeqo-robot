@@ -52,11 +52,11 @@ module.exports = function() {
 					event.emit("block-site","reddit",true)
 
 					setTimeout(function(){
-						answer.answer({msg: response.reaction.wink})
+						answer.answer({msg: response.reaction.watching})
 					},500)
 				}
 
-				answer.answer({msg: response.reaction.excited, cb:cb})
+				answer.answer({msg: response.reaction.abouttime, cb:cb})
 
 				break
 
@@ -124,7 +124,7 @@ module.exports = function() {
 				break
 
 			case 'stopMusic':
-				event.emit("stop-music")
+				event.emit("reset")
 				break
 
 			case 'sleep':

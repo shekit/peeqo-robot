@@ -45,7 +45,7 @@ module.exports = {
 				folder: 'watching',
 				files: ['1.gif']
 			},
-			remote:["i'm watching you","keeping an eye on you","don't mess with me"],
+			remote:["i'm watching you","don't mess with me", "eyes on you", "mexican standoff"],
 			servo: "lookup",
 			led: "greenBlink",
 			sound: null
@@ -125,7 +125,7 @@ module.exports = {
 				folder: 'excited',
 				files: ['1.gif','2.gif']
 			},
-			remote:["facepalm","judging you", "omg", "eyeroll"],
+			remote:["facepalm","judging you","i'll kill you", "eyeroll", "don't mess with me"],
 			servo: "lookup",
 			led: null,
 			sound: null
