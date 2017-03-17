@@ -1,1 +1,1 @@
-window.socketURL = "" // enter the ip of your server here
+window.socketURL = "http://localhost:3000" // enter the ip of your server here

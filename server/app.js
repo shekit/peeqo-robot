@@ -144,7 +144,7 @@ server_demo.on('connection', function(socket){
 // CHROME EXTENSION SOCKETS
 
 var server_extension = io.of('/extension')
-var peeqo_extension = io.of('/peeqo-extension')
+var peeqo_extension = io.of('/peeqo_extension')
 
 peeqo_extension.on('connection', function(socket){
 	console.log('peeqo extension connected')
