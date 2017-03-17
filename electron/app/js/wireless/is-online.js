@@ -1,5 +1,7 @@
 const event = require('js/events/events')
 const common = require('js/gifs/common-gif-functions')()
+const response = require('js/data/responses')
+const answer = require('js/actions/response')()
 
 module.exports = function(){
 
@@ -10,37 +12,17 @@ module.exports = function(){
 	}
 
 	Offline.on('down', function(){
-		var obj = {
-			gif_type:"local",  //local/remote
-			gif_category:"no_internet",
-			format: "gif",
-			gif_url: null,
-			gif_loop_forever: true,
-			servo:null,
-			led:"error",
-			sound:null,
-			sound_loop_forever: false
-		}
 
-		event.emit("animate", obj)
+		answer.answer({msg:response.other.offline, gifloop:true, forceLocal:true})
+
 		// send out ble signal so new wifi can be configured
 		//startBleAdvertising();
 	})
 
 	Offline.on('up', function(){
-		var obj = {
-			gif_type:"local",  //local/remote
-			gif_category:common.setQueryByType("excited","yay"),
-			format:common.setFormat(),
-			gif_url: null,
-			gif_loop_forever: false,
-			servo:"excited",
-			led:"success",
-			sound:"cheer",
-			sound_loop_forever: false
-		}
 
-		event.emit("animate", obj)
+		answer.answer({msg:response.reaction.excited})
+
 	})
 
 	Offline.on('checking', function(err){

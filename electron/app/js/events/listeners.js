@@ -222,8 +222,8 @@ module.exports = function(){
 		skills.unlearn(skill)
 	})
 
-	event.on("do", function(obj,action){
-		skills.do(obj,action)
+	event.on("do", function(action){
+		skills.do(action)
 	})
 
 	//**** END SKILLS ****//

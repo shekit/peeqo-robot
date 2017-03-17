@@ -6,7 +6,7 @@ module.exports = {
 				files: ['1.gif','2.gif','3.gif']
 			},
 			remote:["happy","delighted","i'm so happy","satisfied"],
-			servo: null,
+			servo: "happy",
 			led: "greenBlink",
 			sound: null
 		},
@@ -16,8 +16,8 @@ module.exports = {
 				files: ['1.gif','2.gif']
 			},
 			remote:["crying","sad","feeling sad"],
-			servo: null,
-			led: "greenBlink",
+			servo: "sad",
+			led: "fadeRed",
 			sound: null
 		},
 		excited:{
@@ -36,7 +36,7 @@ module.exports = {
 				files: ['1.gif']
 			},
 			remote:["angry","are you serious","i am so mad"],
-			servo: null,
+			servo: "angry",
 			led: "error",
 			sound: null
 		},
@@ -66,7 +66,7 @@ module.exports = {
 				files: ['1.gif']
 			},
 			remote:["no","nope","never","absolutely not"],
-			servo: null,
+			servo: "no",
 			led: "error",
 			sound: null
 		},
@@ -76,7 +76,7 @@ module.exports = {
 				files: ['1.gif','2.gif', '3.gif']
 			},
 			remote:["yes","you got it","ok boss"],
-			servo: null,
+			servo: "nod",
 			led: "success",
 			sound: null
 		},
@@ -86,7 +86,7 @@ module.exports = {
 				files: ['1.gif','2.gif']
 			},
 			remote:["excited","yay","this is awesome"],
-			servo: null,
+			servo: "lookup",
 			led: "greenBlink",
 			sound: null
 		},
@@ -106,6 +106,16 @@ module.exports = {
 				files: ['1.gif','2.gif']
 			},
 			remote:["excited","yay","this is awesome"],
+			servo: "lookup",
+			led: null,
+			sound: null
+		},
+		learning:{
+			local:{
+				folder: 'learning',
+				files: ['1.gif']
+			},
+			remote:["learning","knowledge","downloading"],
 			servo: null,
 			led: "greenBlink",
 			sound: null
@@ -123,53 +133,6 @@ module.exports = {
 	},
 
 	greeting: {
-		hello:{
-			local:{
-				folder: 'hello',
-				files: ["1.gif","2.gif","3.gif","4.gif"],
-			},
-			remote:["hello","hi","howdy","whatsup","sup"],
-			servo: null,
-			led: "greenBlink",
-			sound:null
-		},
-		bye: {
-			local:{
-				folder: 'bye',
-				files: ["1.gif","2.gif"],
-			},
-			remote:["bye","see you","goodbye","ciao","so long"],
-			servo: null,
-			led: "greenBlink",
-			sound:null
-		},
-		goodnight: {
-			local:{
-				folder: 'goodnight',
-				files: ["1.gif"],
-			},
-			remote:["good night", "goodnight", "sweet dreams", "sleep tight"],
-			servo: null,
-			led: "greenBlink",
-			sound:null
-		}
-	},
-
-	information: {
-		weather:{
-			local:[],
-			remote: [],
-			servo: ""
-		},
-
-		music:{
-			local: [],
-			remote: [],
-			servo: ""
-		}
-	},
-
-	other: {
 		alert:{
 			local:{
 				folder: null,
@@ -181,6 +144,75 @@ module.exports = {
 			sound: "alert"
 		},
 
+		hello:{
+			local:{
+				folder: 'hello',
+				files: ["1.gif","2.gif","3.gif","4.gif"],
+			},
+			remote:["hello","hi","howdy","whatsup","sup"],
+			servo: "curious",
+			led: "greenBlink",
+			sound:null
+		},
+		bye: {
+			local:{
+				folder: 'bye',
+				files: ["1.gif","2.gif"],
+			},
+			remote:["bye","see you","goodbye","ciao","so long"],
+			servo: "curious",
+			led: "blueBlink",
+			sound:null
+		},
+		goodnight: {
+			local:{
+				folder: 'goodnight',
+				files: ["1.gif"],
+			},
+			remote:["good night", "goodnight", "sweet dreams", "sleep tight"],
+			servo: "lookup",
+			led: null,
+			sound:null
+		},
+		what: {
+			local:{
+				folder: 'what',
+				files: ["1.gif"],
+			},
+			remote:["what", "what is your problem"],
+			servo: null,
+			led: "greenBlink",
+			sound:null
+		}
+	},
+
+	info: {
+		weather:{
+			local:[],
+			remote: [],
+			servo: ""
+		},
+
+		music:{
+			local: [],
+			remote: [],
+			servo: ""
+		},
+
+		gifjif:{
+			local:{
+				folder: 'gifjif',
+				files: ["1.gif","2.gif"],
+			},
+			remote:["gif jif", "gif or jif", "pronounce gif"],
+			servo: "lookup",
+			led: null,
+			sound:null
+		}
+	},
+
+	other: {
+		
 		boop: {
 			local:{
 				folder: 'boop',
@@ -211,6 +243,17 @@ module.exports = {
 			remote:["i'm back"],
 			servo: "alert",
 			led: "success",
+			sound: null
+		},
+
+		wakeup: {
+			local:{
+				folder: 'wakeup',
+				files: ['1.gif']
+			},
+			remote:["wake up","sleepy","rise and shine"],
+			servo: "wakeup",
+			led: "blueBlink",
 			sound: null
 		},
 

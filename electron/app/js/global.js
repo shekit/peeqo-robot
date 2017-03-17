@@ -85,7 +85,7 @@ $(document).ready(function(){
 		if(isSleeping){
 			event.emit("led", "fadeRed")
 		} else {
-			answer.answer({msg:response.other.alert})
+			answer.answer({msg:response.greeting.alert})
 		}
 	})
 

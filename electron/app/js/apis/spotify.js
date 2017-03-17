@@ -3,6 +3,9 @@ const spotifyApi = new Spotify()
 const event = require('js/events/events')
 const common = require('js/gifs/common-gif-functions')()
 
+const response = require('js/data/responses')
+const answer = require('js/actions/response')()
+
 var skills = require('js/actions/skills')()
 
 
@@ -34,21 +37,12 @@ module.exports = function(){
 				}
 			})
 		} else {
-			var obj = {
-				gif_type:"local",  //local/remote
-				gif_category: common.setQueryByType("r_dunno","i don't know how"),
-				format: common.setFormat(),
-				gif_url: null,
-				gif_loop_forever: false,
-				servo:null,
-				led:"error",
-				sound:null,
-				sound_loop_forever: false,
-				callback: function(){
-					event.emit("led","off")
-				}
+
+			var cb = function(){
+				event.emit("led","off")
 			}
-			event.emit("animate", obj)
+			answer.answer({msg:response.reaction.confused, cb:cb})
+
 		}
 	}
 
@@ -80,18 +74,7 @@ module.exports = function(){
 			dance = 'headBang'
 		}
 		
-		var obj = {
-			gif_type:null,  //local/remote
-			gif_category:null,
-			format: common.setFormat(),
-			gif_url: null,
-			gif_loop_forever: true,
-			servo: dance,
-			led:null,
-			sound:null,
-			sound_loop_forever: false,
-			callback: null
-		}
+		answer.answer({servo:dance})
 
 		// event.emit("animate",obj)
 		event.emit('gif-timer-started',path,obj)
