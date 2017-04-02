@@ -1,4 +1,5 @@
 const event = require('js/events/events')
+const listen = require('js/senses/listen')()
 const eyes = require('js/face/eyes')()
 const localGif = require('js/gifs/local-gif')()
 const remoteGif = require('js/gifs/remote-gif')()
@@ -15,6 +16,16 @@ const sound = require('js/senses/sounds')()
 const personalize = require('js/face/personalize')()
 
 module.exports = function(){
+
+
+	//**** LISTEN ****//
+	event.on('final-command', function(cmd){
+		console.log(cmd)
+	})
+
+	event.on('hotword', function(){
+		console.log('heard my name')
+	})
 
 	//**** EYES ****//
 	event.on('start-blinking', function(){

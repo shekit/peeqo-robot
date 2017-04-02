@@ -28,7 +28,7 @@ app.on('ready', function(){
 
 })
 
-var listenProcess = spawn('node', ['./listen.js'], {detached: false})
+/*var listenProcess = spawn('node', ['./listen.js'], {detached: false})
 
 listenProcess.stderr.on('data', function (data) {
   var message = data.toString()
@@ -46,7 +46,7 @@ listenProcess.stdout.on('data', function (data) {
 	  } else {
 	    console.error(message.substring(3))
 	  }
-})
+})*/
 
 app.on('will-quit', function () {
   listenProcess.kill()

@@ -17,12 +17,15 @@
     "bleno": "^0.4.2",
     "giphy": "0.0.4",
     "giphy-api": "^1.2.5",
+    "@google-cloud/speech": "^0.7.0",
     "i2c-bus": "^1.2.1",
+    "nan": "^2.5.1",
     "natural": "^0.4.0",
+    "node-record-lpcm16": "^0.2.0",
     "pi-utils": "^0.1.3",
     "shortid": "^2.2.8",
     "snapsvg": "^0.4.0",
-    "sonus": "^0.1.7",
+    "snowboy": "^1.1.0",
     "spotify-web-api-js": "^0.21.2"
   }
 }
