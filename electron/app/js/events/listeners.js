@@ -1,5 +1,5 @@
 const event = require('js/events/events')
-const listen = require('js/senses/listen')()
+//const listen = require('js/senses/listen')()
 const eyes = require('js/face/eyes')()
 const localGif = require('js/gifs/local-gif')()
 const remoteGif = require('js/gifs/remote-gif')()
