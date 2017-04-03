@@ -33,7 +33,7 @@ $(document).ready(function(){
 	// EVENTS & LISTENERS
 	const event = require('js/events/events')
 	const listener = require('js/events/listeners')()
-	const intent = require('js/actions/intents')()
+	
 	
 
 	// RESPONSES
@@ -62,7 +62,7 @@ $(document).ready(function(){
 
 
 	// ON HOTWORD DETECTION
-	ipcRenderer.on("hotword", function(evt,arg){
+	/*ipcRenderer.on("hotword", function(evt,arg){
 		console.log("HOTWORD",arg)
 		ledOn = true
 
@@ -91,14 +91,8 @@ $(document).ready(function(){
 	// ON PARTIAL RESULT
 	ipcRenderer.on("partial-results", function(evt, msg){
 		console.log("Partial", msg)
-	})
+	})*/
 
-	function tokenizeAndSend(string){
-		var words = tokenizer.tokenize(string)
-
-		if(words.length){
-			intent.parse(words)
-		}
-	}
+	
 
 })

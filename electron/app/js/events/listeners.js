@@ -14,17 +14,41 @@ const productivity = require('js/actions/productivity')()
 const skills = require('js/actions/skills')()
 const sound = require('js/senses/sounds')()
 const personalize = require('js/face/personalize')()
+const intent = require('js/actions/intents')()
 
 module.exports = function(){
 
+	function tokenizeAndSend(string){
+		var words = tokenizer.tokenize(string)
+
+		if(words.length){
+			intent.parse(words)
+		}
+	}
 
 	//**** LISTEN ****//
 	event.on('final-command', function(cmd){
 		console.log(cmd)
+		event.emit('led','off')
+		ledOn = false
+		tokenizeAndSend(msg.toLowerCase())
 	})
 
 	event.on('hotword', function(){
-		console.log('heard my name')
+		console.log('HOTWORD')
+		ledOn = true
+
+		setTimeout(function(){
+			if(ledOn == true){
+				event.emit("led", "off")
+			}
+		},3000)
+
+		if(isSleeping){
+			event.emit("led", "fadeRed")
+		} else {
+			event.emit("do", "listen")
+		}
 	})
 
 	//**** EYES ****//
