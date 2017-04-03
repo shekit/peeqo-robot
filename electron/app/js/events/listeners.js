@@ -15,6 +15,8 @@ const skills = require('js/actions/skills')()
 const sound = require('js/senses/sounds')()
 const personalize = require('js/face/personalize')()
 const intent = require('js/actions/intents')()
+const natural = require('natural')
+const tokenizer = new natural.WordTokenizer()
 
 module.exports = function(){
 
@@ -31,7 +33,7 @@ module.exports = function(){
 		console.log(cmd)
 		event.emit('led','off')
 		ledOn = false
-		tokenizeAndSend(msg.toLowerCase())
+		tokenizeAndSend(cmd.toLowerCase())
 	})
 
 	event.on('hotword', function(){
@@ -175,7 +177,8 @@ module.exports = function(){
 	//**** CAMERA ****//
 	event.on("take-picture", function(bool){
 		console.log("CAMERA - CLICK")
-		camera.takePicture(bool)
+		camera.startRecording()
+		//camera.takePicture(bool)
 	})
 
 	event.on("camera-off", function(){

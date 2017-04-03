@@ -2,9 +2,8 @@ $(document).ready(function(){
 
 	require('app-module-path').addPath(__dirname);
 	const path = require('path')
-	const ipcRenderer = require('electron').ipcRenderer
-	const natural = require('natural')
-	const tokenizer = new natural.WordTokenizer()
+	//const ipcRenderer = require('electron').ipcRenderer
+	
 
 	// turn console logs off by uncommenting this line
 

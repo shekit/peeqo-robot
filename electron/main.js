@@ -46,11 +46,11 @@ listenProcess.stdout.on('data', function (data) {
 	  } else {
 	    console.error(message.substring(3))
 	  }
-})*/
+})
 
 app.on('will-quit', function () {
   listenProcess.kill()
-})
+})*/
 
 app.on('window-all-closed', function(){
 	app.quit();
