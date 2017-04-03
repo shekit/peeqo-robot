@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div(class='container')
+    div(class='row')
+      div(class='col-sm-4')
+      div(class='col-sm-4 col-xs-12')
+        form(id='wifi')
+          input(type='text' id='wifi-ssid' class='form-control input-lg input-block' placeholder='enter wifi ssid')
+          br
+          input(type='text' id='wifi-pass' class='form-control input-lg input-block' placeholder='enter wifi password')
+          br
+          br
+          input(type='submit' class='btn btn-primary btn-block' value='Connect')
+      div(class='col-sm-4')
+    
+
+block javascript
+  script(src='/js/wifi.js')

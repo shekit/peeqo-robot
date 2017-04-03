@@ -44,6 +44,10 @@ app.get("/test", function(req, res, next){
 	res.render("test.pug")
 })
 
+app.get("/wifi", function(req, res, next){
+	res.render("wifi.pug")
+})
+
 var io = require('socket.io')(http);
 
 
@@ -86,6 +90,23 @@ server_power.on('connection', function(socket){
 
 // END OF POWER SOCKETS
 
+// WIFI SOCKETS
+
+var server_wifi = io.of('/server_wifi')
+var peeqo_wifi = io.of('/peeqo_wifi')
+
+peeqo_wifi.on('connection', function(socket){
+	console.log('peeqo wifi connected')
+})
+
+server_wifi.on('connection', function(socket){
+
+	socket.on('wifi', function(msg){
+		peeqo_wifi.emit("wifi",msg)
+	})
+})
+
+// END OF WIFI SOCKETS
 
 // DEMO SOCKETS
 

@@ -8,6 +8,9 @@ module.exports = function(){
 		if(cmd.includes("camera") && cmd.includes("on")){
 			event.emit('do','cameraOn')
 		}
+		else if(cmd.includes("picture") && cmd.includes("take")){
+			event.emit('do','cameraOn')
+		}
 		else if(cmd.includes("camera") && cmd.includes("off")){
 			event.emit('do','cameraOff')
 		}
