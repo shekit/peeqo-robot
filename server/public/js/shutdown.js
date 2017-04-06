@@ -13,7 +13,7 @@ $(document).ready(function(){
 	})
 
 	socket.on('ip', function(data){
-		alert("Peeqo IP: " + msg);
+		alert("Peeqo IP: " + data);
 	})
 
 })
