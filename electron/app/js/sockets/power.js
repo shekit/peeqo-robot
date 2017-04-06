@@ -1,9 +1,8 @@
 const config = require('config/config.js')
 const event = require('js/events/events')
 
-if(process.platform != 'darwin'){
-	const wifi = require('js/wireless/wifi')()
-}
+const wifi = require('js/wireless/wifi')()
+
 
 var socket = io(config.peeqo.server + '/peeqo_power')
 
