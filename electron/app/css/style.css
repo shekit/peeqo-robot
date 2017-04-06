@@ -43,6 +43,27 @@ img {
 	background: #000;
 }
 
+#textWrapper {
+	display: block;
+}
+
+.textOverlay {
+	font-weight: bold;
+	font-family: 'Helvetica','sans-serif';
+	position: absolute;
+	color: #fff;
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: black;
+	font-size: 60px;
+	z-index:10000;
+	top:50%;
+	left:50%;
+	text-align: center;
+	transform: translate(-50%,-50%);
+	pointer-events: none;
+	text-transform: capitalize;
+}
+
 #video, #gif{
 	width: 800px;
 	height: 480px;

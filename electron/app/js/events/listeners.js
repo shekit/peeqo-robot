@@ -10,6 +10,7 @@ const piControl = require('js/power/shutdown')()
 const camera = require('js/senses/camera')()
 const hue = require('js/apis/hue')()
 const spotify = require('js/apis/spotify')()
+const weather = require('js/apis/weather')()
 const productivity = require('js/actions/productivity')()
 const skills = require('js/actions/skills')()
 const sound = require('js/senses/sounds')()
@@ -137,6 +138,10 @@ module.exports = function(){
 			gifAction.showDiv("gifWrapper")
 			gifAction.showGif(obj)
 		}
+
+		if(obj.textOverlay){
+			gifAction.showText(obj.textOverlay)
+		}
 		
 	})
 
@@ -147,6 +152,7 @@ module.exports = function(){
 		if(obj && obj.format == 'video'){
 			document.getElementById("video").src = ''
 		}
+		gifAction.removeText()
 		eyes.transitionFromGif(obj);
 	})
 
@@ -228,6 +234,14 @@ module.exports = function(){
 		spotify.stop()
 	})
 	//**** END SPOTIFY ****//
+
+	//**** WEATHER ****//
+
+	event.on("get-weather", function(city){
+		weather.getWeather(city)
+	})
+
+	//**** END WEATHER ****//
 
 	//**** PRODUCTIVITY ****//
 	event.on("block-site", function(site,block){

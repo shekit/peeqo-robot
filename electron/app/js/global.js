@@ -20,6 +20,7 @@ $(document).ready(function(){
 
 	if(process.platform != 'darwin'){
 		const ble = require('js/wireless/ble')()
+		const wifi_sockets = require('js/sockets/wifi')()
 	}
 	
 	// SOCKETS
@@ -28,7 +29,7 @@ $(document).ready(function(){
 	const extension_sockets = require('js/sockets/extension')()
 	const test_sockets = require('js/sockets/test')()
 	const webcontrol_sockets = require('js/sockets/webcontrol')()
-	const wifi_sockets = require('js/sockets/wifi')()
+	
 
 	// EVENTS & LISTENERS
 	const event = require('js/events/events')

@@ -50,6 +50,9 @@ module.exports = function(){
 		else if(cmd.includes("go") && cmd.includes("sleep")){
 			event.emit('do','sleep')
 		}
+		else if(cmd.includes("weather") || cmd.includes("whether")){
+			event.emit('get-weather', 'New York')
+		}
 		else if(cmd.includes("wake")){
 			event.emit('do','wakeUp')
 		} 

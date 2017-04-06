@@ -65,6 +65,14 @@ module.exports = function(){
 		}
 	}
 
+	common.showText = function(text){
+		$(".textOverlay").html(text)
+	}
+
+	common.removeText = function(text){
+		$(".textOverlay").html("")
+	}
+
 	common.setTimer = function(obj){
 		// display gif for exactly 2 loops by passing in its duration
 		var dur = parseInt(obj.duration)
