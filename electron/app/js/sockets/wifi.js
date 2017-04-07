@@ -7,6 +7,7 @@ var socket = io(config.peeqo.server + '/peeqo_wifi')
 module.exports = function(){
 
 	socket.on("wifi", function(data){
+		console.log("Connect to wifi")
 		wifi.connect(data.ssid, data.pass)
 	})
 
