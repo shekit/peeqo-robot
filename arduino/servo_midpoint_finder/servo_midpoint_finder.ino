@@ -4,11 +4,11 @@ Servo myservo;
 
 char c = 'a';
 
-int val = 1475;
+int val = 1450;
 
 void setup(){
   myservo.attach(7);
-  myservo.writeMicroseconds(1475); 
+  myservo.writeMicroseconds(val); 
   //myservo.write(90);
   Serial.begin(9600);
 }

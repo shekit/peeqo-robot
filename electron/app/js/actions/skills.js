@@ -42,7 +42,11 @@ module.exports = function() {
 
 			case 'listen':
 
-				answer.answer({msg:response.greeting.alert, type:"none"})
+				var cb = function(){
+					event.emit('gspeech')
+				}
+
+				answer.answer({msg:response.greeting.alert, type:"none", cb:cb})
 				break
 
 			case 'blockReddit':

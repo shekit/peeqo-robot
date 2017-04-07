@@ -35,6 +35,9 @@ module.exports = function(){
 		else if(cmd.includes("go") && cmd.includes("reddit")){
 			event.emit('do','blockReddit')
 		}
+		else if(cmd.includes('reddit')){
+			event.emit('do','blockReddit')
+		}
 		else if(cmd.includes("block") && cmd.includes("reddit")){
 			event.emit('do','blockReddit')
 		}

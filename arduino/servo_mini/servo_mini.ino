@@ -182,8 +182,8 @@ void resetServos(){
   
   // these values were calibrated for each servo
   
-  servo[0].writeMicroseconds(1515);
-  servo[1].writeMicroseconds(1485);
+  servo[0].writeMicroseconds(1450); // used to be 1515
+  servo[1].writeMicroseconds(1540); // used to be 1485
   servo[2].writeMicroseconds(1465);
   servo[3].writeMicroseconds(1455);
   servo[4].writeMicroseconds(1450);

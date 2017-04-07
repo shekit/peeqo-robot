@@ -163,6 +163,10 @@ module.exports = function(){
 		console.log('HOTWORD', index, hotword)
 		event.emit('hotword','yes')
 		mic.unpipe(snowboyDetector)
+		
+	})
+
+	event.on('gspeech', function(){
 		const gNew = new GoogleSpeech(request)
 		gNew.startStream()
 	})
