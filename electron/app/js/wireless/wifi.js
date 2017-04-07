@@ -1,6 +1,5 @@
-if(process.platform != 'darwin'){
-	const piutils = require('pi-utils')
-}
+
+const piutils = require('pi-utils')
 const event = require('js/events/events')
 const response = require('js/data/responses')
 const answer = require('js/actions/response')()
