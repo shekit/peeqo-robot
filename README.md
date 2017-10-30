@@ -78,6 +78,12 @@ chmod 777 ~/.electron
 sudo rm /usr/bin/electron
 sudo npm -g install electron
 ```
+### Clone this repo:
+
+```
+cd ~
+git clone https://github.com/shekit/peeqo-robot
+```
 
 ### Start App on Boot/Startup:
 
@@ -102,6 +108,75 @@ sudo chmod +x launch.sh
 cd /path/to/electron/app // this should be where the directory exists on your pi
 sudo electron main.js
 ```
+
+### Setup Mic:
+
+1. Plug Sound Card into USB
+2. Plug speaker and mic into soundcard
+3. Do `arecord -l` and `aplay -l` to see the number of your device - whether it’s 0,1,2
+4. Edit alsa.conf (might have to change to 1 or 2 depending on whether you have a camera plugged in)
+```
+sudo nano /usr/share/alsa/alsa.conf
+defaults.ctl.card 0 > defaults.ctl.card 1
+defaults.pcm.card 0 > defaults.pcm.card 1
+defaults.pcm.device 0 > defaults.pcm.device 1
+```
+5. Edit aliases.conf
+
+`sudo nano /lib/modprobe.d/aliases.conf`
+- Comment out below option or it will override previous changes on startup
+```
+options snd-usb-audio index=-2 (comment this out with a # before)
+```
+- THIS MAY BE CAUSING AN ERROR, dont do this and see if it helps
+- Check order modules load in
+`cat /proc/asound/modules`
+
+6. Edit .asoundrc
+```
+nano .asoundrc
+pcm.!default{
+	type asym
+	playback.pcm {
+		type plug
+		slave.pcm “hw:1,0”  
+#this first number is the number of the usb device
+	}
+
+	capture.pcm {
+		type plug
+		slave.pcm “hw:1,0”
+ #this is the mic usb number, maybe 2 if camera is included
+}
+}
+```
+7. Check if this works instead ( this worked on one pi not running pixel)
+`pcm.!default { type plug slave { pcm "hw:1,0" } } ctl.!default { type hw card 1 }`
+8. If you don’t use plugs you will get following error with arecord
+`arecord: set_params:1233: Sample format non available Available formats: - S16_LE`
+
+### Setup Bluetooth:
+
+1. `hcitool | grep ver` -- make sure it’s higher than 5.x.x
+2. Stop Bluetooth Daemon bluetoothd
+```
+sudo systemctl stop bluetooth
+sudo systemctl status bluetooth #should show status ‘quitting’
+sudo systemctl disable bluetooth #for it to persist after reboot
+```
+3. Power up bluetooth adapter
+`sudo hciconfig hci0 up`
+4. Install necessary libraries
+`sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev`
+5. Allow to run without root/sudo
+```
+sudo apt-get install libcap2-bin
+sudo setcap cap_net_raw+eip $(eval readlink -f `which electron`)
+```
+- This grants electron cap_net_raw priveleges to start/stop ble advertising
+(this is not working right now)
+6. Do all this before installing an app with bleno
+
 
 ### Remove Mouse Cursor and prevent screen from going off:
 
@@ -135,7 +210,12 @@ hdmi_cvt=480 800 60 6
 sudo nano /boot/config.txt
 max_usb_current=1
 ```
+### Run app:
 
+```
+cd /path/to/folder/electron
+sudo electron main.js
+```
 
 
 
