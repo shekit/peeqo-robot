@@ -221,6 +221,6 @@ sudo electron main.js
 
 # Steps Ahead
 
-Yes, I have some work to do to get this repo in order so it becomes more usable. I'll be doing that, including adding config files, more comments and everything! So please bear with me
+Yes, there's still work to be done. I will keep chipping away at it. Any contributions/feedback are welcome!
 
 Let's make Peeqo the best community built robot ever!
